@@ -11,6 +11,21 @@ The primary goals are consistency, shared tooling, and safer long-term maintenan
 npm install -g pnpm
 ```
 
+## Documentation Site
+
+This monorepo uses a single VitePress site rooted at `docs/`.
+
+- Start local docs: `pnpm docs:dev`
+- Build docs: `pnpm docs:build`
+- Preview build: `pnpm docs:preview`
+
+Package-level docs should live close to code:
+
+- `plugins/<slug>/docs/`
+- `themes/<slug>/docs/`
+
+Those docs are synchronized into the VitePress site before dev/build runs.
+
 ## Nx
 
 This repository uses `nx` for various monorepo-related tasks:
