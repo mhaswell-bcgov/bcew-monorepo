@@ -16,47 +16,47 @@ import { resolve } from 'node:path';
  * - Skips packages that do not contain a `docs/` folder.
  */
 // Centralized docs output consumed by the root VitePress site.
-const repoRoot = resolve(import.meta.dirname, '..');
-const outputRoot = resolve(repoRoot, 'docs', 'content');
+const repoRoot = resolve( import.meta.dirname, '..' );
+const outputRoot = resolve( repoRoot, 'docs', 'content' );
 
 // Package groups that can contain package-local docs folders.
 const packageDirs = [
-  { sourceRoot: 'plugins', outRoot: 'plugins' },
-  { sourceRoot: 'themes', outRoot: 'themes' }
+    { sourceRoot: 'plugins', outRoot: 'plugins' },
+    { sourceRoot: 'themes', outRoot: 'themes' },
 ];
 
 /**
  * Copy all package docs within a source group (plugins/themes) to output.
  *
  * @param {string} sourceRoot Relative monorepo path containing package folders.
- * @param {string} outRoot Relative output segment under `docs/content`.
+ * @param {string} outRoot    Relative output segment under `docs/content`.
  */
-function syncDocsForGroup(sourceRoot, outRoot) {
-  const baseDir = resolve(repoRoot, sourceRoot);
-  const packageNames = readdirSync(baseDir, { withFileTypes: true })
-    .filter((entry) => entry.isDirectory())
-    .map((entry) => entry.name);
+function syncDocsForGroup( sourceRoot, outRoot ) {
+    const baseDir = resolve( repoRoot, sourceRoot );
+    const packageNames = readdirSync( baseDir, { withFileTypes: true } )
+        .filter( ( entry ) => entry.isDirectory() )
+        .map( ( entry ) => entry.name );
 
-  for (const packageName of packageNames) {
-    const sourceDocs = resolve(baseDir, packageName, 'docs');
-    // Skip packages that do not have docs yet.
-    if (!existsSync(sourceDocs)) {
-      continue;
+    for ( const packageName of packageNames ) {
+        const sourceDocs = resolve( baseDir, packageName, 'docs' );
+        // Skip packages that do not have docs yet.
+        if ( ! existsSync( sourceDocs ) ) {
+            continue;
+        }
+
+        const outputDir = resolve( outputRoot, outRoot, packageName );
+        mkdirSync( outputDir, { recursive: true } );
+        // Copy package docs into generated VitePress content.
+        cpSync( sourceDocs, outputDir, { recursive: true, force: true } );
     }
-
-    const outputDir = resolve(outputRoot, outRoot, packageName);
-    mkdirSync(outputDir, { recursive: true });
-    // Copy package docs into generated VitePress content.
-    cpSync(sourceDocs, outputDir, { recursive: true, force: true });
-  }
 }
 
 // Remove old generated docs so deleted/renamed files do not linger.
-rmSync(outputRoot, { recursive: true, force: true });
-mkdirSync(outputRoot, { recursive: true });
+rmSync( outputRoot, { recursive: true, force: true } );
+mkdirSync( outputRoot, { recursive: true } );
 
-for (const group of packageDirs) {
-  syncDocsForGroup(group.sourceRoot, group.outRoot);
+for ( const group of packageDirs ) {
+    syncDocsForGroup( group.sourceRoot, group.outRoot );
 }
 
-console.log('Docs sync complete.');
+console.log( 'Docs sync complete.' );
