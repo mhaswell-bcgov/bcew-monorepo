@@ -1,0 +1,61 @@
+name: Deploy VitePress Docs
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "plugins/**/docs/**"
+      - "themes/**/docs/**"
+      - "tools/sync-docs.mjs"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/deploy-docs.yml"
+  pull_request:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "plugins/**/docs/**"
+      - "themes/**/docs/**"
+      - "tools/sync-docs.mjs"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/deploy-docs.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build VitePress (includes docs sync)
+        env:
+          DOCS_BASE: /wordpress-monorepo/
+        run: npm run docs:build
+
+      - name: Deploy to gh-pages/docs
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: docs/.vitepress/dist
+          target-folder: docs
+          clean: true
