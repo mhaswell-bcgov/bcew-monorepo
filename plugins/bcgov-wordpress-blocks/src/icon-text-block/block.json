@@ -9,22 +9,6 @@
     "description": "",
     "example": {},
     "attributes": {
-        "iconId": {
-            "type": "string",
-            "default": ""
-        },
-        "iconSize": {
-            "type": "string",
-            "default": "medium"
-        },
-        "isDecorative": {
-            "type": "boolean",
-            "default": false
-        },
-        "accessibleName": {
-            "type": "string",
-            "default": ""
-        },
         "layout": {
             "type": "string",
             "default": "icon-left"

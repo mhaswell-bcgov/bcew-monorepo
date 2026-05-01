@@ -1,10 +1,7 @@
+/**
+ * WordPress dependencies
+ */
 import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
-import {
-    getIconGlyphA11yProps,
-    getIconWrapperA11yProps,
-} from '../icon/icon-accessibility';
-import { ICON_ALLOWLIST_MAP } from '../icon/icon-allowlist';
-import { getIconWrapperClasses } from '../icon/icon-classes';
 
 /**
  * The save function defines the way in which the different attributes should
@@ -15,16 +12,15 @@ import { getIconWrapperClasses } from '../icon/icon-classes';
  * @param {Object} props.attributes Persisted block attributes.
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#save
  *
- * @return {Element} Element to render.
+ * @return {import('react').ReactElement} Element to render.
  */
 const save = ( { attributes = {} } = {} ) => {
-    const { iconId, iconSize, layout } = attributes;
+    const { layout } = attributes;
     const supportedLayouts = [ 'icon-left', 'icon-top' ];
     const normalizedLayout = supportedLayouts.includes( layout )
         ? layout
         : 'icon-left';
     const layoutClass = `is-layout-${ normalizedLayout }`;
-    const selectedIcon = ICON_ALLOWLIST_MAP[ iconId ];
 
     const blockProps = useBlockProps.save( {
         className: `bcgov-wp-blocks-icon-text-block ${ layoutClass }`,
@@ -33,32 +29,7 @@ const save = ( { attributes = {} } = {} ) => {
     return (
         <div { ...blockProps }>
             <div className="bcgov-wp-blocks-icon-text-block__layout-shell">
-                <div
-                    className={ `bcgov-wp-blocks-icon-text-block__icon-section ${ getIconWrapperClasses(
-                        {
-                            iconSize,
-                        }
-                    ) }` }
-                    { ...getIconWrapperA11yProps( attributes, {
-                        forSave: true,
-                    } ) }
-                >
-                    { selectedIcon ? (
-                        <i
-                            className={ `bcgov-wp-blocks-icon__preview ${ selectedIcon.faClass }` }
-                            { ...getIconGlyphA11yProps( attributes, {
-                                forSave: true,
-                            } ) }
-                        />
-                    ) : (
-                        <span className="bcgov-wp-blocks-icon__preview">
-                            { 'Icon placeholder' }
-                        </span>
-                    ) }
-                </div>
-                <div className="bcgov-wp-blocks-icon-text-block__text-section">
-                    <InnerBlocks.Content />
-                </div>
+                <InnerBlocks.Content />
             </div>
         </div>
     );
