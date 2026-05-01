@@ -4,7 +4,6 @@
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 import { registerBlockType } from '@wordpress/blocks';
-import '@fortawesome/fontawesome-free/css/all.min.css';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
