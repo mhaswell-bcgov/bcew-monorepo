@@ -62,7 +62,7 @@ Why this exists:
 ## Safe workflow (step-by-step)
 
 1. Edit docs only in `plugins/.../docs` or `themes/.../docs`
-2. Start docs: `pnpm docs:dev` (runs sync automatically)
+2. Start docs: `pnpm docs:dev` (runs sync once on start, then re-runs sync when `plugins/**/docs/**`, `themes/**/docs/**`, or `tools/sync-docs.mjs` changes)
 3. Check your package in the left sidebar
 4. Open your page and check right-side "On this page" links
 5. Commit source docs only (not generated `docs/content`)
