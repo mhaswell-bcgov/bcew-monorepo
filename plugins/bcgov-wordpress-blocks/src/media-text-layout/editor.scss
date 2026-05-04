@@ -3,30 +3,12 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
-
-.wp-block-bcgov-wordpress-blocks-media-text-layout {
-    outline: 1px dashed rgba(0, 0, 0, 0.15);
+.editor-styles-wrapper .layout-shell .wp-block-image {
+    position: static;
 }
 
-.wp-block-bcgov-wordpress-blocks-media-text-layout,
-.wp-block-bcgov-wordpress-blocks-media-text-layout * {
-    box-sizing: border-box;
-}
-
-.wp-block-bcgov-wordpress-blocks-media-text-layout .wp-block-image {
-    background: rgba(0, 0, 0, 0.03);
-}
-
-.wp-block-bcgov-wordpress-blocks-media-text-layout .media-text-content {
-    background: rgba(0, 0, 0, 0.02);
-}
-
-.image-placeholder {
+.editor-styles-wrapper .layout-shell .wp-block-image img {
+    position: static;
     width: 100%;
-    min-height: 120px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.05);
-    color: rgba(0, 0, 0, 0.6);
+    height: auto;
 }
