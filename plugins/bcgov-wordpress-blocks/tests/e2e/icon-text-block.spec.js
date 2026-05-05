@@ -13,7 +13,7 @@ test( 'icon-text-block complete e2e flow', async ( {
 
     const block = editor.canvas
         .locator( `[data-type="${ BLOCK_NAME }"]` )
-        .first()
+        .first();
     await expect( block ).toBeVisible();
     await expect(
         block.locator( '[data-type="bcgov-wordpress-blocks/icon"]' )
@@ -25,9 +25,9 @@ test( 'icon-text-block complete e2e flow', async ( {
         1
     );
     await expect( block.locator( '[data-type="core/list"]' ) ).toHaveCount( 1 );
-    await expect(
-        block.locator( '[data-type="core/buttons"]' )
-    ).toHaveCount( 1 );
+    await expect( block.locator( '[data-type="core/buttons"]' ) ).toHaveCount(
+        1
+    );
 
     // Reuse icon block controls within the composed block.
     const nestedIconBlock = block

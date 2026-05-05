@@ -40,6 +40,7 @@
     }
 
     &:has(.bcgov-wp-blocks-icon__preview:not(i)) {
+
         .wp-block-list li:empty {
             display: none;
         }
