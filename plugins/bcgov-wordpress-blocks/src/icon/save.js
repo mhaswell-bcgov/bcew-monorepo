@@ -38,7 +38,13 @@ const save = ( { attributes } ) => {
         />
     ) : (
         <span className="bcgov-wp-blocks-icon__preview">
-            { __( 'Icon placeholder', 'bcgov-wordpress-blocks' ) }
+            <i
+                className="bcgov-wp-blocks-icon__placeholder-icon fa-regular fa-image"
+                aria-hidden
+            />
+            <span className="bcgov-wp-blocks-icon__placeholder-text">
+                { __( 'Select icon', 'bcgov-wordpress-blocks' ) }
+            </span>
         </span>
     );
 
