@@ -2,8 +2,7 @@
 
 This page explains where to put docs and what your changes do in the site UI.
 
-Run docs commands from the monorepo root:
-`/Users/aspiteri/Development/wordpress-monorepo`
+Run docs commands from the monorepo root (the folder that contains `package.json`).
 
 ## Where to write docs
 
@@ -55,7 +54,7 @@ It:
 
 Why this exists:
 
-- VitePress builds one site from `docs/`
+- The VitePress-based site builds from `docs/`
 - package docs are owned inside package folders
 - sync combines both into one build input
 
