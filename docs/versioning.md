@@ -13,8 +13,8 @@ Release tags must match the workflow filter in `tag.yml` (`**/v*`) and encode bo
 - `<nx-project-name>` must be the **exact** Nx project name (`npx nx show projects`). Example: `bcgov-wordpress-blocks`.
 - `<semver>` is prefixed with `v` in the tag. Examples: `v1.0.0`, `v1.1.0-a1` (Composer-compatible prerelease segments are allowed when `tag.yml` and Composer both accept them).
 - Invalid examples:
-  - Wrong project slug not in Nx graph
-  - Non-semver suffixes such as `v100-testing-tag` for production consumption
+    - Wrong project slug not in Nx graph
+    - Non-semver suffixes such as `v100-testing-tag` for production consumption
 
 The workflow strips the leading `v` for the version recorded in `packages.json` while keeping the full tag for GitHub Release URLs.
 
