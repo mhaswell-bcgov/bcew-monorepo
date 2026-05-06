@@ -38,4 +38,15 @@
             grid-row: auto;
         }
     }
+
+    &:has(.bcgov-wp-blocks-icon__preview:not(i)) {
+
+        .wp-block-list li:empty {
+            display: none;
+        }
+
+        .wp-block-list:has(li:only-child:empty) {
+            display: none;
+        }
+    }
 }

@@ -19,10 +19,42 @@ const INNER_BLOCKS_TEMPLATE = [
             },
         },
     ],
-    [ 'core/heading' ],
-    [ 'core/paragraph' ],
-    [ 'core/list' ],
-    [ 'core/buttons' ],
+    [
+        'core/heading',
+        {
+            lock: {
+                move: true,
+                remove: true,
+            },
+        },
+    ],
+    [
+        'core/paragraph',
+        {
+            lock: {
+                move: true,
+                remove: true,
+            },
+        },
+    ],
+    [
+        'core/list',
+        {
+            lock: {
+                move: true,
+                remove: true,
+            },
+        },
+    ],
+    [
+        'core/buttons',
+        {
+            lock: {
+                move: true,
+                remove: false,
+            },
+        },
+    ],
 ];
 
 const ALLOWED_BLOCKS = [
@@ -59,7 +91,7 @@ const Edit = ( { attributes = {}, setAttributes = () => {} } = {} ) => {
         {
             template: INNER_BLOCKS_TEMPLATE,
             allowedBlocks: ALLOWED_BLOCKS,
-            templateLock: false,
+            templateLock: 'insert',
         }
     );
 
