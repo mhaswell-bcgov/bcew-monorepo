@@ -102,12 +102,16 @@ const Edit = ( { attributes, setAttributes } ) => {
                             />
                         </MediaUploadCheck>
                     </div>
-                    <div className="inner-blocks">
-                        <InnerBlocks
-                            template={ TEMPLATE }
-                            allowedBlocks={ TEMPLATE }
-                            renderAppender={ InnerBlocks.ButtonBlockAppender }
-                        />
+                    <div className="media-text-content">
+                        <div className="inner-blocks">
+                            <InnerBlocks
+                                template={ TEMPLATE }
+                                allowedBlocks={ TEMPLATE }
+                                renderAppender={
+                                    InnerBlocks.ButtonBlockAppender
+                                }
+                            />
+                        </div>
                     </div>
                 </div>
             </div>

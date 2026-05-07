@@ -12,7 +12,6 @@ echo esc_attr(
 ">
 
     <div class="layout-shell">
-
         <div class="wp-block-image">
             <?php
             if ( $image_id ) {
@@ -20,12 +19,9 @@ echo esc_attr(
             }
             ?>
         </div>
-
         <div class="media-text-content">
-
             <?php echo wp_kses_post( $content ); ?>
         </div>
-
     </div>
 
 </div>
