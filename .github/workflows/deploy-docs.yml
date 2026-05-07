@@ -1,4 +1,4 @@
-name: Deploy VitePress Docs
+name: Deploy documentation site
 
 on:
   workflow_dispatch:
@@ -52,7 +52,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Build VitePress (includes docs sync)
+      - name: Build docs site (VitePress; includes sync)
         env:
           DOCS_BASE: /wordpress-monorepo/
         run: pnpm docs:build

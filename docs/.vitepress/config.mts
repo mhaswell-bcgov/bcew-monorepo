@@ -44,6 +44,23 @@ function packageDocsSection(
   };
 }
 
+const monorepoGuideItems = [
+  { text: 'Overview', link: '/' },
+  { text: 'Getting started', link: '/getting-started' },
+  { text: 'Documentation site', link: '/documentation-site' },
+  { text: 'Architecture', link: '/architecture' },
+  { text: 'Project standards', link: '/project-standards' },
+  { text: 'Contributing & migration', link: '/contributing-workflow' },
+  { text: 'Shared tooling', link: '/shared-tooling' },
+  { text: 'CI/CD', link: '/ci-cd' },
+  { text: 'Release & deployment', link: '/release-and-deployment' },
+  { text: 'Versioning', link: '/versioning' },
+  { text: 'Package management', link: '/package-management' },
+  { text: 'Contributing docs', link: '/contributing' },
+  { text: 'Onboarding checklist', link: '/onboarding-validation' },
+  { text: 'Maintenance', link: '/maintenance' }
+];
+
 export default defineConfig({
   base: process.env.DOCS_BASE ?? '/',
   title: 'WordPress Monorepo Docs',
@@ -53,17 +70,13 @@ export default defineConfig({
   themeConfig: {
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Getting Started', link: '/getting-started' },
-      { text: 'Contributing Docs', link: '/contributing' }
+      { text: 'Guides', link: '/getting-started' },
+      { text: 'Contributing docs', link: '/contributing' }
     ],
     sidebar: [
       {
         text: 'Monorepo',
-        items: [
-          { text: 'Overview', link: '/' },
-          { text: 'Getting Started', link: '/getting-started' },
-          { text: 'Contributing Docs', link: '/contributing' }
-        ]
+        items: monorepoGuideItems
       },
       packageDocsSection('plugins', 'Plugins'),
       packageDocsSection('themes', 'Themes')
