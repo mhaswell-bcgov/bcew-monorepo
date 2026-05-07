@@ -6,7 +6,7 @@ Welcome to the documentation portal for the BC Government WordPress monorepo: th
 
 The latest version of this documentation is published to GitHub Pages:
 
-**[https://bcgov.github.io/wordpress-monorepo/docs/](https://bcgov.github.io/wordpress-monorepo/docs/)**
+**[https://bcgov.github.io/wordpress-monorepo/](https://bcgov.github.io/wordpress-monorepo/)**
 
 ## Start here
 
