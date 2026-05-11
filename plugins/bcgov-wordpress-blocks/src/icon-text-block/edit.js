@@ -22,6 +22,14 @@ const INNER_BLOCKS_TEMPLATE = [
     [
         'core/heading',
         {
+            style: {
+                spacing: {
+                    margin: {
+                        top: '0rem',
+                        bottom: '0.75rem',
+                    },
+                },
+            },
             lock: {
                 move: true,
                 remove: true,
@@ -31,6 +39,14 @@ const INNER_BLOCKS_TEMPLATE = [
     [
         'core/paragraph',
         {
+            style: {
+                spacing: {
+                    margin: {
+                        top: '0rem',
+                        bottom: '0.5rem',
+                    },
+                },
+            },
             lock: {
                 move: true,
                 remove: true,
@@ -40,6 +56,17 @@ const INNER_BLOCKS_TEMPLATE = [
     [
         'core/list',
         {
+            style: {
+                typography: {
+                    lineHeight: '1.688rem',
+                },
+                spacing: {
+                    margin: {
+                        top: '0rem',
+                        bottom: '1rem',
+                    },
+                },
+            },
             lock: {
                 move: true,
                 remove: true,
