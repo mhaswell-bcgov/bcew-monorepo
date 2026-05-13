@@ -1,7 +1,6 @@
-import { test, expect } from '@wordpress/e2e-test-utils-playwright';
-import path from 'path';
-import type { Editor } from '@wordpress/e2e-test-utils-playwright';
+import { test, expect, Editor } from '@wordpress/e2e-test-utils-playwright';
 import type { Locator, Page } from '@playwright/test';
+import path from 'path';
 
 interface Content {
     heading: string;
@@ -40,9 +39,7 @@ const WIDTH_CONSTRAINTS = {
 const getEditorBlock = ( editor: Editor ) =>
     editor.canvas.locator( `[data-type="${ BLOCK_NAME }"]` ).first();
 
-const getEditorFields = (
-    editor: Editor
-): { heading: Locator; list: Locator; button: Locator } => {
+const getEditorFields = ( editor: Editor ) => {
     return {
         heading: editor.canvas
             .getByRole( 'document', { name: 'Block: Heading' } )
@@ -177,24 +174,18 @@ test.describe( 'media-text-layout block', () => {
     /**
      * Set up a new post with the media-text-layout block and fill in content before each test.
      */
-    test.beforeEach(
-        async ( {
-            admin,
-            editor,
-            requestUtils,
-        }) => {
-            await admin.createNewPost();
+    test.beforeEach( async ( { admin, editor, requestUtils } ) => {
+        await admin.createNewPost();
 
-            // Upload media and insert block with image attribute
-            const media = await requestUtils.uploadMedia( IMAGE_PATH );
-            await editor.insertBlock( {
-                name: BLOCK_NAME,
-                attributes: { imageId: media.id },
-            } );
+        // Upload media and insert block with image attribute
+        const media = await requestUtils.uploadMedia( IMAGE_PATH );
+        await editor.insertBlock( {
+            name: BLOCK_NAME,
+            attributes: { imageId: media.id },
+        } );
 
-            await fillEditorContent( editor, CONTENT );
-        }
-    );
+        await fillEditorContent( editor, CONTENT );
+    } );
 
     test.afterAll( async ( { requestUtils } ) => {
         await requestUtils.deleteAllMedia();
@@ -203,8 +194,6 @@ test.describe( 'media-text-layout block', () => {
 
     test( 'Verify the block renders filled content and preview on desktop/mobile', async ( {
         editor,
-    }: {
-        editor: Editor;
     } ) => {
         const block = getEditorBlock( editor );
         await expect( block ).toBeVisible();
@@ -221,8 +210,6 @@ test.describe( 'media-text-layout block', () => {
 
     test( 'Verify the block toggles image to right in editor and preview', async ( {
         editor,
-    }: {
-        editor: Editor;
     } ) => {
         const block = getEditorBlock( editor );
         await expect( block ).toBeVisible();
@@ -241,8 +228,6 @@ test.describe( 'media-text-layout block', () => {
 
     test( 'Verify the block renders with the correct width constraints', async ( {
         editor,
-    }: {
-        editor: Editor;
     } ) => {
         await withPreviewBlock(
             editor,
