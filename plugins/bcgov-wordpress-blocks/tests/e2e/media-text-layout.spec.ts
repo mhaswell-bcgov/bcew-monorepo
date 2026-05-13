@@ -182,11 +182,7 @@ test.describe( 'media-text-layout block', () => {
             admin,
             editor,
             requestUtils,
-        }: {
-            admin: any;
-            editor: Editor;
-            requestUtils: any;
-        } ) => {
+        }) => {
             await admin.createNewPost();
 
             // Upload media and insert block with image attribute
