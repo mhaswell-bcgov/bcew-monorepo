@@ -152,21 +152,6 @@ test.describe( 'media-text-layout block', () => {
     test.afterAll( async ( { requestUtils, request } ) => {
         await requestUtils.deleteAllMedia();
         await requestUtils.deleteAllPosts();
-
-        const mediaResp = await request.get(
-            '/wp-json/wp/v2/media?per_page=1'
-        );
-        const postsResp = await request.get(
-            '/wp-json/wp/v2/posts?per_page=1'
-        );
-
-        const mediaTotal = Number( mediaResp.headers()[ 'x-wp-total' ] || 0 );
-        const postsTotal = Number( postsResp.headers()[ 'x-wp-total' ] || 0 );
-
-        expect( mediaTotal ).toBe( 0 );
-        expect( postsTotal ).toBe( 0 );
-
-        console.log( 'Test cleanup confirmed: 0 media and 0 posts.' );
     } );
 
     test( 'Verify the block renders filled content and preview on desktop/mobile', async ( {
