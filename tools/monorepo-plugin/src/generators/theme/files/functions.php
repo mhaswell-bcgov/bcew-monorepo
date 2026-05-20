@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Load Composer autoloader and verify required class exists.
  * If the autoloader or the required class is missing, halt plugin execution.
