@@ -6,7 +6,7 @@
     "autoload": {
         "psr-4": {
             "Bcgov\\<%= phpNamespace %>\\": "src/",
-            "Bcgov\\<%= phpNamespace %>\\Test\\": "tests/php/"
+            "Bcgov\\<%= phpNamespace %>\\Test\\": "tests/"
         }
     },
 }
