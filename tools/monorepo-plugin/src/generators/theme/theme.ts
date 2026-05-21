@@ -20,18 +20,21 @@ export const themeGenerator = async (
     const projectRoot = `themes/${ options.slug }`;
     // Todo: Detect existing project and update instead of initializing new project.
     // @see https://nx.dev/docs/extending-nx/migration-generators
+    const phpNamespace = options.slug
+        .split( '-' )
+        .map( ( part ) => part.charAt( 0 ).toUpperCase() + part.slice( 1 ) )
+        .join( '' );
+
     addProjectConfiguration( tree, options.slug, {
         root: projectRoot,
         projectType: 'application',
         sourceRoot: `${ projectRoot }/src`,
         targets: {},
     } );
-    generateFiles(
-        tree,
-        path.join( __dirname, 'files' ),
-        projectRoot,
-        options
-    );
+    generateFiles( tree, path.join( __dirname, 'files' ), projectRoot, {
+        ...options,
+        phpNamespace,
+    } );
     updateLabeler( tree, options.slug );
     await formatFiles( tree );
 };
