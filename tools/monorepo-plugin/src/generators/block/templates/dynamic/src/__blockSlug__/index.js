@@ -1,5 +1,5 @@
 /**
- * Registers a new block provided a unique name and an object defining its behavior.
+ * Registers a dynamic block (server-rendered) provided a unique name and an object defining its behavior.
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
@@ -18,7 +18,7 @@ import './style.scss';
  * Internal dependencies
  */
 import Edit from './edit';
-import save from './save';
+// eslint-disable-next-line import/no-unresolved
 import metadata from './block.json';
 
 /**
@@ -31,9 +31,4 @@ registerBlockType( metadata.name, {
      * @see ./edit.js
      */
     edit: Edit,
-
-    /**
-     * @see ./save.js
-     */
-    save,
 } );

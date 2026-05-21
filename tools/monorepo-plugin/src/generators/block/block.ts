@@ -49,7 +49,16 @@ export const blockGenerator = async (
         );
     }
 
-    generateFiles( tree, path.join( __dirname, 'files' ), pluginConfig.root, {
+    // Select template folder based on variant.
+    // Each template (static/dynamic) is self-contained with all required files.
+    const variant = options.variant || 'dynamic';
+    const templateDir = path.join(
+        __dirname,
+        'templates',
+        'static' === variant ? 'static' : 'dynamic'
+    );
+
+    generateFiles( tree, templateDir, pluginConfig.root, {
         pluginSlug,
         blockSlug,
         blockTitle: toTitle( blockSlug ),
