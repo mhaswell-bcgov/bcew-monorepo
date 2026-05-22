@@ -21,7 +21,7 @@ export const collectWpEnvJsonPaths = ( tree: Tree, dir = '' ): string[] => {
     for ( const child of tree.children( dir ) ) {
         const filePath = dir ? `${ dir }/${ child }` : child;
 
-        if ( child === '.wp-env.json' && tree.isFile( filePath ) ) {
+        if ( '.wp-env.json' === child && tree.isFile( filePath ) ) {
             paths.push( filePath );
             continue;
         }
@@ -51,11 +51,11 @@ export const findHighestWpEnvPort = ( tree: Tree ): number => {
 
         const config = JSON.parse( content.toString() ) as WpEnvConfig;
 
-        if ( typeof config.port === 'number' ) {
+        if ( 'number' === typeof config.port ) {
             highest = Math.max( highest, config.port );
         }
 
-        if ( typeof config.testsPort === 'number' ) {
+        if ( 'number' === typeof config.testsPort ) {
             highest = Math.max( highest, config.testsPort );
         }
     }
