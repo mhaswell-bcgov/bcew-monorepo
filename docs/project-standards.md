@@ -28,6 +28,7 @@ A **valid** monorepo package in this repository is a workspace member that Nx ca
    | `test-e2e` | Playwright via `wp-scripts test-playwright` |
    | `test-integration` | PHPUnit inside `wp-env` |
    | `test-screenshot` | Playwright regression config (where used) |
+   | `test-screenshot-generate` | Generate new Playwright visual regression screenshots |
 
    Root shortcuts such as `pnpm build` run `nx run-many` across all projects that define the target.
 

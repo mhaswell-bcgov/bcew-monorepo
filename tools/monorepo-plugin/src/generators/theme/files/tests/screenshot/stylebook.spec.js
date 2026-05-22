@@ -4,7 +4,9 @@ test.describe( 'style book', () => {
     test( 'all blocks', async ( { admin } ) => {
         // These blocks don't display in WP's style-book.
         const EXCLUDED_BLOCKS = [
+            'avatar',
             'column',
+            'comments',
             'comment-template',
             'embed',
             'footnotes',
@@ -15,6 +17,7 @@ test.describe( 'style book', () => {
             'query-total',
             'spacer',
             'rss',
+            'tag-cloud',
             'video',
             'calendar',
             'latest-comments',
