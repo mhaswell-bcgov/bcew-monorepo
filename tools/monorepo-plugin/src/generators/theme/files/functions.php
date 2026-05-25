@@ -1,5 +1,11 @@
 <?php
 /**
+ * Theme functions and definitions
+ *
+ * @package <%= phpNamespace %>
+ */
+
+/**
  * Load Composer autoloader and verify required class exists.
  * If the autoloader or the required class is missing, halt plugin execution.
  */
