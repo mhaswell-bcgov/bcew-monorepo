@@ -21,10 +21,24 @@
                 "index": 1
             },
             "x-prompt": "What block name would you like to use?"
+        },
+        "variant": {
+            "type": "string",
+            "description": "Block variant. Example: static",
+            "enum": [
+                "static",
+                "dynamic"
+            ],
+            "$default": {
+                "$source": "argv",
+                "index": 2
+            },
+            "x-prompt": "Do you want a dynamic (server-rendered via PHP) or static (serialized to post content) block?"
         }
     },
     "required": [
         "plugin",
-        "name"
+        "name",
+        "variant"
     ]
 }
