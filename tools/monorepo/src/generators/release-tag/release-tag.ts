@@ -1,5 +1,5 @@
 import { getProjects, Tree, logger } from '@nx/devkit';
-import { execSync } from 'child_process';
+import { execFileSync } from 'child_process';
 import { ReleaseTagGeneratorSchema } from './schema';
 
 /**
@@ -39,11 +39,11 @@ export const releaseTagGenerator = async (
 
     logger.info( `Creating tag: ${ tag }` );
 
-    execSync( `git tag "${ tag }"`, { stdio: 'inherit' } );
+    execFileSync( 'git', [ 'tag', tag ], { stdio: 'inherit' } );
 
     if ( push ) {
         logger.info( `Pushing tag ${ tag } to origin...` );
-        execSync( `git push origin "${ tag }"`, { stdio: 'inherit' } );
+        execFileSync( 'git', [ 'push', 'origin', tag ], { stdio: 'inherit' } );
     } else {
         logger.info(
             `Tag created locally. Run \`git push origin "${ tag }"\` to publish it.`

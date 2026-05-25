@@ -51,14 +51,8 @@ jobs:
             exit 1
           fi
 
-          # Composer-compatible semver regex
-          SEMVER_REGEX='^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(?:-((?:0|[1-9][0-9]*|[0-9]*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9][0-9]*|[0-9]*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$'
-
-          if ! [[ "$VERSION" =~ $SEMVER_REGEX ]]; then
-            echo "Invalid semver in tag version: '$VERSION'" 1>&2
-            echo "Version must follow semantic versioning (Composer-compatible)." 1>&2
-            exit 1
-          fi
+          # Validate semver using Node.js (supports PCRE patterns)
+          node .github/scripts/validate-semver.mjs "$VERSION" || exit 1
 
           echo "tag=$TAG" >> $GITHUB_OUTPUT
           echo "name=$NAME" >> $GITHUB_OUTPUT
