@@ -8,7 +8,6 @@ describe( 'theme generator', () => {
     let tree: Tree;
     const options: ThemeGeneratorSchema = {
         name: 'Test Theme',
-        slug: 'test-theme',
         parentTheme: 'none',
     };
 

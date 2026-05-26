@@ -1,6 +1,6 @@
 import { WordPressGeneratorSchema } from "../helpers";
 
 export interface ThemeGeneratorSchema extends WordPressGeneratorSchema {
-    slug: string;
+    name: string;
     parentTheme: string;
 }

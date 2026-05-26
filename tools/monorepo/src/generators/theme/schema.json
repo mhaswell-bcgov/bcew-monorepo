@@ -13,15 +13,6 @@
             },
             "x-prompt": "What name would you like to use?"
         },
-        "slug": {
-            "type": "string",
-            "description": "Theme slug. Example: my-theme",
-            "$default": {
-                "$source": "argv",
-                "index": 0
-            },
-            "x-prompt": "What slug would you like to use?"
-        },
         "wpEnvPort": {
             "type": "number",
             "description": "Optional override for wp-env dev port. When omitted, the next available port is chosen from existing .wp-env.json files in the monorepo."
@@ -46,5 +37,5 @@
             }
         }
     },
-    "required": [ "name", "slug", "parentTheme" ]
+    "required": [ "name", "parentTheme" ]
 }

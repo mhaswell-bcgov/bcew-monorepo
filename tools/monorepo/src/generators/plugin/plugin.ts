@@ -1,9 +1,4 @@
-import {
-    addProjectConfiguration,
-    formatFiles,
-    generateFiles,
-    Tree,
-} from '@nx/devkit';
+import { addProjectConfiguration, generateFiles, Tree } from '@nx/devkit';
 import * as path from 'path';
 import { PluginGeneratorSchema } from './schema';
 import { updateLabeler, WordPressProjectType } from '../helpers';
@@ -14,7 +9,7 @@ import { getNextWpEnvPorts } from '../wp-env-ports';
  * @param {Tree}                  tree    Filesystem tree.
  * @param {PluginGeneratorSchema} options Options from schema.json.
  */
-export const pluginGenerator = async (
+export const pluginGenerator = (
     tree: Tree,
     options: PluginGeneratorSchema
 ) => {
@@ -49,7 +44,6 @@ export const pluginGenerator = async (
         wpEnvPort,
     } );
     updateLabeler( tree, slug, WordPressProjectType.Plugin );
-    await formatFiles( tree );
 };
 
 export default pluginGenerator;
