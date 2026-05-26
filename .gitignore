@@ -39,3 +39,10 @@ tsconfig.tsbuildinfo
 # nx files
 .nx/cache
 .nx/workspace-data
+
+# AI Agent config files
+AGENTS.md
+.github/skills/**
+.github/prompts/**
+.github/agents/*.md
+.github/*.md
