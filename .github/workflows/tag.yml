@@ -4,7 +4,7 @@ on:
     tags:
       - '**/v*'
 
-concurrency: 
+concurrency:
   group: composer-repo-update
   cancel-in-progress: false
 
@@ -20,7 +20,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install pnpm 
+      - name: Install pnpm
         uses: pnpm/action-setup@v4
         with:
             version: 10
@@ -40,12 +40,23 @@ jobs:
         shell: bash
         run: |
           TAG=${GITHUB_REF#refs/tags/}
-          NAME=${TAG%/*}
-          VERSION=${TAG##*/}
+
+          # Validate format: <project>/v<semver>
+          if [[ "$TAG" =~ ^([^/]+)/v(.+)$ ]]; then
+            NAME=${BASH_REMATCH[1]}
+            VERSION=${BASH_REMATCH[2]}
+          else
+            echo "Invalid tag format: '$TAG'" 1>&2
+            echo "Expected format: <project>/v<semver> (e.g. my-plugin/v1.2.3)" 1>&2
+            exit 1
+          fi
+
+          # Validate semver using a Node.js script
+          node .github/scripts/validate-semver.mjs "$VERSION" || exit 1
 
           echo "tag=$TAG" >> $GITHUB_OUTPUT
           echo "name=$NAME" >> $GITHUB_OUTPUT
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "version=v$VERSION" >> $GITHUB_OUTPUT
           echo "project_path=$(npx nx show project ${NAME} --json | jq -r .root)" >> $GITHUB_OUTPUT
 
       - name: Install Composer dependencies
@@ -86,7 +97,7 @@ jobs:
           mkdir public
 
           php .github/scripts/update-packages.php
-          
+
       - name: Deploy to GH Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
