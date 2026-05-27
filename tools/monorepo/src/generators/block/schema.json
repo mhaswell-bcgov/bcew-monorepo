@@ -1,0 +1,44 @@
+{
+    "$schema": "https://json-schema.org/schema",
+    "$id": "Block",
+    "title": "Block",
+    "type": "object",
+    "properties": {
+        "plugin": {
+            "type": "string",
+            "description": "Existing plugin project name. Example: bcgov-wordpress-blocks",
+            "$default": {
+                "$source": "argv",
+                "index": 0
+            },
+            "x-prompt": "Which existing plugin should receive the new block?"
+        },
+        "name": {
+            "type": "string",
+            "description": "Block name or slug. Example: hero-banner",
+            "$default": {
+                "$source": "argv",
+                "index": 1
+            },
+            "x-prompt": "What block name would you like to use?"
+        },
+        "variant": {
+            "type": "string",
+            "description": "Block variant. Example: static",
+            "enum": [
+                "static",
+                "dynamic"
+            ],
+            "$default": {
+                "$source": "argv",
+                "index": 2
+            },
+            "x-prompt": "Do you want a dynamic (server-rendered via PHP) or static (serialized to post content) block?"
+        }
+    },
+    "required": [
+        "plugin",
+        "name",
+        "variant"
+    ]
+}

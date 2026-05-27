@@ -1,0 +1,63 @@
+{
+    "name": "monorepo",
+    "version": "0.0.1",
+    "private": true,
+    "description": "",
+    "author": "michael.haswell@gov.bc.ca",
+    "license": "GPL-2.0-or-later",
+    "keywords": [],
+    "homepage": "",
+    "repository": "",
+    "bugs": "",
+    "nx": {
+        "targets": {
+            "build": {
+                "executor": "@nx/js:tsc",
+                "outputs": [
+                    "{options.outputPath}"
+                ],
+                "options": {
+                    "outputPath": "tools/monorepo/dist",
+                    "main": "tools/monorepo/src/index.ts",
+                    "tsConfig": "tools/monorepo/tsconfig.lib.json",
+                    "rootDir": "tools/monorepo/src",
+                    "generatePackageJson": false,
+                    "assets": [
+                        {
+                            "input": "./tools/monorepo/src",
+                            "glob": "**/!(*.ts)",
+                            "output": "."
+                        },
+                        {
+                            "input": "./tools/monorepo/src",
+                            "glob": "**/*.d.ts",
+                            "output": "."
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "generators": "./generators.json",
+    "files": [
+        "dist",
+        "!**/*.tsbuildinfo",
+        "generators.json"
+    ],
+    "main": "./dist/index.js",
+    "module": "./dist/index.js",
+    "exports": {
+        "./package.json": "./package.json",
+        ".": {
+            "bcgov-wordpress-monorepo": "./src/index.ts",
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js",
+            "default": "./dist/index.js"
+        }
+    },
+    "types": "./dist/index.d.ts",
+        "dependencies": {
+        "@nx/devkit": "22.5.4",
+        "tslib": "^2.3.0"
+    }
+}

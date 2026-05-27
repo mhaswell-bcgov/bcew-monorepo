@@ -1,0 +1,24 @@
+{
+    "generators": {
+        "release-tag": {
+            "factory": "./dist/generators/release-tag/release-tag",
+            "schema": "./dist/generators/release-tag/schema.json",
+            "description": "Create and push a release tag in the format <project>/v<semver>"
+        },
+        "theme": {
+            "factory": "./dist/generators/theme/theme",
+            "schema": "./dist/generators/theme/schema.json",
+            "description": "Generate a WordPress theme"
+        },
+        "plugin": {
+            "factory": "./dist/generators/plugin/plugin",
+            "schema": "./dist/generators/plugin/schema.json",
+            "description": "Generate a WordPress plugin project"
+        },
+        "block": {
+            "factory": "./dist/generators/block/block",
+            "schema": "./dist/generators/block/schema.json",
+            "description": "Add a WordPress block to an existing plugin project"
+        }
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "$schema": "https://schemas.wp.org/trunk/block.json",
+    "apiVersion": 3,
+    "name": "<%= pluginSlug %>/<%= blockSlug %>",
+    "version": "0.0.1",
+    "title": "<%= blockTitle %>",
+    "category": "widgets",
+    "icon": "media-document",
+    "description": "<%= blockDescription %>",
+    "example": {},
+    "supports": {
+        "html": false
+    },
+    "textdomain": "<%= pluginSlug %>",
+    "editorScript": "file:./index.js",
+    "editorStyle": "file:./index.css",
+    "style": "file:./style-index.css",
+    "render": "file:./render.php",
+    "viewScript": "file:./view.js"
+}
