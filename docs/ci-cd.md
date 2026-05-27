@@ -19,7 +19,7 @@ All workflows live under [`.github/workflows/`](https://github.com/bcgov/wordpre
     2. **e2e** — e2e tests using Playwright and wp-env.
     3. **Screenshot** — Visual regression tests using Playwright and wp-env. Compares screenshots
         - **Note**: If a screenshot test fails in the CI/CD, check the artifact it uploads during the `actions/upload-artifact` step. It will contain a zip of the diff between the expected screenshots and the ones it produced. Usually the fix for this will require running `npx nx test-screenshot-generate` locally to generate new screenshots.
-7. **Artifacts** — Playwright report uploaded on completion (unless cancelled).
+6. **Artifacts** — Playwright report uploaded on completion (unless cancelled).
 
 ### How “affected” is chosen
 
