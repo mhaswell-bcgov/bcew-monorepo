@@ -41,7 +41,7 @@ Reusable workflow `detect-affected-projects.yml` exists for **callable** workflo
 1. Checkout with full history.
 2. Parse tag into **project name** (Nx project) and **version**.
 3. `nx run <project>:composer-install` and `nx run <project>:build`.
-4. Create `dist.zip` from the project directory using `git archive` after staging `dist/` (respects `.gitattributes` export rules).
+4. Create `dist.zip` from the project directory using `git archive` (respects `.gitattributes` export rules), copy in `dist/` build output, and for `X.Y.Z` tags update the WordPress version header only inside the zip.
 5. Create a **GitHub Release** with `dist.zip` attached.
 6. Update **`packages.json`** for the Composer repository hosted on GitHub Pages and deploy the `public/` output.
 
