@@ -83,6 +83,7 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: mikepenz/release-changelog-builder-action@v6.2.2
         with:
+            owner: "bcgov"
             includeOnlyPaths: ${{ steps.vars.outputs.project_path }}
             ignorePreReleases: "false"
             fromTag: "d6725a2e0088842eaf5636847efc3a77d60564a5"
