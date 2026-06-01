@@ -81,7 +81,7 @@ jobs:
       - name: Generate changelog
         id: build_changelog
         if: startsWith(github.ref, 'refs/tags/')
-        uses: mikepenz/release-changelog-builder-action@6.2.2
+        uses: mikepenz/release-changelog-builder-action@v6.2.2
         with:
             includeOnlyPaths: ${{ steps.vars.outputs.project_path }}
             ignorePreReleases: "false"
