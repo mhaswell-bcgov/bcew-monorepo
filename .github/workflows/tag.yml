@@ -83,9 +83,10 @@ jobs:
         if: startsWith(github.ref, 'refs/tags/')
         uses: mikepenz/release-changelog-builder-action@v6.2.2
         with:
-            mode: "COMMIT"
             includeOnlyPaths: ${{ steps.vars.outputs.project_path }}
             ignorePreReleases: "false"
+            # Todo: Automatically detect previous tag, rather than hardcoding.
+            # This is the initial commit of the repository, so all PRs will be included in the changelog until we can set the fromTag dynamically.
             fromTag: "d6725a2e0088842eaf5636847efc3a77d60564a5"
             toTag: ${{ steps.vars.outputs.tag }}
 
