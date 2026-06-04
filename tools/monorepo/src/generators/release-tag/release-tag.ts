@@ -39,11 +39,15 @@ export const releaseTagGenerator = async (
 
     logger.info( `Creating tag: ${ tag }` );
 
-    execFileSync( 'git', [ 'tag', '-a', tag, '-m', `Release ${ tag }` ], { stdio: 'inherit' } );
+    execFileSync( 'git', [ 'tag', '-a', tag, '-m', `Release ${ tag }` ], {
+        stdio: 'inherit',
+    } );
 
     if ( options.remote ) {
         logger.info( `Pushing tag ${ tag } to ${ options.remote }...` );
-        execFileSync( 'git', [ 'push', options.remote, tag ], { stdio: 'inherit' } );
+        execFileSync( 'git', [ 'push', options.remote, tag ], {
+            stdio: 'inherit',
+        } );
     } else {
         logger.info(
             `Tag created locally. Run \`git push "${ tag }"\` to publish it.`
