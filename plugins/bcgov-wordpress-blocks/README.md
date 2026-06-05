@@ -1,6 +1,6 @@
 # Bcgov WordPress Blocks
 
-Plugin containing blocks intended to be used with the Design System WordPress Theme suite of products.
+Plugin containing blocks intended to be used with the Design System WordPress Theme suite of products. 
 
 ## Notes
 
