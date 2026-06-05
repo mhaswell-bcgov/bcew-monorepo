@@ -94,6 +94,8 @@ jobs:
     test-e2e:
         name: Test e2e (affected)
         runs-on: ubuntu-latest
+        container:
+            image: mcr.microsoft.com/playwright:v1.58.2-noble
         steps:
             - name: Checkout
               uses: actions/checkout@v4
