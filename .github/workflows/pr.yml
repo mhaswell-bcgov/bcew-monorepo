@@ -115,8 +115,10 @@ jobs:
                   run_install: true
                   cache: true
 
-            - name: Install Composer dependencies
-              run: composer i
+            - name: Install dependencies
+              uses: php-actions/composer@v6
+              with:
+                  php_version: "7.4"
 
             - name: Run e2e tests
               run: npx nx affected --base="origin/${{ github.base_ref }}" -t test-e2e
