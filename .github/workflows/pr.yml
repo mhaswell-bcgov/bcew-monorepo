@@ -125,7 +125,7 @@ jobs:
               run: composer i
 
             - name: Run e2e tests
-              run: npx nx affected --base="origin/${{ github.base_ref }}" -t test-e2e
+              run: npx nx affected --base="${{ github.head_ref }}" -t test-e2e
 
             - uses: actions/upload-artifact@v4
               if: ${{ !cancelled() }}
