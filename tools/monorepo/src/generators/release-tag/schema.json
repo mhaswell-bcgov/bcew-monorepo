@@ -25,7 +25,8 @@
         "remote": {
             "type": "string",
             "description": "Push the tag to a given remote after creating it.",
-            "x-prompt": "Push the tag to a given remote, eg 'origin'? Leave blank to create the tag locally without pushing."
+            "default": "origin",
+            "x-prompt": "Which remote are you pushing to? Leave blank to push to origin."
         }
     },
     "required": ["project", "version"]
