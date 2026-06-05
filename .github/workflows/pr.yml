@@ -102,6 +102,9 @@ jobs:
               with:
                   fetch-depth: 0
 
+            - name: Fetch base branch for affected detection
+              run: git fetch origin ${{ github.base_ref }}
+
             - name: Setup Node.js 24
               uses: actions/setup-node@v4
               with:
@@ -124,7 +127,7 @@ jobs:
               run: composer i
 
             - name: Run e2e tests
-              run: npx nx affected --base="${{ github.base_ref }}" -t test-e2e
+              run: npx nx affected --base="origin/${{ github.base_ref }}" -t test-e2e
 
             - uses: actions/upload-artifact@v4
               if: ${{ !cancelled() }}
@@ -167,7 +170,7 @@ jobs:
                   restore-keys: pnpm-store-
 
             - name: Run screenshot tests
-              run: npx nx affected --base="${{ github.base_ref }}" -t test-screenshot
+              run: npx nx affected --base="origin/${{ github.base_ref }}" -t test-screenshot
 
             - uses: actions/upload-artifact@v4
               if: ${{ !cancelled() }}
