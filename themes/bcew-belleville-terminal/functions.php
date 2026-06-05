@@ -2,7 +2,7 @@
 /**
  * Theme functions and definitions
  *
- * @package Design_System_WordPress_Child_Theme_Belleville_Terminal
+ * @package Bcew_Belleville_Terminal
  */
 
 /**

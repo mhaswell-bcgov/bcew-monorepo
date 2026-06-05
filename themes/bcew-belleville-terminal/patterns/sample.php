@@ -1,9 +1,9 @@
 <?php
 /**
  * Title: Sample
- * Slug: design-system-wordpress-child-theme-belleville-terminal/sample
+ * Slug: bcew-belleville-terminal/sample
  *
- * @package design-system-wordpress-child-theme-belleville-terminal
+ * @package bcew-belleville-terminal
  */
 ?>
 
