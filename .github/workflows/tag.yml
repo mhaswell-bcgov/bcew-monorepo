@@ -97,6 +97,7 @@ jobs:
           tag_name: ${{ steps.vars.outputs.tag }}
           prerelease: true
           body: ${{steps.build_changelog.outputs.changelog}}
+          draft: true
 
       - name: Update packages.json
         env:
