@@ -14,7 +14,6 @@ export const releaseTagGenerator = async (
     options: ReleaseTagGeneratorSchema
 ) => {
     const { project } = options;
-    const push = options.push ?? true;
 
     // Strip a leading "v" so the user can type either "1.2.3" or "v1.2.3".
     const version = options.version.replace( /^v/, '' );
@@ -40,14 +39,18 @@ export const releaseTagGenerator = async (
 
     logger.info( `Creating tag: ${ tag }` );
 
-    execFileSync( 'git', [ 'tag', tag ], { stdio: 'inherit' } );
+    execFileSync( 'git', [ 'tag', '-a', tag, '-m', `Release ${ tag }` ], {
+        stdio: 'inherit',
+    } );
 
-    if ( push ) {
-        logger.info( `Pushing tag ${ tag } to origin...` );
-        execFileSync( 'git', [ 'push', 'origin', tag ], { stdio: 'inherit' } );
+    if ( options.remote ) {
+        logger.info( `Pushing tag ${ tag } to ${ options.remote }...` );
+        execFileSync( 'git', [ 'push', options.remote, tag ], {
+            stdio: 'inherit',
+        } );
     } else {
         logger.info(
-            `Tag created locally. Run \`git push origin "${ tag }"\` to publish it.`
+            `Tag created locally. Run \`git push "${ tag }"\` to publish it.`
         );
     }
 };

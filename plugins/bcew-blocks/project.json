@@ -1,0 +1,31 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "bcew-blocks",
+    "root": "plugins/bcew-blocks",
+    "sourceRoot": "plugins/bcew-blocks/src",
+    "projectType": "application",
+    "generators": {
+        "bcew-monorepo:plugin": {
+            "name": "BCEW Blocks",
+            "description": "Plugin containing blocks intended to be used with the BC Extended Web suite of products."
+        }
+    },
+    "targets": {
+        "composer-install": {},
+        "build": {},
+        "start": {},
+        "test-e2e": {},
+        "test-screenshot": {},
+        "test-screenshot-generate": {},
+        "test-integration": {
+            "options": {
+                "command": "wp-env run tests-cli --env-cwd=wp-content/plugins/bcew-blocks composer test ./"
+            }
+        },
+        "wp-env-start": {},
+        "wp-env-clean": {},
+        "wp-env-stop": {}
+    },
+    "implicitDependencies": ["packages/phpunit-config/"],
+    "tags": ["type:wp-plugin"]
+}
