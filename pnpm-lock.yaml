@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@bcew-monorepo/e2e':
+        specifier: workspace:*
+        version: link:packages/e2e
       '@fortawesome/fontawesome-free':
         specifier: 7.2.0
         version: 7.2.0
@@ -38,9 +41,6 @@ importers:
       '@types/node':
         specifier: 20.19.9
         version: 20.19.9
-      '@bcew-monorepo/e2e':
-        specifier: workspace:*
-        version: link:packages/e2e
       '@wordpress/block-editor':
         specifier: 15.17.0
         version: 15.17.0(@date-fns/tz@1.4.1)(@emotion/is-prop-valid@1.4.0)(@types/react-dom@18.3.7(@types/react@18.3.28))(@types/react@18.3.28)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(stylelint@16.26.1(typescript@5.9.3))
@@ -130,20 +130,23 @@ importers:
         specifier: latest
         version: 6.19.0
     devDependencies:
-      '@playwright/test':
-        specifier: ^1.58.2
-        version: 1.58.2
       '@bcew-monorepo/e2e':
         specifier: workspace:*
         version: link:../../packages/e2e
+      '@playwright/test':
+        specifier: ^1.58.2
+        version: 1.58.2
       '@wordpress/e2e-test-utils-playwright':
         specifier: ^1.42.0
         version: 1.42.0(@playwright/test@1.58.2)(@types/node@20.19.9)
 
   themes/bcew-theme-2:
     dependencies:
+      '@bcgov/bc-sans':
+        specifier: ^2.1.0
+        version: 2.1.0
       '@bcgov/design-tokens':
-        specifier: '^4.0.0 '
+        specifier: ^4.0.0
         version: 4.0.0
 
   themes/design-system-wordpress-child-theme-belleville-terminal: {}
@@ -985,6 +988,9 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
+
+  '@bcgov/bc-sans@2.1.0':
+    resolution: {integrity: sha512-1MesF4NAVpM5dywoJ68wNcBylHbPqg1dDV/FNuQm0BbspETGlPmfX8LG8rtrCjCAPhWuL2qRT/lBYDUMvFTUnw==}
 
   '@bcgov/design-tokens@4.0.0':
     resolution: {integrity: sha512-kcen18Q/snP6M6JQ6XUQTlWXM1Gnm6y8Zk0i29K+T/Y0m/ab4PufmGpl43l/EJKCnYgpOaZFSXDK7CCO6P0INw==}
@@ -12980,6 +12986,8 @@ snapshots:
       use-sync-external-store: 1.6.0(react@18.3.1)
     optionalDependencies:
       '@types/react': 18.3.28
+
+  '@bcgov/bc-sans@2.1.0': {}
 
   '@bcgov/design-tokens@4.0.0': {}
 
