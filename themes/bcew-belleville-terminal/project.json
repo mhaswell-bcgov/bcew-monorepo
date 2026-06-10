@@ -1,13 +1,13 @@
 {
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "name": "design-system-wordpress-child-theme-belleville-terminal",
-    "root": "themes/design-system-wordpress-child-theme-belleville-terminal",
-    "sourceRoot": "themes/design-system-wordpress-child-theme-belleville-terminal/src",
+    "name": "bcew-belleville-terminal",
+    "root": "themes/bcew-belleville-terminal",
+    "sourceRoot": "themes/bcew-belleville-terminal/src",
     "projectType": "application",
     "generators": {
-        "bcew-monorepo:theme-generator": {
+        "monorepo:theme-generator": {
             "name": "Belleville Terminal Child Theme",
-            "slug": "design-system-wordpress-child-theme-belleville-terminal"
+            "slug": "bcew-belleville-terminal"
         }
     },
     "targets": {

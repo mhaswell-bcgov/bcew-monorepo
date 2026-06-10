@@ -14,9 +14,9 @@ theme:
     - changed-files:
           - any-glob-to-any-file: 'themes/**'
 
-themes/child-theme-belleville-terminal:
+themes/bcew-belleville-terminal:
     - changed-files:
-          - any-glob-to-any-file: 'themes/design-system-wordpress-child-theme-belleville-terminal/**'
+          - any-glob-to-any-file: 'themes/bcew-belleville-terminal/**'
 
 plugins/bcew-blocks:
     - changed-files:

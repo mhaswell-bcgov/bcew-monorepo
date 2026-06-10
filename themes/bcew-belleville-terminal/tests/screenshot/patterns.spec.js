@@ -17,7 +17,7 @@ test.describe( 'pattern', () => {
             await editor.page
                 .getByRole( 'textbox', { name: 'Type text or HTML' } )
                 .fill(
-                    `<!-- wp:pattern {"slug":"design-system-wordpress-child-theme-belleville-terminal/${ name }"} /-->`
+                    `<!-- wp:pattern {"slug":"bcew-belleville-terminal/${ name }"} /-->`
                 );
             await editor.page
                 .getByRole( 'button', { name: 'Exit code editor' } )
