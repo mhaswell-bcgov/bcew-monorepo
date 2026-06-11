@@ -97,7 +97,7 @@ jobs:
     test-e2e:
         name: Test e2e (affected)
         runs-on: ubuntu-latest
-        timeout-minutes: 15
+        timeout-minutes: 2 # Todo: This step is currently stalling out while downloading Playwright browsers. Need to find a fix and properly re-enable it. See issue #101.
         steps:
             - name: Checkout
               uses: actions/checkout@v4
