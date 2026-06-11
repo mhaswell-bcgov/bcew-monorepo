@@ -82,15 +82,9 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          TAG="${{ steps.vars.outputs.tag }}"
-          ZIP="${{ steps.vars.outputs.project_path }}/dist.zip"
+            TAG="${{ steps.vars.outputs.tag }}"
+            ZIP="${{ steps.vars.outputs.project_path }}/dist.zip"
 
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            echo "Release $TAG already exists (e.g. created via GitHub UI); uploading dist.zip"
-            gh release upload "$TAG" "$ZIP" --clobber
-          else
-            gh release create "$TAG" --prerelease "$ZIP"
-          fi
             # NOTE:
             # We create a temporary commit so git archive can include build artifacts
             # while still respecting .gitattributes export-ignore. This commit is never pushed.
