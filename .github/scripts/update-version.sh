@@ -6,7 +6,6 @@ PROJECT_NAME="${2:?project name required}"
 VERSION="${3:-}"
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"
-OUTPUT_ZIP="${REPO_ROOT}/${PROJECT_PATH}/dist.zip"
 
 cd "${REPO_ROOT}"
 
@@ -42,11 +41,3 @@ if [[ "${VERSION}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
 else
   echo "Version '${VERSION}' is not X.Y.Z — skipping WordPress version update in release artifact."
 fi
-
-rm -f "${OUTPUT_ZIP}"
-(
-  cd "${TMP}"
-  zip -rq "${OUTPUT_ZIP}" .
-)
-
-echo "Created ${OUTPUT_ZIP}"
