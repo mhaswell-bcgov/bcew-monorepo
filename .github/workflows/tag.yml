@@ -1,5 +1,6 @@
 name: Release Subproject and Update packages.json
 on:
+  # Todo: Add more inputs for: project name, version, release type (pre-release or stable), etc. For now we can parse these from the tag name, but this is less user-friendly and more error-prone.
   workflow_dispatch:
     inputs:
       tag_name:
@@ -109,7 +110,6 @@ jobs:
           tag_name: ${{ steps.vars.outputs.tag }}
           prerelease: true
           body: ${{steps.build_changelog.outputs.changelog}}
-          draft: true
 
       - name: Update packages.json
         env:
