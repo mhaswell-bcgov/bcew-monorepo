@@ -1,6 +1,6 @@
 # CI/CD and workflow behavior
 
-All workflows live under [`.github/workflows/`](https://github.com/bcgov/wordpress-monorepo/tree/main/.github/workflows). This page summarizes behavior; inline workflow comments and the [workflows README](https://github.com/bcgov/wordpress-monorepo/blob/main/.github/workflows/README.md) are authoritative for details.
+All workflows live under [`.github/workflows/`](https://github.com/bcgov/bcew-monorepo/tree/main/.github/workflows). This page summarizes behavior; inline workflow comments and the [workflows README](https://github.com/bcgov/bcew-monorepo/blob/main/.github/workflows/README.md) are authoritative for details.
 
 ## Pull requests (`pr.yml`)
 
@@ -34,7 +34,7 @@ Reusable workflow `detect-affected-projects.yml` exists for **callable** workflo
 
 ## Tags (`tag.yml`)
 
-**Triggers:** Push of tags matching `**/v*` (for example `bcgov-wordpress-blocks/v1.2.0`).
+**Triggers:** Push of tags matching `**/v*` (for example `bcew-blocks/v1.2.0`).
 
 **Behavior (high level):**
 

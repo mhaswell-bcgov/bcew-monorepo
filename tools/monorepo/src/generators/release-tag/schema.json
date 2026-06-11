@@ -6,7 +6,7 @@
     "properties": {
         "project": {
             "type": "string",
-            "description": "The Nx project name to tag (e.g. bcgov-wordpress-blocks).",
+            "description": "The Nx project name to tag (e.g. bcew-blocks).",
             "$default": {
                 "$source": "argv",
                 "index": 0
@@ -22,11 +22,10 @@
             },
             "x-prompt": "What version are you releasing? (e.g. 1.2.3)"
         },
-        "push": {
-            "type": "boolean",
-            "description": "Push the tag to the remote after creating it.",
-            "default": true,
-            "x-prompt": "Push the tag to remote?"
+        "remote": {
+            "type": "string",
+            "description": "Push the tag to a given remote after creating it.",
+            "x-prompt": "Push the tag to a given remote, eg 'origin'? Leave blank to create the tag locally without pushing."
         }
     },
     "required": ["project", "version"]

@@ -1,0 +1,25 @@
+{
+    "$schema": "../../node_modules/nx/schemas/project-schema.json",
+    "name": "bcew-belleville-terminal",
+    "root": "themes/bcew-belleville-terminal",
+    "sourceRoot": "themes/bcew-belleville-terminal/src",
+    "projectType": "application",
+    "generators": {
+        "monorepo:theme-generator": {
+            "name": "Belleville Terminal Child Theme",
+            "slug": "bcew-belleville-terminal"
+        }
+    },
+    "targets": {
+        "composer-install": {},
+        "build": {},
+        "start": {},
+        "test-screenshot": {},
+        "test-screenshot-generate": {},
+        "wp-env-start": {},
+        "wp-env-clean": {},
+        "wp-env-stop": {}
+    },
+    "implicitDependencies": ["packages/phpunit-config/"],
+    "tags": ["type:wp-theme"]
+}

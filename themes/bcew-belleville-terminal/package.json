@@ -1,0 +1,24 @@
+{
+    "name": "bcew-belleville-terminal",
+    "version": "1.0.0",
+    "description": "Belleville Terminal Child Theme",
+    "author": "govwordpress@gov.bc.ca",
+    "license": "GPL-2.0-or-later",
+    "keywords": [
+        "WordPress",
+        "Block Theme",
+        "BCGov",
+        "DesignSystem",
+        "Gutenberg"
+    ],
+    "homepage": "https://github.com/bcgov/bcew-monorepo",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/bcgov/bcew-monorepo.git"
+    },
+    "bugs": {
+        "url": "https://github.com/bcgov/bcew-monorepo#readme",
+        "email": "govwordpress@gov.bc.ca"
+    },
+    "main": "index.js"
+}
