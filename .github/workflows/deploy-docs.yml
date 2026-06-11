@@ -54,11 +54,10 @@ jobs:
 
       - name: Build docs site (VitePress; includes sync)
         env:
-          DOCS_BASE: /bcew-monorepo/
+          DOCS_BASE: /bcew-monorepo/docs
         run: pnpm docs:build
 
       - name: Deploy to gh-pages/docs
-        if: github.event_name != 'pull_request'
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages

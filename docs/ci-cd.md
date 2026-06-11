@@ -34,7 +34,7 @@ Reusable workflow `detect-affected-projects.yml` exists for **callable** workflo
 
 ## Tags (`tag.yml`)
 
-**Triggers:** Push of tags matching `**/v*` (for example `bcew-blocks/v1.2.0`).
+**Triggers:** Manually triggered using the release workflow, providing a namespaced tag as an input (for example `bcew-blocks/v1.2.0`).
 
 **Behavior (high level):**
 

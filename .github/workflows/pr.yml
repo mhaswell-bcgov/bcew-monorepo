@@ -18,6 +18,7 @@ jobs:
             contents: read
             pull-requests: write
         runs-on: ubuntu-latest
+        timeout-minutes: 15
         steps:
             - uses: actions/checkout@v5
             - uses: actions/labeler@v6
@@ -27,6 +28,7 @@ jobs:
     lint:
         name: Lint monorepo
         runs-on: ubuntu-latest
+        timeout-minutes: 15
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -66,6 +68,7 @@ jobs:
     test-integration:
         name: Test integration (affected)
         runs-on: ubuntu-latest
+        timeout-minutes: 15
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -94,6 +97,7 @@ jobs:
     test-e2e:
         name: Test e2e (affected)
         runs-on: ubuntu-latest
+        timeout-minutes: 2 # Todo: This step is currently stalling out while downloading Playwright browsers. Need to find a fix and properly re-enable it. See issue #101.
         steps:
             - name: Checkout
               uses: actions/checkout@v4
@@ -116,6 +120,9 @@ jobs:
             - name: Install Composer dependencies
               run: composer i
 
+            - name: Install Playwright dependencies
+              run: npx playwright install --with-deps
+
             - name: Run e2e tests
               run: npx nx affected --base="origin/${{ github.base_ref }}" -t test-e2e
 
@@ -131,6 +138,7 @@ jobs:
     test-screenshot:
         name: Test screenshots (affected)
         runs-on: ubuntu-latest
+        timeout-minutes: 15
         steps:
             - name: Checkout
               uses: actions/checkout@v4
