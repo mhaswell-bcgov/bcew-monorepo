@@ -1,8 +1,12 @@
 name: Release Subproject and Update packages.json
 on:
-  push:
-    tags:
-      - '**/v*'
+  # Todo: Add more inputs for: project name, version, release type (pre-release or stable), etc. For now we can parse these from the tag name, but this is less user-friendly and more error-prone.
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag to release (for example: my-plugin/v1.2.3)'
+        required: true
+        type: string
 
 concurrency:
   group: composer-repo-update
@@ -38,8 +42,10 @@ jobs:
       - name: Parse Tag
         id: vars
         shell: bash
+        env:
+          INPUT_TAG_NAME: ${{ inputs.tag_name }}
         run: |
-          TAG=${GITHUB_REF#refs/tags/}
+          TAG="$INPUT_TAG_NAME"
 
           # Validate format: <project>/v<semver>
           if [[ "$TAG" =~ ^([^/]+)/v(.+)$ ]]; then
@@ -66,39 +72,28 @@ jobs:
       - name: Nx Build
         run: npx nx run ${{ steps.vars.outputs.name }}:build
 
-      - name: Zip Artifacts
+      - name: Update versions and zip build artifacts
         run: |
             bash .github/scripts/prepare-release-zip.sh \
               "${{ steps.vars.outputs.project_path }}" \
               "${{ steps.vars.outputs.name }}" \
               "${{ steps.vars.outputs.version_normalized }}"
 
-      - name: Create or Update GitHub Release
+      - name: Create tag
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: ${{ steps.vars.outputs.tag }}
         run: |
-          TAG="${{ steps.vars.outputs.tag }}"
-          ZIP="${{ steps.vars.outputs.project_path }}/dist.zip"
-
-          if gh release view "$TAG" >/dev/null 2>&1; then
-            echo "Release $TAG already exists (e.g. created via GitHub UI); uploading dist.zip"
-            gh release upload "$TAG" "$ZIP" --clobber
+          if git rev-parse "$TAG" >/dev/null 2>&1; then
+            echo "Tag $TAG already exists"
           else
-            gh release create "$TAG" --prerelease "$ZIP"
+            git tag "$TAG"
+            git push origin "$TAG"
           fi
-            # NOTE:
-            # We create a temporary commit so git archive can include build artifacts
-            # while still respecting .gitattributes export-ignore. This commit is never pushed.
-
-            git add -f dist/
-            git config user.name "github-actions[bot]"
-            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-            git commit -m "ci: commit build files"
-            git archive --output=dist.zip HEAD
 
       - name: Generate changelog
         id: build_changelog
-        if: startsWith(github.ref, 'refs/tags/')
+        if: ${{ inputs.tag_name != '' }}
         uses: mikepenz/release-changelog-builder-action@v6.2.2
         with:
             includeOnlyPaths: ${{ steps.vars.outputs.project_path }}
@@ -115,7 +110,6 @@ jobs:
           tag_name: ${{ steps.vars.outputs.tag }}
           prerelease: true
           body: ${{steps.build_changelog.outputs.changelog}}
-          draft: true
 
       - name: Update packages.json
         env:
