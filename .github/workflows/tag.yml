@@ -59,6 +59,7 @@ jobs:
           echo "version=v${{ inputs.version }}" >> $GITHUB_OUTPUT
           echo "project_path=$(npx nx show project ${{ inputs.name }} --json | jq -r .root)" >> $GITHUB_OUTPUT
           echo "is_prerelease=${{ inputs.is_prerelease }}" >> $GITHUB_OUTPUT
+          echo "tag=${{ inputs.name }}/v${{ inputs.version }}" >> $GITHUB_OUTPUT
 
       - name: Install Composer dependencies
         run: npx nx run ${{ steps.vars.outputs.name }}:composer-install
