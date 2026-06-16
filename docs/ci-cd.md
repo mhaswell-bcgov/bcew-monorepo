@@ -34,7 +34,11 @@ Reusable workflow `detect-affected-projects.yml` exists for **callable** workflo
 
 ## Tags (`tag.yml`)
 
+On the GitHub repository, navigate to Actions > Release Subproject and Update packages.json > Run workflow. You should see the following options:
+![Release workflow options](assets/release-workflow.png)
+
 Manual workflow used to create releases, given the following inputs:
+- Branch: Dropdown providing all branches from which this workflow can be run. Sometimes you may want to create a release off of a non-main branch if something must be tested remotely before it can be merged. In these cases, it should always be a prerelease. Most of the time releases will be created off the main branch.
 - Project name: Dropdown providing the names of all monorepo projects.
 - Version: Text input for the version to be released, eg. `1.0.1-alpha.1`.
 - Is prerelease: Boolean input determining if it's a prerelease. A prerelease version has a postfix like `alpha.1`. 
