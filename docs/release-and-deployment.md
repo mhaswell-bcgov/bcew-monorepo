@@ -12,12 +12,6 @@ The **`bcgov/bcew-monorepo`** repository (this monorepo) is the **source of trut
 
 The `packages.json` entries point `dist.url` at the release asset on **this** GitHub repo (`update-packages.php` uses `github.com/<repository>/releases/download/...`).
 
-## Release flow (high level)
-
-1. Developers merge work to `main` via pull request.
-2. A maintainer pushes a **namespaced version tag** for the Nx project being released.
-3. **`tag.yml`** builds that project, publishes **`dist.zip`** on a GitHub Release, and updates **`packages.json`** on GitHub Pages.
-
 ### Manual vs automated steps
 
 | Step | Usually |

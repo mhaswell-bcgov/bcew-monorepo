@@ -34,19 +34,15 @@ Reusable workflow `detect-affected-projects.yml` exists for **callable** workflo
 
 ## Tags (`tag.yml`)
 
-**Triggers:** Manually triggered using the release workflow, providing a namespaced tag as an input (for example `bcew-blocks/v1.2.0`).
+Manual workflow used to create releases, given the following inputs:
+- Project name: Dropdown providing the names of all monorepo projects.
+- Version: Text input for the version to be released, eg. `1.0.1-alpha.1`.
+- Is prerelease: Boolean input determining if it's a prerelease. A prerelease version has a postfix like `alpha.1`. 
 
-**Behavior (high level):**
-
-1. Checkout with full history.
-2. Parse tag into **project name** (Nx project) and **version**.
-3. `nx run <project>:composer-install` and `nx run <project>:build`.
-4. Create `dist.zip` from the project directory using `git archive` (respects `.gitattributes` export rules), copy in `dist/` build output, and for `X.Y.Z` tags update the WordPress version header only inside the zip.
-5. Create a **GitHub Release** with `dist.zip` attached.
-6. Update **`packages.json`** for the Composer repository hosted on GitHub Pages and deploy the `public/` output.
-
-See [Release and deployment](./release-and-deployment.md) for the consumer-facing model.
-
-## Permissions
-
-Workflows use least privilege where possible; `tag.yml` and docs deploy require `contents: write` (and Pages-related permissions) for releases and `gh-pages` updates.
+What this workflow does:
+1. Updates versions in source, eg. updates `style.css` or `{plugin name}.php` version fields.
+2. Generates release notes describing all pull requests merged into the release.
+3. Creates a tag using the project name and version provided as inputs, eg. `bcew-project/v1.0.1-alpha.1`.
+4. Builds the project and creates a zip of the result, `dist.zip`.
+5. Creates a GitHub Release and attaches `dist.zip` as an asset. Sets to prerelease if "is prerelease" input is true.
+6. Updates `packages.json` for the Composer repository on GitHub Pages and deploys it.

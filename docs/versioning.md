@@ -33,10 +33,6 @@ Examples: `feature/add-hero-block`, `fix/wp-env-port-conflict`.
 
 **Default branch:** `main` — PRs usually target `main`; `nx.json` sets `defaultBase` to `origin/main` for local `nx affected` comparisons.
 
-## Releases and prereleases
-
-`tag.yml` currently marks GitHub Releases as **prerelease** (`prerelease: true` in the workflow). Adjust workflow YAML when the program moves to stable release semantics.
-
 ## WordPress version on release
 
 When **`tag.yml`** runs for a tag like `bcew-theme-2/v1.4.0`:
