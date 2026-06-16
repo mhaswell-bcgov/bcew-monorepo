@@ -1,12 +1,23 @@
 name: Release Subproject and Update packages.json
 on:
-  # Todo: Add more inputs for: project name, version, release type (pre-release or stable), etc. For now we can parse these from the tag name, but this is less user-friendly and more error-prone.
   workflow_dispatch:
     inputs:
-      tag_name:
-        description: 'Tag to release (for example: my-plugin/v1.2.3)'
+      name:
+        description: 'Project to release'
+        required: true
+        type: choice
+        options:
+          - bcew-blocks
+          - bcew-belleville-terminal
+          - bcew-theme-2
+          - design-system-wordpress-child-theme-ticorp
+      version:
+        description: 'Version to release (for example: 1.2.3)'
         required: true
         type: string
+      is_prerelease:
+        description: 'Is this a pre-release?'
+        type: boolean
 
 concurrency:
   group: composer-repo-update
@@ -39,32 +50,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Parse Tag
+      - name: Parse Inputs
         id: vars
         shell: bash
-        env:
-          INPUT_TAG_NAME: ${{ inputs.tag_name }}
         run: |
-          TAG="$INPUT_TAG_NAME"
-
-          # Validate format: <project>/v<semver>
-          if [[ "$TAG" =~ ^([^/]+)/v(.+)$ ]]; then
-            NAME=${BASH_REMATCH[1]}
-            VERSION=${BASH_REMATCH[2]}
-          else
-            echo "Invalid tag format: '$TAG'" 1>&2
-            echo "Expected format: <project>/v<semver> (e.g. my-plugin/v1.2.3)" 1>&2
-            exit 1
-          fi
-
-          # Validate semver using a Node.js script
-          node .github/scripts/validate-semver.mjs "$VERSION" || exit 1
-
-          echo "tag=$TAG" >> $GITHUB_OUTPUT
-          echo "name=$NAME" >> $GITHUB_OUTPUT
-          echo "version=v$VERSION" >> $GITHUB_OUTPUT
-          echo "version_normalized=$VERSION" >> $GITHUB_OUTPUT
-          echo "project_path=$(npx nx show project ${NAME} --json | jq -r .root)" >> $GITHUB_OUTPUT
+          echo "name=${{ inputs.name }}" >> $GITHUB_OUTPUT
+          echo "version_normalized=${{ inputs.version }}" >> $GITHUB_OUTPUT
+          echo "version=v${{ inputs.version }}" >> $GITHUB_OUTPUT
+          echo "project_path=$(npx nx show project ${{ inputs.name }} --json | jq -r .root)" >> $GITHUB_OUTPUT
+          echo "is_prerelease=${{ inputs.is_prerelease }}" >> $GITHUB_OUTPUT
+          echo "tag=${{ inputs.name }}/v${{ inputs.version }}" >> $GITHUB_OUTPUT
 
       - name: Install Composer dependencies
         run: npx nx run ${{ steps.vars.outputs.name }}:composer-install
@@ -108,7 +103,7 @@ jobs:
         with:
           files: ${{ steps.vars.outputs.project_path }}/dist.zip
           tag_name: ${{ steps.vars.outputs.tag }}
-          prerelease: true
+          prerelease: ${{ steps.vars.outputs.is_prerelease }}
           body: ${{steps.build_changelog.outputs.changelog}}
 
       - name: Update packages.json
