@@ -55,6 +55,22 @@ Full tables and target semantics live in the **[docs site](https://bcgov.github.
 - **Documentation:** [docs/contributing.md](docs/contributing.md)
 - **CI workflows:** [.github/workflows/README.md](.github/workflows/README.md)
 
+### Checklist for Contributing features to the monorepo
+
+Use this checklist before pushing a PR:
+
+- [ ] I validated the changed project locally as needed
+- [ ] `pnpm lint` passes
+- [ ] `npx nx affected -t build` passes
+- [ ] `npx nx affected -t test-integration` passes if applicable
+- [ ] `npx nx affected -t test-e2e` passes if applicable
+- [ ] `npx nx affected -t test-screenshot` passes if applicable
+- [ ] I updated docs if needed
+- [ ] I did not edit generated files under `docs/content/`
+- [ ] If I added a new plugin or theme, I updated `.github/labeler.yml`
+
+See [docs/contributing-workflow.md](docs/contributing-workflow.md), [docs/contributing.md](docs/contributing.md), and [.github/workflows/README.md](.github/workflows/README.md) for the full workflow and CI expectations.
+
 ---
 
 ## License
