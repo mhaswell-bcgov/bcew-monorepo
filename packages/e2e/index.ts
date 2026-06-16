@@ -100,6 +100,88 @@ export const renderPattern = async ( editor: any, patternSlug: string ) => {
     await expect( preview ).toHaveScreenshot();
 };
 
+const EXCLUDED_STYLEBOOK_BLOCKS = [
+    'avatar',
+    'column',
+    'comments',
+    'comment-template',
+    'embed',
+    'footnotes',
+    'html',
+    'list-item',
+    'media-text',
+    'nextpage',
+    'pagination',
+    'post-template',
+    'pullquote',
+    'query-total',
+    'spacer',
+    'rss',
+    'tag-cloud',
+    'video',
+    'calendar',
+    'latest-comments',
+    'archives',
+];
+
+/**
+ * Render the WordPress style book and save screenshots for each example.
+ *
+ * @param {any} admin Admin fixture object.
+ */
+export const renderStylebook = async ( admin: any ) => {
+    await admin.visitAdminPage( 'site-editor.php', 'path=%2Fwp_global_styles' );
+
+    await new Promise( ( resolve ) => setTimeout( resolve, 2000 ) );
+
+    await admin.page.getByRole( 'button', { name: 'Style Book' } ).click();
+
+    const canvas = admin.page.frameLocator(
+        'iframe[name="style-book-canvas"]'
+    );
+    await expect( canvas.locator( 'body' ) ).toBeVisible();
+
+    const blocks = canvas.locator( 'div.edit-site-style-book__example' );
+    const blockCount = await blocks.count();
+
+    await expect( blockCount ).toBeGreaterThan( 0 );
+
+    for ( let blockIndex = 0; blockIndex < blockCount; blockIndex++ ) {
+        const block = blocks.nth( blockIndex );
+        const blockName = await block.getAttribute( 'id' );
+
+        if ( ! blockName ) {
+            throw new Error( 'Style book example is missing an id attribute.' );
+        }
+
+        const formattedName = blockName.replace( 'example-core/', '' );
+
+        if ( EXCLUDED_STYLEBOOK_BLOCKS.includes( formattedName ) ) {
+            continue;
+        }
+
+        await block
+            .locator( 'div.edit-site-style-book__example-preview' )
+            .screenshot( {
+                path:
+                    'tests/screenshot/__snapshots__/style-book-' +
+                    formattedName +
+                    '.png',
+            } );
+    }
+};
+
+/**
+ * Creates a test suite that renders the style book for visual regression testing.
+ */
+export const createStylebookTests = () => {
+    test.describe( 'style book', () => {
+        test( 'all blocks', async ( { admin } ) => {
+            await renderStylebook( admin );
+        } );
+    } );
+};
+
 /**
  * Creates a test suite that renders each pattern for visual regression testing.
  *
