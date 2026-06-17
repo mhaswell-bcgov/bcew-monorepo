@@ -160,14 +160,12 @@ export const renderStylebook = async ( admin: any ) => {
             continue;
         }
 
-        await block
-            .locator( 'div.edit-site-style-book__example-preview' )
-            .screenshot( {
-                path:
-                    'tests/screenshot/__snapshots__/style-book-' +
-                    formattedName +
-                    '.png',
-            } );
+        await expect(
+            block.locator( 'div.edit-site-style-book__example-preview' )
+        ).toHaveScreenshot( {
+            name: `style-book-${ formattedName }.png`,
+            maxDiffPixelRatio: 0.01,
+        } );
     }
 };
 
