@@ -7,6 +7,16 @@
     "category": "media",
     "icon": "grid-view",
     "description": "A row of cards.",
+    "attributes": {
+        "cardCount": {
+            "type": "number",
+            "default": 1
+        },
+        "contentType": {
+            "type": "string",
+            "default": "icon-text"
+        }
+    },
     "supports": {
         "html": false
     },

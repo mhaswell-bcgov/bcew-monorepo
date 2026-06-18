@@ -185,6 +185,9 @@ importers:
       '@playwright/test':
         specifier: 'catalog:'
         version: 1.58.2
+      '@wordpress/e2e-test-utils-playwright':
+        specifier: 'catalog:'
+        version: 1.48.1(@playwright/test@1.58.2)(@types/node@20.19.9)
       '@wordpress/scripts':
         specifier: 'catalog:'
         version: 31.8.0(@playwright/test@1.58.2)(@swc/core@1.15.21(@swc/helpers@0.5.20))(@types/eslint@9.6.1)(@types/node@20.19.9)(@wordpress/env@11.6.0(@types/node@20.19.9))(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(stylelint-scss@6.14.0(stylelint@16.26.1(typescript@5.9.3)))(type-fest@4.41.0)(typescript@5.9.3)

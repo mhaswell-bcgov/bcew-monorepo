@@ -8,6 +8,12 @@
     "icon": "index-card",
     "parent": [ "bcew-blocks/cards" ],
     "description": "A single card within the Cards block.",
+    "attributes": {
+        "contentType": {
+            "type": "string",
+            "default": "icon-text"
+        }
+    },
     "supports": {
         "html": false,
         "inserter": false,
