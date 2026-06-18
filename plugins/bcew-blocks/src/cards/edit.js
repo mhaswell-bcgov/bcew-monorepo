@@ -1,23 +1,114 @@
 /**
  * WordPress dependencies
  */
-import { useBlockProps, useInnerBlocksProps } from '@wordpress/block-editor';
-
-const ALLOWED_BLOCKS = [ 'bcew-blocks/card' ];
-const TEMPLATE = [ [ 'bcew-blocks/card' ] ];
+import {
+    useBlockProps,
+    useInnerBlocksProps,
+    InspectorControls,
+    store as blockEditorStore,
+} from '@wordpress/block-editor';
+/* eslint-disable import/no-extraneous-dependencies -- @wordpress/components is provided in the monorepo workspace */
+import { PanelBody, SelectControl } from '@wordpress/components';
+/* eslint-enable import/no-extraneous-dependencies */
+import { useDispatch, useSelect } from '@wordpress/data';
+import { createBlock } from '@wordpress/blocks';
+import { __ } from '@wordpress/i18n';
 
 /**
+ * Internal dependencies
+ */
+import {
+    CARD_BLOCK,
+    CARD_CONTENT_TYPES,
+    DEFAULT_CARD_CONTENT_TYPE,
+} from './constants';
+
+const ALLOWED_BLOCKS = [ CARD_BLOCK ];
+
+/**
+ * Builds the initial inner-block template: one card slot per `cardCount`,
+ * each seeded with the chosen content type.
+ *
+ * @param {number} cardCount   Number of card slots.
+ * @param {string} contentType Card content type key.
+ * @return {Array} Inner-block template.
+ */
+const buildTemplate = ( cardCount, contentType ) =>
+    Array.from( { length: cardCount }, () => [ CARD_BLOCK, { contentType } ] );
+
+/**
+ * @param {Object}   props               Block props.
+ * @param {string}   props.clientId      Block client ID.
+ * @param {Object}   props.attributes    Persisted attributes.
+ * @param {Function} props.setAttributes Updates attributes.
  * @return {import('react').ReactElement} Editor element.
  */
-const Edit = () => {
-    const blockProps = useBlockProps( { className: 'bcew-blocks-cards' } );
+const Edit = ( { clientId, attributes, setAttributes } ) => {
+    const { cardCount, contentType } = attributes;
+    const normalizedType = CARD_CONTENT_TYPES[ contentType ]
+        ? contentType
+        : DEFAULT_CARD_CONTENT_TYPE;
+
+    const { replaceInnerBlocks, updateBlockAttributes } =
+        useDispatch( blockEditorStore );
+    const cardClientIds = useSelect(
+        ( select ) => select( blockEditorStore ).getBlockOrder( clientId ),
+        [ clientId ]
+    );
+
+    const blockProps = useBlockProps( {
+        className: `bcew-blocks-cards bcew-blocks-cards--count-${ cardCount }`,
+    } );
     const innerBlocksProps = useInnerBlocksProps( blockProps, {
         allowedBlocks: ALLOWED_BLOCKS,
-        template: TEMPLATE,
+        template: buildTemplate( cardCount, normalizedType ),
         orientation: 'horizontal',
     } );
 
-    return <div { ...innerBlocksProps } />;
+    const onChangeContentType = ( value ) => {
+        setAttributes( { contentType: value } );
+        cardClientIds.forEach( ( cardId ) => {
+            updateBlockAttributes( cardId, { contentType: value } );
+            replaceInnerBlocks(
+                cardId,
+                [ createBlock( CARD_CONTENT_TYPES[ value ] ) ],
+                false
+            );
+        } );
+    };
+
+    return (
+        <>
+            <InspectorControls>
+                <PanelBody
+                    title={ __( 'Card content', 'bcew-blocks' ) }
+                    initialOpen
+                >
+                    <SelectControl
+                        label={ __( 'Content type', 'bcew-blocks' ) }
+                        help={ __(
+                            'Sets the content type for every card in this row.',
+                            'bcew-blocks'
+                        ) }
+                        value={ normalizedType }
+                        options={ [
+                            {
+                                label: __( 'Icon + Text', 'bcew-blocks' ),
+                                value: 'icon-text',
+                            },
+                            {
+                                label: __( 'Image + Text', 'bcew-blocks' ),
+                                value: 'media-text',
+                            },
+                        ] }
+                        onChange={ onChangeContentType }
+                        __nextHasNoMarginBottom
+                    />
+                </PanelBody>
+            </InspectorControls>
+            <div { ...innerBlocksProps } />
+        </>
+    );
 };
 
 export default Edit;
