@@ -8,7 +8,7 @@ import {
     store as blockEditorStore,
 } from '@wordpress/block-editor';
 /* eslint-disable import/no-extraneous-dependencies -- @wordpress/components is provided in the monorepo workspace */
-import { PanelBody, SelectControl } from '@wordpress/components';
+import { PanelBody, SelectControl, RangeControl } from '@wordpress/components';
 /* eslint-enable import/no-extraneous-dependencies */
 import { useDispatch, useSelect } from '@wordpress/data';
 import { createBlock } from '@wordpress/blocks';
@@ -21,6 +21,7 @@ import {
     CARD_BLOCK,
     CARD_CONTENT_TYPES,
     DEFAULT_CARD_CONTENT_TYPE,
+    MAX_CARD_SLOTS,
 } from './constants';
 
 const ALLOWED_BLOCKS = [ CARD_BLOCK ];
@@ -51,8 +52,8 @@ const Edit = ( { clientId, attributes, setAttributes } ) => {
 
     const { replaceInnerBlocks, updateBlockAttributes } =
         useDispatch( blockEditorStore );
-    const cardClientIds = useSelect(
-        ( select ) => select( blockEditorStore ).getBlockOrder( clientId ),
+    const cardBlocks = useSelect(
+        ( select ) => select( blockEditorStore ).getBlocks( clientId ),
         [ clientId ]
     );
 
@@ -65,12 +66,26 @@ const Edit = ( { clientId, attributes, setAttributes } ) => {
         orientation: 'horizontal',
     } );
 
+    const onChangeCardCount = ( value ) => {
+        const clamped = Math.min( Math.max( value, 1 ), MAX_CARD_SLOTS );
+        setAttributes( { cardCount: clamped } );
+
+        let nextCards = cardBlocks.slice( 0, clamped );
+        while ( nextCards.length < clamped ) {
+            nextCards = [
+                ...nextCards,
+                createBlock( CARD_BLOCK, { contentType: normalizedType } ),
+            ];
+        }
+        replaceInnerBlocks( clientId, nextCards, false );
+    };
+
     const onChangeContentType = ( value ) => {
         setAttributes( { contentType: value } );
-        cardClientIds.forEach( ( cardId ) => {
-            updateBlockAttributes( cardId, { contentType: value } );
+        cardBlocks.forEach( ( card ) => {
+            updateBlockAttributes( card.clientId, { contentType: value } );
             replaceInnerBlocks(
-                cardId,
+                card.clientId,
                 [ createBlock( CARD_CONTENT_TYPES[ value ] ) ],
                 false
             );
@@ -102,6 +117,14 @@ const Edit = ( { clientId, attributes, setAttributes } ) => {
                             },
                         ] }
                         onChange={ onChangeContentType }
+                        __nextHasNoMarginBottom
+                    />
+                    <RangeControl
+                        label={ __( 'Number of cards', 'bcew-blocks' ) }
+                        value={ cardCount }
+                        onChange={ onChangeCardCount }
+                        min={ 1 }
+                        max={ MAX_CARD_SLOTS }
                         __nextHasNoMarginBottom
                     />
                 </PanelBody>
