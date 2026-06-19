@@ -1,9 +1,18 @@
 .bcew-blocks-card {
-    display: flex;
-    flex-direction: column;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+}
 
-    &__content {
-        display: flex;
-        flex-direction: column;
-    }
+.bcew-blocks-card__content {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.bcew-blocks-card__content > *:first-child {
+    margin-top: 0;
+}
+
+.bcew-blocks-card__content > *:last-child {
+    margin-bottom: 0;
 }

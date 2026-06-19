@@ -1,10 +1,44 @@
-.bcew-blocks-cards {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.5rem;
+@import './cards-layout';
 
-    > * {
-        flex: 1 1 0;
-        min-width: 0;
+/* Cards container: a CSS grid in both the editor and the frontend. On wide
+   viewports the columns hold the cards side by side and the rows are shared
+   for cross-card alignment (see cards-layout.scss). Below the breakpoint the
+   cards stack in a single column and each block uses its standalone layout. */
+.bcew-blocks-cards {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr);
+    column-gap: 1.5rem;
+    row-gap: 1.5rem;
+    width: 100%;
+    align-items: stretch;
+}
+
+.bcew-blocks-cards.is-layout-flow,
+.bcew-blocks-cards.is-layout-constrained,
+.bcew-blocks-cards.is-layout-flex,
+.bcew-blocks-cards.is-horizontal {
+    display: grid !important;
+    flex-direction: unset !important;
+    flex-wrap: unset !important;
+}
+
+/* Render only as many card slots as the chosen count. */
+.bcew-blocks-cards--count-1
+    > :is(.bcew-blocks-card, .wp-block-bcew-blocks-card):nth-child(n + 2),
+.bcew-blocks-cards--count-2
+    > :is(.bcew-blocks-card, .wp-block-bcew-blocks-card):nth-child(n + 3),
+.bcew-blocks-cards--count-3
+    > :is(.bcew-blocks-card, .wp-block-bcew-blocks-card):nth-child(n + 4) {
+    display: none !important;
+}
+
+@media (min-width: 782px) {
+
+    .bcew-blocks-cards.bcew-blocks-cards--count-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .bcew-blocks-cards.bcew-blocks-cards--count-3 {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }

@@ -1,0 +1,134 @@
+/* Inner row placement for icon-top / icon-left (standalone and cards subgrid). */
+@mixin bcew-icon-text-layout-grid {
+
+    &.is-layout-icon-top .bcgov-wp-blocks-icon-text-block__layout-shell {
+        grid-template-columns: minmax(0, 1fr);
+
+        > :is(.wp-block-bcew-blocks-icon, [data-type='bcew-blocks/icon']) {
+            grid-row: 1;
+        }
+
+        > :is(
+                .wp-block-heading,
+                [data-type='core/heading'],
+                h1,
+                h2,
+                h3,
+                h4,
+                h5,
+                h6,
+                h1.wp-block-heading,
+                h2.wp-block-heading,
+                h3.wp-block-heading,
+                h4.wp-block-heading,
+                h5.wp-block-heading,
+                h6.wp-block-heading
+            ) {
+            grid-row: 2;
+        }
+
+        > :is(.wp-block-paragraph, [data-type='core/paragraph'], p.wp-block-paragraph, p) {
+            grid-row: 3;
+        }
+
+        > :is(.wp-block-list, [data-type='core/list'], ul.wp-block-list, ol.wp-block-list, ul, ol) {
+            grid-row: 4;
+            width: 100%;
+            min-width: 0;
+        }
+
+        > :is(.wp-block-buttons, [data-type='core/buttons']) {
+            grid-row: 5;
+            align-self: start;
+        }
+    }
+
+    &.is-layout-icon-left .bcgov-wp-blocks-icon-text-block__layout-shell {
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: start;
+
+        > :is(.wp-block-bcew-blocks-icon, [data-type='bcew-blocks/icon']) {
+            display: flex;
+            align-items: center;
+            grid-column: 1;
+            grid-row: 1;
+            align-self: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        > :is(
+                .wp-block-heading,
+                [data-type='core/heading'],
+                h1,
+                h2,
+                h3,
+                h4,
+                h5,
+                h6,
+                h1.wp-block-heading,
+                h2.wp-block-heading,
+                h3.wp-block-heading,
+                h4.wp-block-heading,
+                h5.wp-block-heading,
+                h6.wp-block-heading
+            ) {
+            grid-column: 2;
+            grid-row: 1;
+            align-self: center;
+            margin-block: 0;
+            min-width: 0;
+        }
+
+        > :is(.wp-block-paragraph, [data-type='core/paragraph'], p.wp-block-paragraph, p) {
+            grid-column: 2;
+            grid-row: 2;
+            align-self: start;
+            min-width: 0;
+        }
+
+        > :is(.wp-block-list, [data-type='core/list'], ul.wp-block-list, ol.wp-block-list, ul, ol) {
+            grid-column: 2;
+            grid-row: 3;
+            align-self: start;
+            width: 100%;
+            min-width: 0;
+        }
+
+        > :is(.wp-block-buttons, [data-type='core/buttons']) {
+            grid-column: 2;
+            grid-row: 4;
+            align-self: start;
+            min-width: 0;
+        }
+
+        @media (max-width: 689px) {
+            grid-template-columns: minmax(0, 1fr);
+
+            > :is(.wp-block-bcew-blocks-icon, [data-type='bcew-blocks/icon']) {
+                grid-column: 1;
+                grid-row: 1;
+            }
+
+            > :is(.wp-block-heading, [data-type='core/heading'], h1, h2, h3, h4, h5, h6) {
+                grid-column: 1;
+                grid-row: 2;
+            }
+
+            > :is(.wp-block-paragraph, [data-type='core/paragraph'], p) {
+                grid-column: 1;
+                grid-row: 3;
+            }
+
+            > :is(.wp-block-list, [data-type='core/list'], ul, ol) {
+                grid-column: 1;
+                grid-row: 4;
+            }
+
+            > :is(.wp-block-buttons, [data-type='core/buttons']) {
+                grid-column: 1;
+                grid-row: 5;
+            }
+        }
+    }
+}
