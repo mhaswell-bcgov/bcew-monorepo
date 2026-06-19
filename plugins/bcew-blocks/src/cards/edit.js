@@ -58,7 +58,7 @@ const Edit = ( { clientId, attributes, setAttributes } ) => {
     );
 
     const blockProps = useBlockProps( {
-        className: `bcew-blocks-cards bcew-blocks-cards--count-${ cardCount }`,
+        className: `bcew-blocks-cards bcew-blocks-cards--count-${ cardCount } bcew-blocks-cards--type-${ normalizedType }`,
     } );
     const innerBlocksProps = useInnerBlocksProps( blockProps, {
         allowedBlocks: ALLOWED_BLOCKS,

@@ -1,5 +1,6 @@
 import {
     useBlockProps,
+    useInnerBlocksProps,
     InnerBlocks,
     InspectorControls,
     MediaUpload,
@@ -55,6 +56,15 @@ const Edit = ( { attributes, setAttributes } ) => {
             'right' === imagePosition ? 'is-image-right' : 'is-image-left',
         style: styles,
     } );
+
+    const innerBlocksProps = useInnerBlocksProps(
+        { className: 'inner-blocks' },
+        {
+            template: TEMPLATE,
+            allowedBlocks: TEMPLATE,
+            renderAppender: InnerBlocks.ButtonBlockAppender,
+        }
+    );
 
     return (
         <>
@@ -142,15 +152,7 @@ const Edit = ( { attributes, setAttributes } ) => {
                         </MediaUploadCheck>
                     </div>
                     <div className="media-text-content">
-                        <div className="inner-blocks">
-                            <InnerBlocks
-                                template={ TEMPLATE }
-                                allowedBlocks={ TEMPLATE }
-                                renderAppender={
-                                    InnerBlocks.ButtonBlockAppender
-                                }
-                            />
-                        </div>
+                        <div { ...innerBlocksProps } />
                     </div>
                 </div>
             </div>
