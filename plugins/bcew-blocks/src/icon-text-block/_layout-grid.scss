@@ -102,32 +102,39 @@
             min-width: 0;
         }
 
+        /* Stack into a single column on mobile. The desktop selectors above
+           carry compound `:is()` args (e.g. `h1.wp-block-heading`) that inflate
+           their specificity to (0,5,1); `!important` here guarantees the mobile
+           placement wins so every child collapses into column 1. Without it the
+           heading/paragraph/list keep their column-2 placement, which spawns an
+           implicit auto column that starves column 1 to 0px and crushes the
+           CTA into a vertical sliver. */
         @media (max-width: 689px) {
             grid-template-columns: minmax(0, 1fr);
 
             > :is(.wp-block-bcew-blocks-icon, [data-type='bcew-blocks/icon']) {
-                grid-column: 1;
-                grid-row: 1;
+                grid-column: 1 !important;
+                grid-row: 1 !important;
             }
 
             > :is(.wp-block-heading, [data-type='core/heading'], h1, h2, h3, h4, h5, h6) {
-                grid-column: 1;
-                grid-row: 2;
+                grid-column: 1 !important;
+                grid-row: 2 !important;
             }
 
             > :is(.wp-block-paragraph, [data-type='core/paragraph'], p) {
-                grid-column: 1;
-                grid-row: 3;
+                grid-column: 1 !important;
+                grid-row: 3 !important;
             }
 
             > :is(.wp-block-list, [data-type='core/list'], ul, ol) {
-                grid-column: 1;
-                grid-row: 4;
+                grid-column: 1 !important;
+                grid-row: 4 !important;
             }
 
             > :is(.wp-block-buttons, [data-type='core/buttons']) {
-                grid-column: 1;
-                grid-row: 5;
+                grid-column: 1 !important;
+                grid-row: 5 !important;
             }
         }
     }
