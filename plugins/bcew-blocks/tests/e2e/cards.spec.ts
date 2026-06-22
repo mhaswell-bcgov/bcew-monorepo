@@ -1,5 +1,5 @@
 import { test, expect, Editor } from '@wordpress/e2e-test-utils-playwright';
-import type { Locator, Page } from '@playwright/test';
+import type { Locator } from '@playwright/test';
 
 /**
  * End-to-end "user journey" for the Cards block.
