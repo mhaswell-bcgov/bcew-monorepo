@@ -90,7 +90,13 @@ add_filter( 'block_editor_settings_all', 'bcew_restrict_locking_unlocking_blocks
  * @return bool True when the WordPress Search plugin is providing its blocks.
  */
 function bcew_is_search_plugin_active() {
-	return WP_Block_Type_Registry::get_instance()->is_registered( 'wordpress-search/search-bar' );
+	static $is_active = null;
+
+	if ( null === $is_active ) {
+		$is_active = WP_Block_Type_Registry::get_instance()->is_registered( 'wordpress-search/search-bar' );
+	}
+
+	return $is_active;
 }
 
 /**
