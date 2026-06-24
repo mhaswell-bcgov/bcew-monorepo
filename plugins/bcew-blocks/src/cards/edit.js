@@ -8,9 +8,15 @@ import {
     store as blockEditorStore,
 } from '@wordpress/block-editor';
 /* eslint-disable import/no-extraneous-dependencies -- @wordpress/components is provided in the monorepo workspace */
-import { PanelBody, SelectControl, RangeControl } from '@wordpress/components';
+import {
+    PanelBody,
+    SelectControl,
+    RangeControl,
+    ToggleControl,
+} from '@wordpress/components';
 /* eslint-enable import/no-extraneous-dependencies */
 import { useDispatch, useSelect } from '@wordpress/data';
+import { useEffect } from '@wordpress/element';
 import { createBlock } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
 
@@ -25,6 +31,7 @@ import {
 } from './constants';
 
 const ALLOWED_BLOCKS = [ CARD_BLOCK ];
+const ICON_TEXT_BLOCK = CARD_CONTENT_TYPES[ 'icon-text' ];
 
 /**
  * Builds the initial inner-block template: one card slot per `cardCount`,
@@ -45,10 +52,11 @@ const buildTemplate = ( cardCount, contentType ) =>
  * @return {import('react').ReactElement} Editor element.
  */
 const Edit = ( { clientId, attributes, setAttributes } ) => {
-    const { cardCount, contentType } = attributes;
+    const { cardCount, contentType, boxShadow } = attributes;
     const normalizedType = CARD_CONTENT_TYPES[ contentType ]
         ? contentType
         : DEFAULT_CARD_CONTENT_TYPE;
+    const isIconText = 'icon-text' === normalizedType;
 
     const { replaceInnerBlocks, updateBlockAttributes } =
         useDispatch( blockEditorStore );
@@ -56,6 +64,26 @@ const Edit = ( { clientId, attributes, setAttributes } ) => {
         ( select ) => select( blockEditorStore ).getBlocks( clientId ),
         [ clientId ]
     );
+
+    // The shadow is a single, row-level setting: mirror it onto every
+    // icon-text block in the row so they always match (including cards added
+    // after the toggle was set). The per-block toggle is hidden inside cards,
+    // so this stays the single source of truth.
+    useEffect( () => {
+        if ( ! isIconText ) {
+            return;
+        }
+        cardBlocks.forEach( ( card ) => {
+            card.innerBlocks?.forEach( ( inner ) => {
+                if (
+                    ICON_TEXT_BLOCK === inner.name &&
+                    inner.attributes?.boxShadow !== boxShadow
+                ) {
+                    updateBlockAttributes( inner.clientId, { boxShadow } );
+                }
+            } );
+        } );
+    }, [ boxShadow, cardBlocks, isIconText, updateBlockAttributes ] );
 
     const blockProps = useBlockProps( {
         className: `bcew-blocks-cards bcew-blocks-cards--count-${ cardCount } bcew-blocks-cards--type-${ normalizedType }`,
@@ -128,6 +156,25 @@ const Edit = ( { clientId, attributes, setAttributes } ) => {
                         __nextHasNoMarginBottom
                     />
                 </PanelBody>
+                { isIconText && (
+                    <PanelBody
+                        title={ __( 'Style', 'bcew-blocks' ) }
+                        initialOpen={ false }
+                    >
+                        <ToggleControl
+                            __nextHasNoMarginBottom
+                            label={ __( 'Box shadow', 'bcew-blocks' ) }
+                            help={ __(
+                                'Adds a drop shadow to every card in this row.',
+                                'bcew-blocks'
+                            ) }
+                            checked={ !! boxShadow }
+                            onChange={ ( value ) =>
+                                setAttributes( { boxShadow: value } )
+                            }
+                        />
+                    </PanelBody>
+                ) }
             </InspectorControls>
             <div { ...innerBlocksProps } />
         </>

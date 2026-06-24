@@ -7,7 +7,10 @@
         0 3.2px 7.2px 0 rgba(0, 0, 0, 0.13);
     padding: var(--bcgov-icon-text-card-padding);
     border: none;
-    box-shadow: var(--bcgov-icon-text-card-shadow);
+
+    &.has-box-shadow {
+        box-shadow: var(--bcgov-icon-text-card-shadow);
+    }
 
     .bcgov-wp-blocks-icon-text-block__layout-shell {
         display: grid;

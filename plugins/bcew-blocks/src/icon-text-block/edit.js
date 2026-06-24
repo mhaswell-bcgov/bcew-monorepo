@@ -3,9 +3,13 @@ import {
     InspectorControls,
     useBlockProps,
     useInnerBlocksProps,
+    store as blockEditorStore,
 } from '@wordpress/block-editor';
-import { PanelBody, RadioControl } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
+import { PanelBody, RadioControl, ToggleControl } from '@wordpress/components';
 import './editor.scss';
+
+const CARDS_BLOCK = 'bcew-blocks/cards';
 
 const INNER_BLOCKS_TEMPLATE = [
     [
@@ -94,19 +98,36 @@ const ALLOWED_BLOCKS = [
  * @param {Object}   props               Block props.
  * @param {Object}   props.attributes    Persisted attributes.
  * @param {Function} props.setAttributes Updates attributes.
+ * @param {string}   props.clientId      Block client ID.
  * @return {import('react').ReactElement} Editor element.
  */
-const Edit = ( { attributes = {}, setAttributes = () => {} } = {} ) => {
-    const { layout } = attributes;
+const Edit = ( {
+    attributes = {},
+    setAttributes = () => {},
+    clientId,
+} = {} ) => {
+    const { layout, boxShadow } = attributes;
+
+    // Inside a Cards block the shadow is controlled once at the row level, so
+    // the per-block toggle is hidden to keep a single source of truth.
+    const isInsideCards = useSelect(
+        ( select ) =>
+            select( blockEditorStore ).getBlockParentsByBlockName(
+                clientId,
+                CARDS_BLOCK
+            ).length > 0,
+        [ clientId ]
+    );
 
     const supportedLayouts = [ 'icon-left', 'icon-top' ];
     const normalizedLayout = supportedLayouts.includes( layout )
         ? layout
         : 'icon-left';
     const layoutClass = `is-layout-${ normalizedLayout }`;
+    const shadowClass = boxShadow ? ' has-box-shadow' : '';
 
     const blockProps = useBlockProps( {
-        className: `bcgov-wp-blocks-icon-text-block ${ layoutClass }`,
+        className: `bcgov-wp-blocks-icon-text-block ${ layoutClass }${ shadowClass }`,
     } );
 
     const innerBlocksProps = useInnerBlocksProps(
@@ -148,6 +169,25 @@ const Edit = ( { attributes = {}, setAttributes = () => {} } = {} ) => {
                         }
                     />
                 </PanelBody>
+                { ! isInsideCards && (
+                    <PanelBody
+                        title={ __( 'Style', 'bcew-blocks' ) }
+                        initialOpen={ false }
+                    >
+                        <ToggleControl
+                            __nextHasNoMarginBottom
+                            label={ __( 'Box shadow', 'bcew-blocks' ) }
+                            help={ __(
+                                'Add a drop shadow around the block.',
+                                'bcew-blocks'
+                            ) }
+                            checked={ !! boxShadow }
+                            onChange={ ( value ) =>
+                                setAttributes( { boxShadow: value } )
+                            }
+                        />
+                    </PanelBody>
+                ) }
             </InspectorControls>
             <div { ...blockProps }>
                 <div { ...innerBlocksProps } />
