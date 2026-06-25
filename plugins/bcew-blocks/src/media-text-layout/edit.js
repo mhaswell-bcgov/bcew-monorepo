@@ -5,10 +5,14 @@ import {
     InspectorControls,
     MediaUpload,
     MediaUploadCheck,
+    store as blockEditorStore,
 } from '@wordpress/block-editor';
 import { BaseControl, PanelBody, ToggleControl } from '@wordpress/components';
-import { useSelect } from '@wordpress/data';
+import { useSelect, useDispatch } from '@wordpress/data';
+import { useEffect } from '@wordpress/element';
+import { createBlock } from '@wordpress/blocks';
 import { store as coreStore } from '@wordpress/core-data';
+import { reconcileOptionalInnerBlocks } from '../utils/optional-inner-blocks';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -18,12 +22,27 @@ import { store as coreStore } from '@wordpress/core-data';
  */
 import './editor.scss';
 
+const CARDS_BLOCK = 'bcew-blocks/cards';
+
 const TEMPLATE = [
     [ 'core/heading' ],
     [ 'core/paragraph' ],
     [ 'core/list' ],
     [ 'core/buttons' ],
 ];
+
+// Canonical position of every inner block, used to re-insert an optional block
+// (paragraph/list) back into its correct slot when it is toggled on again.
+const BLOCK_ORDER = {
+    'core/heading': 0,
+    'core/paragraph': 1,
+    'core/list': 2,
+    'core/buttons': 3,
+};
+
+const createParagraph = () => createBlock( 'core/paragraph' );
+const createList = () =>
+    createBlock( 'core/list', {}, [ createBlock( 'core/list-item' ) ] );
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -33,10 +52,18 @@ const TEMPLATE = [
  * @param {Object}   props               Block props.
  * @param {Object}   props.attributes    Persisted attributes.
  * @param {Function} props.setAttributes Updates attributes.
+ * @param {string}   props.clientId      Block client ID.
  * @return {Element} Element to render.
  */
-const Edit = ( { attributes, setAttributes } ) => {
-    const { imagePosition, imageId, layoutRatio, characterLimit } = attributes;
+const Edit = ( { attributes, setAttributes, clientId } ) => {
+    const {
+        imagePosition,
+        imageId,
+        layoutRatio,
+        characterLimit,
+        showParagraph,
+        showList,
+    } = attributes;
     const media = useSelect(
         ( select ) => {
             if ( ! imageId ) {
@@ -47,6 +74,56 @@ const Edit = ( { attributes, setAttributes } ) => {
         },
         [ imageId ]
     );
+
+    // Inside a Cards block the content toggles are controlled once at the row
+    // level, so the per-block toggles are hidden to keep a single source of
+    // truth.
+    const isInsideCards = useSelect(
+        ( select ) =>
+            select( blockEditorStore ).getBlockParentsByBlockName(
+                clientId,
+                CARDS_BLOCK
+            ).length > 0,
+        [ clientId ]
+    );
+
+    const innerBlocks = useSelect(
+        ( select ) => select( blockEditorStore ).getBlocks( clientId ),
+        [ clientId ]
+    );
+    const { replaceInnerBlocks } = useDispatch( blockEditorStore );
+
+    // Add/remove the optional paragraph and list so they are truly absent from
+    // the saved content (and thus the front end) when toggled off.
+    useEffect( () => {
+        // Wait until the inner-block template has populated. On first render the
+        // inner blocks are momentarily empty (before the template seeds them);
+        // acting then would replace the whole set with just paragraph/list and
+        // clobber the heading/buttons. The heading is always present, so use it
+        // as the "template ready" signal.
+        if (
+            ! innerBlocks.some( ( block ) => 'core/heading' === block.name )
+        ) {
+            return;
+        }
+        const next = reconcileOptionalInnerBlocks( {
+            blocks: innerBlocks,
+            optional: {
+                'core/paragraph': {
+                    show: false !== showParagraph,
+                    create: createParagraph,
+                },
+                'core/list': {
+                    show: false !== showList,
+                    create: createList,
+                },
+            },
+            order: BLOCK_ORDER,
+        } );
+        if ( next ) {
+            replaceInnerBlocks( clientId, next, false );
+        }
+    }, [ showParagraph, showList, innerBlocks, clientId, replaceInnerBlocks ] );
     const styles = {
         '--ratio-image': `${ layoutRatio.image }%`,
         '--ratio-content': `${ layoutRatio.content }%`,
@@ -96,6 +173,28 @@ const Edit = ( { attributes, setAttributes } ) => {
                         <div>{ characterLimit }</div>
                     </BaseControl>
                 </PanelBody>
+                { ! isInsideCards && (
+                    <PanelBody title="Content" initialOpen={ false }>
+                        <ToggleControl
+                            __nextHasNoMarginBottom
+                            label="Show paragraph"
+                            help="Turn off to remove the paragraph from this block."
+                            checked={ false !== showParagraph }
+                            onChange={ ( value ) =>
+                                setAttributes( { showParagraph: value } )
+                            }
+                        />
+                        <ToggleControl
+                            __nextHasNoMarginBottom
+                            label="Show list"
+                            help="Turn off to remove the list from this block."
+                            checked={ false !== showList }
+                            onChange={ ( value ) =>
+                                setAttributes( { showList: value } )
+                            }
+                        />
+                    </PanelBody>
+                ) }
             </InspectorControls>
 
             <div { ...blockProps }>

@@ -16,6 +16,14 @@
         "boxShadow": {
             "type": "boolean",
             "default": false
+        },
+        "showParagraph": {
+            "type": "boolean",
+            "default": true
+        },
+        "showList": {
+            "type": "boolean",
+            "default": true
         }
     },
     "supports": {

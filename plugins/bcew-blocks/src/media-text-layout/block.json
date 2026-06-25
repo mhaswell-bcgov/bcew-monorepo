@@ -41,6 +41,14 @@
         "characterLimit": {
             "type": "number",
             "default": 200
+        },
+        "showParagraph": {
+            "type": "boolean",
+            "default": true
+        },
+        "showList": {
+            "type": "boolean",
+            "default": true
         }
     },
     "textdomain": "bcew-blocks",

@@ -52,3 +52,21 @@ function bcgov_wordpress_blocks_init() {
     }
 }
 add_action( 'init', 'bcgov_wordpress_blocks_init' );
+
+/**
+ * Hides empty lists from the front end.
+ *
+ * A `core/list` with no list items (or only blank items) still serialises an
+ * empty `<ul>`/`<ol>`, which renders as stray spacing/borders. When the list
+ * has no visible text we render nothing at all. This runs for every list,
+ * including those nested inside the icon-text and media-text blocks, where an
+ * empty list is never desired.
+ *
+ * @param string $block_content The rendered list markup.
+ *
+ * @return string The original markup, or an empty string when the list is empty.
+ */
+function bcgov_wordpress_blocks_hide_empty_list( $block_content ) {
+    return '' === trim( wp_strip_all_tags( (string) $block_content ) ) ? '' : $block_content;
+}
+add_filter( 'render_block_core/list', 'bcgov_wordpress_blocks_hide_empty_list' );
