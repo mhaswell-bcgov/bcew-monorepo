@@ -15,15 +15,16 @@ import { InnerBlocks, useBlockProps } from '@wordpress/block-editor';
  * @return {import('react').ReactElement} Element to render.
  */
 const save = ( { attributes = {} } = {} ) => {
-    const { layout } = attributes;
+    const { layout, boxShadow } = attributes;
     const supportedLayouts = [ 'icon-left', 'icon-top' ];
     const normalizedLayout = supportedLayouts.includes( layout )
         ? layout
         : 'icon-left';
     const layoutClass = `is-layout-${ normalizedLayout }`;
+    const shadowClass = boxShadow ? ' has-box-shadow' : '';
 
     const blockProps = useBlockProps.save( {
-        className: `bcgov-wp-blocks-icon-text-block ${ layoutClass }`,
+        className: `bcgov-wp-blocks-icon-text-block ${ layoutClass }${ shadowClass }`,
     } );
 
     return (

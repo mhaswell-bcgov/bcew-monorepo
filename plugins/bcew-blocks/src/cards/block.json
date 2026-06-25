@@ -15,6 +15,10 @@
         "contentType": {
             "type": "string",
             "default": "icon-text"
+        },
+        "boxShadow": {
+            "type": "boolean",
+            "default": false
         }
     },
     "supports": {

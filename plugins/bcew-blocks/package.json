@@ -28,6 +28,7 @@
         "@wordpress/components": "catalog:",
         "@wordpress/core-data": "catalog:",
         "@wordpress/data": "catalog:",
+        "@wordpress/element": "catalog:",
         "@wordpress/i18n": "catalog:"
     },
     "devDependencies": {

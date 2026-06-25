@@ -10,7 +10,10 @@
     max-width: 100%;
     padding: var(--bcgov-icon-text-card-padding);
     border: none;
-    box-shadow: var(--bcgov-icon-text-card-shadow);
+
+    &.has-box-shadow {
+        box-shadow: var(--bcgov-icon-text-card-shadow);
+    }
 
     .bcgov-wp-blocks-icon-text-block__layout-shell {
         display: grid;
