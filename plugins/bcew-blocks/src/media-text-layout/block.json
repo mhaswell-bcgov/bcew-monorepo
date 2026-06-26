@@ -2,7 +2,7 @@
     "$schema": "https://schemas.wp.org/trunk/block.json",
     "apiVersion": 3,
     "name": "bcew-blocks/media-text-layout",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "title": "Media & Text Layout",
     "category": "media",
     "keywords": ["media", "image", "text", "layout", "design system"],
@@ -41,7 +41,22 @@
         "characterLimit": {
             "type": "number",
             "default": 200
+        },
+        "showParagraph": {
+            "type": "boolean",
+            "default": true
+        },
+        "showList": {
+            "type": "boolean",
+            "default": true
+        },
+        "hideEmptyList": {
+            "type": "boolean",
+            "default": true
         }
+    },
+    "providesContext": {
+        "bcew-blocks/hideEmptyList": "hideEmptyList"
     },
     "textdomain": "bcew-blocks",
     "editorScript": "file:./index.js",
