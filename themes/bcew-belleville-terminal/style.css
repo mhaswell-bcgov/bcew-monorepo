@@ -6,3 +6,19 @@ Version:      1.0.0
 Template:     design-system-wordpress-theme
 
 */
+
+/* Footer logo sizing */
+.footer-logo-canada {
+  width: 145px;
+  height: 56px;
+}
+
+.footer-logo-bc {
+  width: 146px;
+  height: 56px;
+}
+
+.footer-logo-belleville {
+  width: 65px;
+  height: 56px;
+}
