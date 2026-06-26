@@ -11,6 +11,7 @@ import { BaseControl, PanelBody, ToggleControl } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useEffect } from '@wordpress/element';
 import { createBlock } from '@wordpress/blocks';
+import { __ } from '@wordpress/i18n';
 import { store as coreStore } from '@wordpress/core-data';
 import { reconcileOptionalInnerBlocks } from '../utils/optional-inner-blocks';
 
@@ -106,7 +107,7 @@ const Edit = ( { attributes, setAttributes, clientId } ) => {
         ) {
             return;
         }
-        const next = reconcileOptionalInnerBlocks( {
+        const nextBlocks = reconcileOptionalInnerBlocks( {
             blocks: innerBlocks,
             optional: {
                 'core/paragraph': {
@@ -120,8 +121,8 @@ const Edit = ( { attributes, setAttributes, clientId } ) => {
             },
             order: BLOCK_ORDER,
         } );
-        if ( next ) {
-            replaceInnerBlocks( clientId, next, false );
+        if ( nextBlocks ) {
+            replaceInnerBlocks( clientId, nextBlocks, false );
         }
     }, [ showParagraph, showList, innerBlocks, clientId, replaceInnerBlocks ] );
     const styles = {
@@ -146,9 +147,12 @@ const Edit = ( { attributes, setAttributes, clientId } ) => {
     return (
         <>
             <InspectorControls>
-                <PanelBody title="Layouts" initialOpen={ true }>
+                <PanelBody
+                    title={ __( 'Layouts', 'bcew-blocks' ) }
+                    initialOpen={ true }
+                >
                     <ToggleControl
-                        label="Image on right"
+                        label={ __( 'Image on right', 'bcew-blocks' ) }
                         checked={ 'right' === imagePosition }
                         onChange={ ( value ) =>
                             setAttributes( {
@@ -158,8 +162,11 @@ const Edit = ( { attributes, setAttributes, clientId } ) => {
                     />
                     <BaseControl
                         id="media-text-layout-ratio"
-                        label="Layout Ratio"
-                        help="The default image/content split."
+                        label={ __( 'Layout Ratio', 'bcew-blocks' ) }
+                        help={ __(
+                            'The default image/content split.',
+                            'bcew-blocks'
+                        ) }
                     >
                         <div>
                             { layoutRatio.image } / { layoutRatio.content }
@@ -167,18 +174,27 @@ const Edit = ( { attributes, setAttributes, clientId } ) => {
                     </BaseControl>
                     <BaseControl
                         id="media-text-layout-character-limit"
-                        label="Character Limit"
-                        help="Maximum recommended character length for headings and paragraphs."
+                        label={ __( 'Character Limit', 'bcew-blocks' ) }
+                        help={ __(
+                            'Maximum recommended character length for headings and paragraphs.',
+                            'bcew-blocks'
+                        ) }
                     >
                         <div>{ characterLimit }</div>
                     </BaseControl>
                 </PanelBody>
                 { ! isInsideCards && (
-                    <PanelBody title="Content" initialOpen={ false }>
+                    <PanelBody
+                        title={ __( 'Content', 'bcew-blocks' ) }
+                        initialOpen={ false }
+                    >
                         <ToggleControl
                             __nextHasNoMarginBottom
-                            label="Show paragraph"
-                            help="Turn off to remove the paragraph from this block."
+                            label={ __( 'Show paragraph', 'bcew-blocks' ) }
+                            help={ __(
+                                'Turn off to remove the paragraph from this block.',
+                                'bcew-blocks'
+                            ) }
                             checked={ false !== showParagraph }
                             onChange={ ( value ) =>
                                 setAttributes( { showParagraph: value } )
@@ -186,8 +202,11 @@ const Edit = ( { attributes, setAttributes, clientId } ) => {
                         />
                         <ToggleControl
                             __nextHasNoMarginBottom
-                            label="Show list"
-                            help="Turn off to remove the list from this block."
+                            label={ __( 'Show list', 'bcew-blocks' ) }
+                            help={ __(
+                                'Turn off to remove the list from this block.',
+                                'bcew-blocks'
+                            ) }
                             checked={ false !== showList }
                             onChange={ ( value ) =>
                                 setAttributes( { showList: value } )
@@ -216,8 +235,14 @@ const Edit = ( { attributes, setAttributes, clientId } ) => {
                                         tabIndex={ 0 }
                                         aria-label={
                                             media
-                                                ? 'Replace image'
-                                                : 'Select image'
+                                                ? __(
+                                                      'Replace image',
+                                                      'bcew-blocks'
+                                                  )
+                                                : __(
+                                                      'Select image',
+                                                      'bcew-blocks'
+                                                  )
                                         }
                                         onClick={ open }
                                         onKeyDown={ ( event ) => {
@@ -237,11 +262,17 @@ const Edit = ( { attributes, setAttributes, clientId } ) => {
                                         ) : (
                                             <div className="image-placeholder">
                                                 <h5 className="image-placeholder-title">
-                                                    Select an image
+                                                    { __(
+                                                        'Select an image',
+                                                        'bcew-blocks'
+                                                    ) }
                                                 </h5>
 
                                                 <p className="image-placeholder-help">
-                                                    Click to upload
+                                                    { __(
+                                                        'Click to upload',
+                                                        'bcew-blocks'
+                                                    ) }
                                                 </p>
                                             </div>
                                         ) }

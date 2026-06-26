@@ -54,19 +54,51 @@ function bcgov_wordpress_blocks_init() {
 add_action( 'init', 'bcgov_wordpress_blocks_init' );
 
 /**
- * Hides empty lists from the front end.
+ * Registers the `bcew-blocks/hideEmptyList` context on `core/list`.
+ *
+ * Core's `core/list` does not know about our context out of the box, so we add
+ * it to its `uses_context` at registration time. This lets a nested list read
+ * the flag provided by our wrapper blocks (media-text-layout, icon-text-block)
+ * without affecting lists anywhere else on the site.
+ *
+ * @param array  $args Arguments used to register the block type.
+ * @param string $name Block type name including namespace.
+ *
+ * @return array The (possibly modified) registration arguments.
+ */
+function bcgov_wordpress_blocks_list_uses_context( $args, $name ) {
+    if ( 'core/list' === $name ) {
+        $uses_context = isset( $args['uses_context'] ) ? (array) $args['uses_context'] : array();
+        if ( ! in_array( 'bcew-blocks/hideEmptyList', $uses_context, true ) ) {
+            $uses_context[]       = 'bcew-blocks/hideEmptyList';
+            $args['uses_context'] = $uses_context;
+        }
+    }
+    return $args;
+}
+add_filter( 'register_block_type_args', 'bcgov_wordpress_blocks_list_uses_context', 10, 2 );
+
+/**
+ * Hides empty lists nested inside our wrapper blocks from the front end.
  *
  * A `core/list` with no list items (or only blank items) still serialises an
- * empty `<ul>`/`<ol>`, which renders as stray spacing/borders. When the list
- * has no visible text we render nothing at all. This runs for every list,
- * including those nested inside the icon-text and media-text blocks, where an
- * empty list is never desired.
+ * empty `<ul>`/`<ol>`, which renders as stray spacing/borders. When such a list
+ * has no visible text we render nothing at all.
  *
- * @param string $block_content The rendered list markup.
+ * This only acts on lists that receive the `bcew-blocks/hideEmptyList` context
+ * from one of our wrapper blocks, so lists elsewhere on the site are left
+ * untouched and never silently disappear.
+ *
+ * @param string   $block_content The rendered list markup.
+ * @param array    $block         The parsed block (unused).
+ * @param WP_Block $instance      The block instance, used to read context.
  *
  * @return string The original markup, or an empty string when the list is empty.
  */
-function bcgov_wordpress_blocks_hide_empty_list( $block_content ) {
+function bcgov_wordpress_blocks_hide_empty_list( $block_content, $block = array(), $instance = null ) {
+    if ( ! $instance instanceof WP_Block || empty( $instance->context['bcew-blocks/hideEmptyList'] ) ) {
+        return $block_content;
+    }
     return '' === trim( wp_strip_all_tags( (string) $block_content ) ) ? '' : $block_content;
 }
-add_filter( 'render_block_core/list', 'bcgov_wordpress_blocks_hide_empty_list' );
+add_filter( 'render_block_core/list', 'bcgov_wordpress_blocks_hide_empty_list', 10, 3 );
