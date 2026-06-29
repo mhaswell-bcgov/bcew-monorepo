@@ -8,6 +8,11 @@
     display: grid !important;
     grid-template-columns: minmax(0, 1fr);
     column-gap: 1.5rem;
+
+    /* Mobile: cards stack in one column, so a vertical gap separates them.
+       On desktop the cards sit in columns and the rows are the shared subgrid
+       content tracks, which must be gap-free (see the breakpoint below) so
+       hidden/empty rows don't leave phantom space between them. */
     row-gap: 1.5rem;
     width: 100%;
     align-items: stretch;
@@ -33,6 +38,12 @@
 }
 
 @media (min-width: 782px) {
+
+    /* Cards are side by side now; the vertical rhythm is the subgrid content
+       tracks, so the row gap must collapse to avoid space between empty rows. */
+    .bcew-blocks-cards {
+        row-gap: 0;
+    }
 
     .bcew-blocks-cards.bcew-blocks-cards--count-2 {
         grid-template-columns: repeat(2, minmax(0, 1fr));

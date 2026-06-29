@@ -32,6 +32,8 @@ import {
 
 const ALLOWED_BLOCKS = [ CARD_BLOCK ];
 const ICON_TEXT_BLOCK = CARD_CONTENT_TYPES[ 'icon-text' ];
+const MEDIA_TEXT_BLOCK = CARD_CONTENT_TYPES[ 'media-text' ];
+const CONTENT_BLOCKS = [ ICON_TEXT_BLOCK, MEDIA_TEXT_BLOCK ];
 
 /**
  * Builds the initial inner-block template: one card slot per `cardCount`,
@@ -52,7 +54,8 @@ const buildTemplate = ( cardCount, contentType ) =>
  * @return {import('react').ReactElement} Editor element.
  */
 const Edit = ( { clientId, attributes, setAttributes } ) => {
-    const { cardCount, contentType, boxShadow } = attributes;
+    const { cardCount, contentType, boxShadow, showParagraph, showList } =
+        attributes;
     const normalizedType = CARD_CONTENT_TYPES[ contentType ]
         ? contentType
         : DEFAULT_CARD_CONTENT_TYPE;
@@ -65,25 +68,44 @@ const Edit = ( { clientId, attributes, setAttributes } ) => {
         [ clientId ]
     );
 
-    // The shadow is a single, row-level setting: mirror it onto every
-    // icon-text block in the row so they always match (including cards added
-    // after the toggle was set). The per-block toggle is hidden inside cards,
-    // so this stays the single source of truth.
+    // The shadow and content toggles are single, row-level settings: mirror
+    // them onto every content block in the row so they always match (including
+    // cards added after a toggle was set). The per-block toggles are hidden
+    // inside cards, so this stays the single source of truth.
     useEffect( () => {
-        if ( ! isIconText ) {
-            return;
-        }
         cardBlocks.forEach( ( card ) => {
             card.innerBlocks?.forEach( ( inner ) => {
+                if ( ! CONTENT_BLOCKS.includes( inner.name ) ) {
+                    return;
+                }
+
+                const updates = {};
+                if ( inner.attributes?.showParagraph !== showParagraph ) {
+                    updates.showParagraph = showParagraph;
+                }
+                if ( inner.attributes?.showList !== showList ) {
+                    updates.showList = showList;
+                }
+                // Box shadow only applies to the icon-text block.
                 if (
                     ICON_TEXT_BLOCK === inner.name &&
                     inner.attributes?.boxShadow !== boxShadow
                 ) {
-                    updateBlockAttributes( inner.clientId, { boxShadow } );
+                    updates.boxShadow = boxShadow;
+                }
+
+                if ( Object.keys( updates ).length > 0 ) {
+                    updateBlockAttributes( inner.clientId, updates );
                 }
             } );
         } );
-    }, [ boxShadow, cardBlocks, isIconText, updateBlockAttributes ] );
+    }, [
+        boxShadow,
+        showParagraph,
+        showList,
+        cardBlocks,
+        updateBlockAttributes,
+    ] );
 
     const blockProps = useBlockProps( {
         className: `bcew-blocks-cards bcew-blocks-cards--count-${ cardCount } bcew-blocks-cards--type-${ normalizedType }`,
@@ -154,6 +176,35 @@ const Edit = ( { clientId, attributes, setAttributes } ) => {
                         min={ 1 }
                         max={ MAX_CARD_SLOTS }
                         __nextHasNoMarginBottom
+                    />
+                </PanelBody>
+                <PanelBody
+                    title={ __( 'Content', 'bcew-blocks' ) }
+                    initialOpen={ false }
+                >
+                    <ToggleControl
+                        __nextHasNoMarginBottom
+                        label={ __( 'Show paragraph', 'bcew-blocks' ) }
+                        help={ __(
+                            'Show or hide the paragraph in every card in this row.',
+                            'bcew-blocks'
+                        ) }
+                        checked={ false !== showParagraph }
+                        onChange={ ( value ) =>
+                            setAttributes( { showParagraph: value } )
+                        }
+                    />
+                    <ToggleControl
+                        __nextHasNoMarginBottom
+                        label={ __( 'Show list', 'bcew-blocks' ) }
+                        help={ __(
+                            'Show or hide the list in every card in this row.',
+                            'bcew-blocks'
+                        ) }
+                        checked={ false !== showList }
+                        onChange={ ( value ) =>
+                            setAttributes( { showList: value } )
+                        }
                     />
                 </PanelBody>
                 { isIconText && (
