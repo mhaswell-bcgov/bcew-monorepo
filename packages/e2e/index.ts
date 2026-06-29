@@ -160,6 +160,47 @@ export const renderStylebook = async ( admin: any ) => {
 
         blockCount = await blocks.count();
     } catch {
+        const canvasFrame = admin.page.frame( { name: 'style-book-canvas' } );
+
+        if ( ! canvasFrame ) {
+            throw new Error( 'Style book canvas iframe was not found.' );
+        }
+
+        await canvasFrame.waitForSelector( 'body' );
+
+        // Wait until the style book canvas height settles before capturing.
+        let previousScrollHeight = await canvasFrame.evaluate(
+            () => document.body.scrollHeight
+        );
+        let stableSamples = 0;
+
+        for ( let sampleIndex = 0; sampleIndex < 30; sampleIndex++ ) {
+            await admin.page.waitForTimeout( 150 );
+
+            const currentScrollHeight = await canvasFrame.evaluate(
+                () => document.body.scrollHeight
+            );
+
+            if ( currentScrollHeight === previousScrollHeight ) {
+                stableSamples++;
+
+                if ( stableSamples >= 4 ) {
+                    break;
+                }
+            } else {
+                stableSamples = 0;
+                previousScrollHeight = currentScrollHeight;
+            }
+        }
+
+        if ( stableSamples < 4 ) {
+            throw new Error(
+                'Style book canvas height did not stabilize before screenshot capture.'
+            );
+        }
+
+        await admin.page.waitForTimeout( 300 );
+
         // Newer WordPress style book UIs may render one selected block preview
         // instead of the legacy multi-example grid.
         await expect( canvas.locator( 'body' ) ).toHaveScreenshot( {

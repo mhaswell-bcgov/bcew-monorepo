@@ -41,7 +41,7 @@ const collectFooterMetrics = async ( page ) => {
             for ( const footerElement of footerElements ) {
                 const footerRect = footerElement.getBoundingClientRect();
 
-                if ( footerRect.width === 0 && footerRect.height === 0 ) {
+                if ( 0 === footerRect.width && 0 === footerRect.height ) {
                     continue;
                 }
 
@@ -97,7 +97,9 @@ test.describe( 'footer sanity', () => {
         );
         expect( footerMetrics.linksColumnWidth ).toBe( 328 );
         expect( footerMetrics.linksColumnsDisplay ).toBe( 'flex' );
-        expect( footerMetrics.footerHorizontalOverflowPixels ).toBeLessThanOrEqual( 1 );
+        expect(
+            footerMetrics.footerHorizontalOverflowPixels
+        ).toBeLessThanOrEqual( 1 );
     } );
 
     test( 'mobile footer layout remains stable', async ( { page } ) => {
@@ -113,6 +115,8 @@ test.describe( 'footer sanity', () => {
         );
         expect( footerMetrics.linksColumnWidth ).toBe( 328 );
         expect( footerMetrics.linksColumnsDisplay ).toBe( 'grid' );
-        expect( footerMetrics.footerHorizontalOverflowPixels ).toBeLessThanOrEqual( 1 );
+        expect(
+            footerMetrics.footerHorizontalOverflowPixels
+        ).toBeLessThanOrEqual( 1 );
     } );
 } );
