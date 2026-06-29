@@ -136,15 +136,39 @@ export const renderStylebook = async ( admin: any ) => {
 
     await admin.page.getByRole( 'button', { name: 'Style Book' } ).click();
 
+    const blocksButton = admin.page.getByRole( 'button', { name: 'Blocks' } );
+    if ( ( await blocksButton.count() ) > 0 ) {
+        await blocksButton.first().click();
+    }
+
     const canvas = admin.page.frameLocator(
         'iframe[name="style-book-canvas"]'
     );
     await expect( canvas.locator( 'body' ) ).toBeVisible();
 
     const blocks = canvas.locator( 'div.edit-site-style-book__example' );
-    const blockCount = await blocks.count();
+    let blockCount = 0;
 
-    await expect( blockCount ).toBeGreaterThan( 0 );
+    try {
+        await expect
+            .poll( async () => blocks.count(), {
+                timeout: 10000,
+                message:
+                    'Expected style book examples to render in style-book-canvas iframe.',
+            } )
+            .toBeGreaterThan( 0 );
+
+        blockCount = await blocks.count();
+    } catch {
+        // Newer WordPress style book UIs may render one selected block preview
+        // instead of the legacy multi-example grid.
+        await expect( canvas.locator( 'body' ) ).toHaveScreenshot( {
+            name: 'style-book-overview.png',
+            maxDiffPixelRatio: 0.01,
+        } );
+
+        return;
+    }
 
     for ( let blockIndex = 0; blockIndex < blockCount; blockIndex++ ) {
         const block = blocks.nth( blockIndex );

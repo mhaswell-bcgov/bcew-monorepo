@@ -13,8 +13,8 @@
  */
 
 ?>
-<!-- wp:group {"style":{"spacing":{"padding":{"top":"16px","bottom":"0px"}}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
-<div class="wp-block-group" style="padding-top:16px;padding-bottom:0px"><!-- wp:paragraph {"align":"left","textColor":"text-color"} -->
-<p class="has-text-align-left has-text-color-color has-text-color">&copy; <?php echo esc_html( wp_date( 'Y' ) ); ?> Government of British Columbia.</p>
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"0px","bottom":"1rem"}}},"layout":{"type":"flex","flexWrap":"nowrap"}} -->
+<div class="wp-block-group" style="padding-top:0px;padding-bottom:1rem"><!-- wp:paragraph {"align":"left","textColor":"text-color"} -->
+<p class="has-text-align-left has-text-color-color has-text-color">&copy; <?php echo esc_html( wp_date( 'Y' ) ); ?> Government of British Columbia</p>
 <!-- /wp:paragraph --></div>
 <!-- /wp:group -->

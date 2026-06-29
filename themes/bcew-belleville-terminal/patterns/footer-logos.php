@@ -2,8 +2,7 @@
 /**
  * Title: Footer Logos
  * Slug: bcew-belleville-terminal/footer-logos
- * Categories: footer
- * Inserter: true
+ * Inserter: false
  *
  * Renders logos from the child theme's assets directory. Using a PHP pattern
  * lets us resolve the asset URL with get_stylesheet_directory_uri() so it works
@@ -12,23 +11,41 @@
  * @package BcewBellevilleTerminal
  */
 
-$bc_logo_url = get_stylesheet_directory_uri() . '/assets/images/bc_logo.png';
+$bc_logo_url         = get_stylesheet_directory_uri() . '/assets/images/bc_logo.png';
 $belleville_logo_url = get_stylesheet_directory_uri() . '/assets/images/belleville_logo.svg';
-$canada_logo_url = get_stylesheet_directory_uri() . '/assets/images/canada_logo.png';
+$canada_logo_url     = get_stylesheet_directory_uri() . '/assets/images/canada_logo.png';
 $belleville_home_url = home_url( '/' );
 ?>
-<!-- wp:group {"className":"footer-logos","style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","flexWrap":"nowrap","justifyContent":"left","verticalAlignment":"center"}} -->
+<!-- wp:group {"className":"footer-logos","style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"left","verticalAlignment":"center"}} -->
 <div class="wp-block-group footer-logos">
-<!-- wp:html -->
-<figure class="footer-logo footer-logo-canada"><a href="<?php echo esc_url( $belleville_home_url ); ?>"><img src="<?php echo esc_url( $canada_logo_url ); ?>" alt="<?php echo esc_attr__( 'Government of Canada', 'bc-extended-web-theme' ); ?>" /></a></figure>
-<!-- /wp:html -->
+    <!-- wp:image {"width":"145px","sizeSlug":"full","linkDestination":"custom","className":"footer-logo footer-logo-canada"} -->
+    <figure class="wp-block-image size-full is-resized footer-logo footer-logo-canada"
+        ><a href="<?php echo esc_url( $belleville_home_url ); ?>"
+            ><img
+                src="<?php echo esc_url( $canada_logo_url ); ?>"
+                alt="<?php echo esc_attr__( 'Government of Canada', 'bc-extended-web-theme' ); ?>"
+                style="width: 145px" /></a
+    ></figure>
+    <!-- /wp:image -->
 
-<!-- wp:html -->
-<figure class="footer-logo footer-logo-bc"><a href="<?php echo esc_url( $belleville_home_url ); ?>"><img src="<?php echo esc_url( $bc_logo_url ); ?>" alt="<?php echo esc_attr__( 'Government of British Columbia', 'bc-extended-web-theme' ); ?>" /></a></figure>
-<!-- /wp:html -->
+    <!-- wp:image {"width":"146px","sizeSlug":"full","linkDestination":"custom","className":"footer-logo footer-logo-bc"} -->
+    <figure class="wp-block-image size-full is-resized footer-logo footer-logo-bc"
+        ><a href="<?php echo esc_url( $belleville_home_url ); ?>"
+            ><img
+                src="<?php echo esc_url( $bc_logo_url ); ?>"
+                alt="<?php echo esc_attr__( 'Government of British Columbia', 'bc-extended-web-theme' ); ?>"
+                style="width: 146px" /></a
+    ></figure>
+    <!-- /wp:image -->
 
-<!-- wp:html -->
-<figure class="footer-logo footer-logo-belleville"><a href="<?php echo esc_url( $belleville_home_url ); ?>"><img src="<?php echo esc_url( $belleville_logo_url ); ?>" alt="<?php echo esc_attr__( 'Belleville Terminal Redevelopment', 'bc-extended-web-theme' ); ?>" /></a></figure>
-<!-- /wp:html -->
+    <!-- wp:image {"width":"65px","sizeSlug":"full","linkDestination":"custom","className":"footer-logo footer-logo-belleville"} -->
+    <figure class="wp-block-image size-full is-resized footer-logo footer-logo-belleville"
+        ><a href="<?php echo esc_url( $belleville_home_url ); ?>"
+            ><img
+                src="<?php echo esc_url( $belleville_logo_url ); ?>"
+                alt="<?php echo esc_attr__( 'Belleville Terminal Redevelopment', 'bc-extended-web-theme' ); ?>"
+                style="width: 65px" /></a
+    ></figure>
+    <!-- /wp:image -->
 </div>
 <!-- /wp:group -->
