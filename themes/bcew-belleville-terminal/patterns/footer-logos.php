@@ -11,9 +11,9 @@
  * @package BcewBellevilleTerminal
  */
 
-$bc_logo_url         = get_stylesheet_directory_uri() . '/assets/images/bc_logo.png';
-$ti_logo_url         = get_stylesheet_directory_uri() . '/assets/images/ti_logo.png';
-$canada_logo_url     = get_stylesheet_directory_uri() . '/assets/images/canada_logo.png';
+$bc_logo_url     = get_stylesheet_directory_uri() . '/assets/images/bc_logo.png';
+$ti_logo_url     = get_stylesheet_directory_uri() . '/assets/images/ti_logo.png';
+$canada_logo_url = get_stylesheet_directory_uri() . '/assets/images/canada_logo.png';
 ?>
 <!-- wp:group {"className":"footer-logos","style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"left","verticalAlignment":"center"}} -->
 <div class="wp-block-group footer-logos">
