@@ -1,6 +1,94 @@
 // Theme build styles for bcew-belleville-terminal
-// Mobile override for separator width — compiled into dist by wp-scripts
+// Compiled into dist by wp-scripts
+
+.bcgov-footer-container.footer-shell {
+  padding: 3.5rem 0 1rem;
+}
+
+.bcgov-footer-container .footer-main-columns {
+  padding-top: 0;
+  padding-bottom: 2rem;
+  column-gap: 2rem;
+}
+
+.bcgov-footer-container .footer-logos-column {
+  display: flex;
+  flex: 1 0 0;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 35rem;
+}
+
+.bcgov-footer-container .footer-links-column {
+  min-width: 328px;
+  padding: 0 0 1rem;
+  line-height: 1.5;
+}
+
+.bcgov-footer-container .footer-bottom-row {
+  border-top: 1px solid var(--wp--preset--color--border-dark);
+  margin-top: 0;
+  padding: 2rem 0 0;
+}
+
+.bcgov-footer-container .footer-logos .footer-logo {
+  margin: 0;
+}
+
+.bcgov-footer-container .footer-logos .footer-logo img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+
+@media (max-width: 1200px) {
+
+  .bcgov-footer-container.footer-shell {
+    padding-right: 1rem;
+    padding-left: 1rem;
+  }
+
+  .wp-block-group.territorial-acknowledgement {
+    padding-right: 1rem !important;
+    padding-left: 1rem !important;
+  }
+}
+
 @media (max-width: 782px) {
+
+  .bcgov-footer-container.footer-shell {
+    padding-top: 1rem;
+  }
+
+  .bcgov-footer-container .footer-main-columns {
+    column-gap: 1rem;
+  }
+
+  .bcgov-footer-container .footer-links-column {
+    flex: 1 1 100%;
+    width: 100%;
+    max-width: 328px;
+    min-width: 0;
+  }
+
+  .bcgov-footer-container .footer-links-column .wp-block-columns {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1rem;
+    row-gap: 0;
+    margin-bottom: 0;
+  }
+
+  .bcgov-footer-container .footer-links-column .wp-block-column {
+    min-width: 0;
+    margin: 0;
+  }
+
+  .bcgov-footer-container .footer-links-column .wp-block-column p {
+    margin-top: 0.5rem;
+    margin-bottom: 0;
+  }
 
   .wp-block-separator.has-alpha-channel-opacity,
   hr.wp-block-separator.has-alpha-channel-opacity {

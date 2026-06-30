@@ -49,3 +49,5 @@ allowBuilds:
   'fs-ext-extra-prebuilt': false
   'nx': false
   'unrs-resolver': false
+overrides:
+  markdownlint-cli: 0.49.0

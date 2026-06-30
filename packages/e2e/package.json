@@ -10,7 +10,7 @@
     "repository": "",
     "bugs": "",
     "type": "module",
-    "main": "index.js",
+    "main": "index.ts",
     "peerDependencies": {
         "@playwright/test": "catalog:",
         "@wordpress/e2e-test-utils-playwright": "catalog:",
