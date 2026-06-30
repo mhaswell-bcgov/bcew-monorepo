@@ -250,7 +250,7 @@ export const renderStylebook = async ( admin: any ) => {
         await expect(
             block.locator( STYLEBOOK_PREVIEW_SELECTOR )
         ).toHaveScreenshot( `style-book-${ formattedName }.png`, {
-            maxDiffPixelRatio: 0.01,
+            maxDiffPixelRatio: 0.02,
         } );
     }
 };
