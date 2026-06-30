@@ -124,6 +124,21 @@ const EXCLUDED_STYLEBOOK_BLOCKS = [
     'archives',
 ];
 
+const STYLEBOOK_EXAMPLE_SELECTOR =
+    'div.edit-site-style-book__example, div.editor-style-book__example';
+
+const STYLEBOOK_PREVIEW_SELECTOR =
+    'div.edit-site-style-book__example-preview, div.editor-style-book__example-preview';
+
+const STYLEBOOK_SELECTED_PREVIEW_SELECTOR = [
+    '[aria-selected="true"] div.edit-site-style-book__example-preview',
+    '[aria-selected="true"] div.editor-style-book__example-preview',
+    '.is-selected div.edit-site-style-book__example-preview',
+    '.is-selected div.editor-style-book__example-preview',
+    'div.edit-site-style-book__example-preview',
+    'div.editor-style-book__example-preview',
+].join( ', ' );
+
 /**
  * Render the WordPress style book and save screenshots for each example.
  *
@@ -146,7 +161,7 @@ export const renderStylebook = async ( admin: any ) => {
     );
     await expect( canvas.locator( 'body' ) ).toBeVisible();
 
-    const blocks = canvas.locator( 'div.edit-site-style-book__example' );
+    const blocks = canvas.locator( STYLEBOOK_EXAMPLE_SELECTOR );
     let blockCount = 0;
 
     try {
@@ -203,10 +218,17 @@ export const renderStylebook = async ( admin: any ) => {
 
         // Newer WordPress style book UIs may render one selected block preview
         // instead of the legacy multi-example grid.
-        await expect( canvas.locator( 'body' ) ).toHaveScreenshot( {
-            name: 'style-book-overview.png',
-            maxDiffPixelRatio: 0.01,
-        } );
+        const selectedPreview = canvas
+            .locator( STYLEBOOK_SELECTED_PREVIEW_SELECTOR )
+            .first();
+
+        await expect( selectedPreview ).toBeVisible();
+        await expect( selectedPreview ).toHaveScreenshot(
+            'style-book-overview.png',
+            {
+                maxDiffPixelRatio: 0.01,
+            }
+        );
 
         return;
     }
@@ -226,9 +248,8 @@ export const renderStylebook = async ( admin: any ) => {
         }
 
         await expect(
-            block.locator( 'div.edit-site-style-book__example-preview' )
-        ).toHaveScreenshot( {
-            name: `style-book-${ formattedName }.png`,
+            block.locator( STYLEBOOK_PREVIEW_SELECTOR )
+        ).toHaveScreenshot( `style-book-${ formattedName }.png`, {
             maxDiffPixelRatio: 0.01,
         } );
     }

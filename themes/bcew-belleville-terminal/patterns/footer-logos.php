@@ -12,39 +12,35 @@
  */
 
 $bc_logo_url         = get_stylesheet_directory_uri() . '/assets/images/bc_logo.png';
-$belleville_logo_url = get_stylesheet_directory_uri() . '/assets/images/belleville_logo.svg';
+$ti_logo_url         = get_stylesheet_directory_uri() . '/assets/images/ti_logo.png';
 $canada_logo_url     = get_stylesheet_directory_uri() . '/assets/images/canada_logo.png';
-$belleville_home_url = home_url( '/' );
 ?>
 <!-- wp:group {"className":"footer-logos","style":{"spacing":{"blockGap":"1rem"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"left","verticalAlignment":"center"}} -->
 <div class="wp-block-group footer-logos">
-    <!-- wp:image {"width":"145px","sizeSlug":"full","linkDestination":"custom","className":"footer-logo footer-logo-canada"} -->
+    <!-- wp:image {"width":"145px","sizeSlug":"full","className":"footer-logo footer-logo-canada"} -->
     <figure class="wp-block-image size-full is-resized footer-logo footer-logo-canada"
-        ><a href="<?php echo esc_url( $belleville_home_url ); ?>"
-            ><img
-                src="<?php echo esc_url( $canada_logo_url ); ?>"
-                alt="<?php echo esc_attr__( 'Government of Canada', 'bc-extended-web-theme' ); ?>"
-                style="width: 145px" /></a
+        ><img
+            src="<?php echo esc_url( $canada_logo_url ); ?>"
+            alt="<?php echo esc_attr__( 'Government of Canada', 'bc-extended-web-theme' ); ?>"
+            style="width: 145px" /
     ></figure>
     <!-- /wp:image -->
 
-    <!-- wp:image {"width":"146px","sizeSlug":"full","linkDestination":"custom","className":"footer-logo footer-logo-bc"} -->
+    <!-- wp:image {"width":"146px","sizeSlug":"full","className":"footer-logo footer-logo-bc"} -->
     <figure class="wp-block-image size-full is-resized footer-logo footer-logo-bc"
-        ><a href="<?php echo esc_url( $belleville_home_url ); ?>"
-            ><img
-                src="<?php echo esc_url( $bc_logo_url ); ?>"
-                alt="<?php echo esc_attr__( 'Government of British Columbia', 'bc-extended-web-theme' ); ?>"
-                style="width: 146px" /></a
+        ><img
+            src="<?php echo esc_url( $bc_logo_url ); ?>"
+            alt="<?php echo esc_attr__( 'Government of British Columbia', 'bc-extended-web-theme' ); ?>"
+            style="width: 146px" /
     ></figure>
     <!-- /wp:image -->
 
-    <!-- wp:image {"width":"65px","sizeSlug":"full","linkDestination":"custom","className":"footer-logo footer-logo-belleville"} -->
-    <figure class="wp-block-image size-full is-resized footer-logo footer-logo-belleville"
-        ><a href="<?php echo esc_url( $belleville_home_url ); ?>"
-            ><img
-                src="<?php echo esc_url( $belleville_logo_url ); ?>"
-                alt="<?php echo esc_attr__( 'Belleville Terminal Redevelopment', 'bc-extended-web-theme' ); ?>"
-                style="width: 65px" /></a
+    <!-- wp:image {"width":"145px","sizeSlug":"full","className":"footer-logo footer-logo-ti"} -->
+    <figure class="wp-block-image size-full is-resized footer-logo footer-logo-ti"
+        ><img
+            src="<?php echo esc_url( $ti_logo_url ); ?>"
+            alt="<?php echo esc_attr__( 'TI Corporation', 'bc-extended-web-theme' ); ?>"
+            style="width: 145px" /
     ></figure>
     <!-- /wp:image -->
 </div>

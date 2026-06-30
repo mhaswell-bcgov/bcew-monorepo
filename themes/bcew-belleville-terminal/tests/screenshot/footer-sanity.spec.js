@@ -2,7 +2,7 @@ import { expect, test } from '@playwright/test';
 
 const DESKTOP_VIEWPORT = { width: 1440, height: 1200 };
 const MOBILE_VIEWPORT = { width: 375, height: 812 };
-const EXPECTED_LOGO_WIDTHS = [ 145, 146, 65 ];
+const EXPECTED_LOGO_WIDTHS = [ 145, 146, 145 ];
 
 const openHomePage = async ( page, viewport ) => {
     await page.setViewportSize( viewport );
