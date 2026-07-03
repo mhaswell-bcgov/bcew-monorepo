@@ -54,7 +54,7 @@
                 },
                 "spacing": {
                     "margin": {
-                        "top": "1.25rem!important"
+                        "top": "1rem!important"
                     }
                 }
             },
@@ -64,7 +64,7 @@
                 },
                 "spacing": {
                     "margin": {
-                        "top": "1.25rem!important"
+                        "top": "1rem!important"
                     }
                 }
             }
@@ -78,11 +78,35 @@
                 },
                 "spacing": {
                     "margin": {
-                        "top": "1.25rem!important"
+                        "top": "1rem!important",
+                        "bottom": "0"
                     }
                 }
             },
-
+            "core/buttons": {
+                "layout": {
+                    "type": "flex",
+                    "justifyContent": "left"
+                },
+                "spacing": {
+                    "margin": {
+                        "top": "1rem!important"
+                    }
+                }
+            },
+            "core/button": {
+                "typography": {
+                    "textAlign": "left"
+                }
+            },
+            "core/paragraph": {
+                "spacing": {
+                    "margin": {
+                        "top": "1rem!important",
+                        "bottom": "0"
+                    }
+                }
+            },
             "core/separator": {
                 "dimensions": {
                     "maxWidth": "70rem"

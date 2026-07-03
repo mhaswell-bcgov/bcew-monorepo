@@ -6,6 +6,7 @@
 
         > :is(.wp-block-bcew-blocks-icon, [data-type='bcew-blocks/icon']) {
             grid-row: 1;
+            margin-block-end: 1rem;
         }
 
         > :is(
@@ -45,6 +46,7 @@
 
     &.is-layout-icon-left .bcgov-wp-blocks-icon-text-block__layout-shell {
         grid-template-columns: auto minmax(0, 1fr);
+        column-gap: 1rem;
         align-items: start;
 
         > :is(.wp-block-bcew-blocks-icon, [data-type='bcew-blocks/icon']) {
@@ -76,7 +78,6 @@
             grid-column: 2;
             grid-row: 1;
             align-self: center;
-            margin-block: 0;
             min-width: 0;
         }
 
@@ -115,6 +116,7 @@
             > :is(.wp-block-bcew-blocks-icon, [data-type='bcew-blocks/icon']) {
                 grid-column: 1 !important;
                 grid-row: 1 !important;
+                margin-block-end: 1rem !important;
             }
 
             > :is(.wp-block-heading, [data-type='core/heading'], h1, h2, h3, h4, h5, h6) {

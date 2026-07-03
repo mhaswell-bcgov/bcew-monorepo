@@ -26,7 +26,7 @@ import './editor.scss';
 const CARDS_BLOCK = 'bcew-blocks/cards';
 
 const TEMPLATE = [
-    [ 'core/heading' ],
+    [ 'core/heading', { level: 3 } ],
     [ 'core/paragraph' ],
     [ 'core/list' ],
     [ 'core/buttons' ],

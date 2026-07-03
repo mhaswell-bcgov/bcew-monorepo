@@ -15,14 +15,6 @@ import './editor.scss';
 const CARDS_BLOCK = 'bcew-blocks/cards';
 
 const PARAGRAPH_ATTRS = {
-    style: {
-        spacing: {
-            margin: {
-                top: '0rem',
-                bottom: '0.5rem',
-            },
-        },
-    },
     lock: {
         move: true,
         remove: true,
@@ -30,17 +22,6 @@ const PARAGRAPH_ATTRS = {
 };
 
 const LIST_ATTRS = {
-    style: {
-        typography: {
-            lineHeight: '1.688rem',
-        },
-        spacing: {
-            margin: {
-                top: '0rem',
-                bottom: '1rem',
-            },
-        },
-    },
     lock: {
         move: true,
         remove: true,
@@ -60,14 +41,7 @@ const INNER_BLOCKS_TEMPLATE = [
     [
         'core/heading',
         {
-            style: {
-                spacing: {
-                    margin: {
-                        top: '0rem',
-                        bottom: '0.75rem',
-                    },
-                },
-            },
+            level: 3,
             lock: {
                 move: true,
                 remove: true,
