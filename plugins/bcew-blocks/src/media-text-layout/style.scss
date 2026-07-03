@@ -27,6 +27,21 @@
         flex: 0 0 var(--ratio-content);
         padding: 1.5rem 1rem;
         order: 1;
+
+        .wp-block-buttons {
+            justify-content: flex-start;
+        }
+
+        .wp-block-button {
+            width: auto;
+            max-width: 100%;
+        }
+
+        .wp-block-button__link {
+            width: auto !important;
+            max-width: 100%;
+            box-sizing: border-box;
+        }
     }
 
     /* Layout setting */
