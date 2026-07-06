@@ -19,8 +19,8 @@
     .bcew-blocks-cards.block-editor-block-list__layout.bcew-blocks-cards--count-5,
     .bcew-blocks-cards.block-editor-block-list__layout.bcew-blocks-cards--count-6 {
 
-        > .block-editor-block-list__block:nth-child(-n + 3) {
-            margin-block-end: var(--bcew-cards-row-gap, 1.5rem) !important;
+        > .block-editor-block-list__block:nth-child(n + 4) {
+            margin-block-start: var(--bcew-cards-row-gap, 1.5rem) !important;
         }
     }
 }

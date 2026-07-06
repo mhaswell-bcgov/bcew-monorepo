@@ -23,6 +23,11 @@ $cards-slot-child: ':is(.bcew-blocks-card, .wp-block-bcew-blocks-card, .block-ed
     align-items: stretch;
 }
 
+/* Space between stacked Cards blocks matches in-row vertical gap. */
+.wp-block-bcew-blocks-cards + .wp-block-bcew-blocks-cards {
+    margin-block-start: var(--bcew-cards-row-gap, 1.5rem);
+}
+
 .bcew-blocks-cards.is-layout-flow,
 .bcew-blocks-cards.is-layout-constrained,
 .bcew-blocks-cards.is-layout-flex,
