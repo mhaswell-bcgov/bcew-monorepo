@@ -1,10 +1,17 @@
 <!-- wp:group {"align":"wide","className":"has-base-background-color has-background","style":{"spacing":{"padding":{"right":"1rem","left":"1rem"}}},"layout":{"type":"constrained"}} -->
-<div class="wp-block-group alignwide has-base-background-color has-background"
-    style="padding-right:1rem;padding-left:1rem">
-    <!-- wp:template-part {"slug":"top-header-row","theme":"bcew-belleville-terminal"} /-->
+<div class="wp-block-group alignwide has-base-background-color has-background" style="padding-right:1rem;padding-left:1rem"><!-- wp:group {"align":"wide","layout":{"type":"flex","justifyContent":"space-between","flexWrap":"wrap"}} -->
+<div class="wp-block-group alignwide"><!-- wp:site-logo {"width":84} /-->
 
-    <!-- wp:template-part {"slug":"desktop-navigation","theme":"bcew-belleville-terminal","align":"full"} /-->
+<!-- wp:design-system-wordpress-plugin/navigation {"overlayMenu":"always","ref":6,"menuId":6,"mobileBreakpoint":782,"showInDesktop":false,"showInMobile":true} /-->
 
-    <!-- wp:template-part {"slug":"breadcrumb","theme":"bcew-belleville-terminal","align":"full"} /-->
-</div>
+<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"}}},"layout":{"type":"constrained","justifyContent":"left"}} -->
+<div class="wp-block-group" style="padding-top:var(--wp--preset--spacing--40);padding-bottom:var(--wp--preset--spacing--40)"><!-- wp:search {"label":"Search","showLabel":false,"buttonText":"Search","style":{"border":{"radius":"4px"}}} /--></div>
+<!-- /wp:group --></div>
+<!-- /wp:group -->
+
+<!-- wp:group {"align":"full","style":{"border":{"top":{"width":"1px","color":"var:preset|color|border-default"},"right":{"width":"0px","style":"none"},"bottom":{"width":"1px","color":"var:preset|color|border-default"},"left":{"width":"0px","style":"none"}},"dimensions":{"minHeight":"40px"},"spacing":{"padding":{"top":"0.13rem","bottom":"0.13rem"}}},"backgroundColor":"hporoo-subheader-nav","layout":{"type":"constrained","contentSize":"1200px","wideSize":"1920px"}} -->
+<div class="wp-block-group alignfull has-hporoo-subheader-nav-background-color has-background" style="border-top-color:var(--wp--preset--color--border-default);border-top-width:1px;border-right-style:none;border-right-width:0px;border-bottom-color:var(--wp--preset--color--border-default);border-bottom-width:1px;border-left-style:none;border-left-width:0px;min-height:40px;padding-top:0.13rem;padding-bottom:0.13rem"><!-- wp:design-system-wordpress-plugin/navigation {"ref":6,"menuId":6,"mobileBreakpoint":1200,"style":{"typography":{"lineHeight":"1.7"}}} /--></div>
+<!-- /wp:group -->
+
+<!-- wp:design-system-wordpress-plugin/breadcrumb /--></div>
 <!-- /wp:group -->
