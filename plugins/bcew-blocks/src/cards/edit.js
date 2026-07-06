@@ -27,6 +27,7 @@ import {
     CARD_BLOCK,
     CARD_CONTENT_TYPES,
     DEFAULT_CARD_CONTENT_TYPE,
+    DEFAULT_CARD_COUNT,
     MAX_CARD_SLOTS,
     MIN_CARD_SLOTS,
 } from './constants';
@@ -55,8 +56,13 @@ const buildTemplate = ( cardCount, contentType ) =>
  * @return {import('react').ReactElement} Editor element.
  */
 const Edit = ( { clientId, attributes, setAttributes } ) => {
-    const { cardCount, contentType, boxShadow, showParagraph, showList } =
-        attributes;
+    const {
+        cardCount = DEFAULT_CARD_COUNT,
+        contentType,
+        boxShadow,
+        showParagraph,
+        showList,
+    } = attributes;
     const normalizedType = CARD_CONTENT_TYPES[ contentType ]
         ? contentType
         : DEFAULT_CARD_CONTENT_TYPE;
