@@ -3,6 +3,13 @@
  *
  * Replace them with your own styles or remove the file completely.
  */
+.editor-styles-wrapper .wp-block-bcew-blocks-media-text-layout.has-box-shadow .layout-shell {
+    --bcew-media-text-shadow:
+        0 0.6px 1.8px 0 rgba(0, 0, 0, 0.1),
+        0 3.2px 7.2px 0 rgba(0, 0, 0, 0.13);
+    box-shadow: var(--bcew-media-text-shadow);
+}
+
 .editor-styles-wrapper .layout-shell .media-text-content {
 
     .wp-block-buttons {

@@ -97,9 +97,8 @@ const Edit = ( {
 } = {} ) => {
     const { layout, boxShadow, showParagraph, showList } = attributes;
 
-    // Inside a Cards block the shadow and content toggles are controlled once
-    // at the row level, so the per-block toggles are hidden to keep a single
-    // source of truth.
+    // Inside a Cards block the content and shadow toggles are controlled once at
+    // the row level, so the per-block toggles are hidden.
     const isInsideCards = useSelect(
         ( select ) =>
             select( blockEditorStore ).getBlockParentsByBlockName(
@@ -152,7 +151,7 @@ const Edit = ( {
         ? layout
         : 'icon-left';
     const layoutClass = `is-layout-${ normalizedLayout }`;
-    const shadowClass = boxShadow ? ' has-box-shadow' : '';
+    const shadowClass = ! isInsideCards && boxShadow ? ' has-box-shadow' : '';
 
     const blockProps = useBlockProps( {
         className: `bcgov-wp-blocks-icon-text-block ${ layoutClass }${ shadowClass }`,
