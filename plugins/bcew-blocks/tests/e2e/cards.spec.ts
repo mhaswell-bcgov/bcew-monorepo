@@ -141,12 +141,12 @@ test.describe( 'Cards block — full user journey', () => {
 
         const iconCards = getCardsBlock( editor, 0 );
         await expect( iconCards ).toBeVisible();
-        // Defaults to a single Icon + Text card.
+        // Defaults to two Icon + Text cards.
         await expect( iconCards ).toHaveClass(
             /bcew-blocks-cards--type-icon-text/
         );
         await expect( getNestedBlocks( iconCards, CARD_BLOCK ) ).toHaveCount(
-            1
+            2
         );
 
         // Grow the row to three cards via the count slider.
@@ -173,12 +173,12 @@ test.describe( 'Cards block — full user journey', () => {
         );
         await expect(
             getNestedBlocks( mediaCards, MEDIA_TEXT_BLOCK )
-        ).toHaveCount( 1 );
+        ).toHaveCount( 2 );
         await expect(
             getNestedBlocks( mediaCards, ICON_TEXT_BLOCK )
         ).toHaveCount( 0 );
 
-        // Grow this row to two cards.
+        // Confirm two cards via the count control (matches the default).
         await setCardCount( editor, mediaCards, MEDIA_ROW.count );
         await expect(
             getNestedBlocks( mediaCards, MEDIA_TEXT_BLOCK )

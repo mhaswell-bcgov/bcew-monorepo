@@ -27,7 +27,9 @@ import {
     CARD_BLOCK,
     CARD_CONTENT_TYPES,
     DEFAULT_CARD_CONTENT_TYPE,
+    DEFAULT_CARD_COUNT,
     MAX_CARD_SLOTS,
+    MIN_CARD_SLOTS,
 } from './constants';
 
 const ALLOWED_BLOCKS = [ CARD_BLOCK ];
@@ -54,8 +56,13 @@ const buildTemplate = ( cardCount, contentType ) =>
  * @return {import('react').ReactElement} Editor element.
  */
 const Edit = ( { clientId, attributes, setAttributes } ) => {
-    const { cardCount, contentType, boxShadow, showParagraph, showList } =
-        attributes;
+    const {
+        cardCount = DEFAULT_CARD_COUNT,
+        contentType,
+        boxShadow,
+        showParagraph,
+        showList,
+    } = attributes;
     const normalizedType = CARD_CONTENT_TYPES[ contentType ]
         ? contentType
         : DEFAULT_CARD_CONTENT_TYPE;
@@ -117,7 +124,10 @@ const Edit = ( { clientId, attributes, setAttributes } ) => {
     } );
 
     const onChangeCardCount = ( value ) => {
-        const clamped = Math.min( Math.max( value, 1 ), MAX_CARD_SLOTS );
+        const clamped = Math.min(
+            Math.max( value, MIN_CARD_SLOTS ),
+            MAX_CARD_SLOTS
+        );
         setAttributes( { cardCount: clamped } );
 
         let nextCards = cardBlocks.slice( 0, clamped );
@@ -173,7 +183,7 @@ const Edit = ( { clientId, attributes, setAttributes } ) => {
                         label={ __( 'Number of cards', 'bcew-blocks' ) }
                         value={ cardCount }
                         onChange={ onChangeCardCount }
-                        min={ 1 }
+                        min={ MIN_CARD_SLOTS }
                         max={ MAX_CARD_SLOTS }
                         __nextHasNoMarginBottom
                     />

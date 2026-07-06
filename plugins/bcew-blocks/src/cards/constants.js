@@ -1,7 +1,10 @@
 /** @typedef {[string, Record<string, unknown>?]} CardTemplateEntry */
 
 export const CARD_BLOCK = 'bcew-blocks/card';
-export const MAX_CARD_SLOTS = 3;
+export const MIN_CARD_SLOTS = 2;
+export const MAX_CARD_SLOTS = 6;
+/** Default card count for new Cards blocks (keep block.json in sync). */
+export const DEFAULT_CARD_COUNT = 2;
 
 /**
  * Selectable card content types, mapped to the block each one renders.
