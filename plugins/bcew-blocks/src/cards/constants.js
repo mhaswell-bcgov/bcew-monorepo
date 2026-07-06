@@ -1,7 +1,13 @@
 /** @typedef {[string, Record<string, unknown>?]} CardTemplateEntry */
 
 export const CARD_BLOCK = 'bcew-blocks/card';
-export const MAX_CARD_SLOTS = 3;
+export const MIN_CARD_SLOTS = 2;
+export const MAX_CARD_SLOTS = 6;
+export const DEFAULT_CARD_COUNT = 2;
+/** Content subgrid rows shared across cards in the same visual row. */
+export const CARDS_SUBGRID_CONTENT_ROWS = 6;
+/** Grid rows each card slot spans in the parent subgrid. */
+export const CARDS_GRID_ROW_SPAN = CARDS_SUBGRID_CONTENT_ROWS;
 
 /**
  * Selectable card content types, mapped to the block each one renders.

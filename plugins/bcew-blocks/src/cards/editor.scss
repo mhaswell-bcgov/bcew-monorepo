@@ -1,12 +1,39 @@
 @import './style';
 
 /* Editor: each card block is wrapped in .block-editor-block-list__block.
-   Reset the default block chrome so the grid/subgrid controls sizing. */
+   Reset the default block chrome so the grid/subgrid controls sizing.
+   Do not zero margin-block-end — wrapped rows use it for row-gap. */
 .bcew-blocks-cards.block-editor-block-list__layout
     > .block-editor-block-list__block {
-    margin: 0 !important;
+    margin-inline: 0 !important;
+    margin-block-start: 0 !important;
     min-width: 0 !important;
     max-width: 100% !important;
     width: 100%;
     float: none !important;
+}
+
+@media (min-width: 782px) {
+
+    .bcew-blocks-cards.block-editor-block-list__layout {
+        row-gap: 0;
+        grid-template-columns: repeat(
+            var(--bcew-cards-columns, 3),
+            var(--bcew-cards-column-width, 22rem)
+        );
+
+        &.bcew-blocks-cards--count-2 {
+            --bcew-cards-columns: 2;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        &.bcew-blocks-cards--count-4,
+        &.bcew-blocks-cards--count-5,
+        &.bcew-blocks-cards--count-6 {
+
+            > .block-editor-block-list__block:nth-child(-n + 3) {
+                margin-block-end: var(--bcew-cards-row-gap, 1.5rem) !important;
+            }
+        }
+    }
 }

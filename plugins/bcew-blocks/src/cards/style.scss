@@ -1,19 +1,24 @@
 @import './cards-layout';
 
+/* Direct child selectors for card slots (frontend block wrapper + editor chrome). */
+$cards-slot-child: ':is(.bcew-blocks-card, .wp-block-bcew-blocks-card, .block-editor-block-list__block)';
+
 /* Cards container: a CSS grid in both the editor and the frontend. On wide
    viewports the columns hold the cards side by side and the rows are shared
    for cross-card alignment (see cards-layout.scss). Below the breakpoint the
    cards stack in a single column and each block uses its standalone layout. */
 .bcew-blocks-cards {
+    --bcew-cards-column-width: 22rem;
+    --bcew-cards-gap: 4.55rem;
+    --bcew-cards-row-gap: 1.5rem;
+    --bcew-cards-columns: 3;
+    --bcew-cards-subgrid-content-rows: 6;
+    --bcew-cards-subgrid-row-span: 6;
+
     display: grid !important;
     grid-template-columns: minmax(0, 1fr);
-    column-gap: 1.5rem;
-
-    /* Mobile: cards stack in one column, so a vertical gap separates them.
-       On desktop the cards sit in columns and the rows are the shared subgrid
-       content tracks, which must be gap-free (see the breakpoint below) so
-       hidden/empty rows don't leave phantom space between them. */
-    row-gap: 1.5rem;
+    column-gap: var(--bcew-cards-gap);
+    row-gap: var(--bcew-cards-row-gap);
     width: 100%;
     align-items: stretch;
 }
@@ -28,28 +33,28 @@
 }
 
 /* Render only as many card slots as the chosen count. */
-.bcew-blocks-cards--count-1
-    > :is(.bcew-blocks-card, .wp-block-bcew-blocks-card):nth-child(n + 2),
-.bcew-blocks-cards--count-2
-    > :is(.bcew-blocks-card, .wp-block-bcew-blocks-card):nth-child(n + 3),
-.bcew-blocks-cards--count-3
-    > :is(.bcew-blocks-card, .wp-block-bcew-blocks-card):nth-child(n + 4) {
+.bcew-blocks-cards--count-1 > #{$cards-slot-child}:nth-child(n + 2),
+.bcew-blocks-cards--count-2 > #{$cards-slot-child}:nth-child(n + 3),
+.bcew-blocks-cards--count-3 > #{$cards-slot-child}:nth-child(n + 4),
+.bcew-blocks-cards--count-4 > #{$cards-slot-child}:nth-child(n + 5),
+.bcew-blocks-cards--count-5 > #{$cards-slot-child}:nth-child(n + 6),
+.bcew-blocks-cards--count-6 > #{$cards-slot-child}:nth-child(n + 7) {
     display: none !important;
 }
 
 @media (min-width: 782px) {
 
-    /* Cards are side by side now; the vertical rhythm is the subgrid content
-       tracks, so the row gap must collapse to avoid space between empty rows. */
     .bcew-blocks-cards {
         row-gap: 0;
+        grid-template-columns: repeat(
+            var(--bcew-cards-columns, 3),
+            var(--bcew-cards-column-width, 22rem)
+        );
     }
 
+    /* Two cards: equal halves of the row (not the fixed 22rem column width). */
     .bcew-blocks-cards.bcew-blocks-cards--count-2 {
+        --bcew-cards-columns: 2;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .bcew-blocks-cards.bcew-blocks-cards--count-3 {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 }
