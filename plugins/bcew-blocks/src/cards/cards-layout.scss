@@ -10,13 +10,39 @@
     .bcew-blocks-cards--type-icon-text,
     .bcew-blocks-cards--type-media-text {
         align-items: stretch;
-        column-gap: 1.5rem;
+        column-gap: var(--bcew-cards-gap, 4.55rem);
         row-gap: 0;
+        grid-auto-rows: auto auto auto auto 1fr auto;
 
-        > .bcew-blocks-card {
+        > :is(.bcew-blocks-card, .wp-block-bcew-blocks-card) {
             display: grid !important;
             grid-template-rows: subgrid;
-            grid-row: 1 / -1;
+            grid-row: span var(--bcew-cards-subgrid-row-span, 6);
+            row-gap: 0;
+            min-width: 0;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        /* Editor: the list-block wrapper is the grid item, not .bcew-blocks-card. */
+        &.block-editor-block-list__layout > .block-editor-block-list__block {
+            display: grid !important;
+            grid-template-rows: subgrid;
+            grid-row: span var(--bcew-cards-subgrid-row-span, 6);
+            row-gap: 0;
+            min-width: 0;
+            width: 100%;
+            max-width: 100%;
+            margin-inline: 0 !important;
+            margin-block-start: 0 !important;
+        }
+
+        &.block-editor-block-list__layout
+            > .block-editor-block-list__block
+            > .bcew-blocks-card {
+            display: grid !important;
+            grid-template-rows: subgrid;
+            grid-row: 1 / span var(--bcew-cards-subgrid-content-rows, 6);
             row-gap: 0;
             min-width: 0;
             width: 100%;
@@ -26,7 +52,7 @@
         .bcew-blocks-card__content {
             display: grid !important;
             grid-template-rows: subgrid;
-            grid-row: 1 / -1;
+            grid-row: 1 / span var(--bcew-cards-subgrid-content-rows, 6);
             row-gap: 0;
             min-width: 0;
             width: 100%;
@@ -40,7 +66,7 @@
             ) {
             display: grid !important;
             grid-template-rows: subgrid;
-            grid-row: 1 / -1;
+            grid-row: 1 / span var(--bcew-cards-subgrid-content-rows, 6);
             row-gap: 0;
             min-width: 0;
             width: 100%;
@@ -64,18 +90,27 @@
             word-break: normal;
             min-width: 0;
         }
+
+        /* Wrapped rows: margin below the first row (frontend card wrappers). */
+        &.bcew-blocks-cards--count-4,
+        &.bcew-blocks-cards--count-5,
+        &.bcew-blocks-cards--count-6 {
+
+            > :is(.bcew-blocks-card, .wp-block-bcew-blocks-card):nth-child(-n + 3) {
+                margin-block-end: var(--bcew-cards-row-gap, 1.5rem);
+            }
+        }
     }
 
     /* ================= Icon + Text (6-row model) =================
        row 1 icon (icon-top) / empty (icon-left), row 2 heading,
        row 3 paragraph, row 4 list, row 5 spacer (1fr), row 6 button. */
     .bcew-blocks-cards--type-icon-text {
-        grid-template-rows: auto auto auto auto 1fr auto;
 
         .bcgov-wp-blocks-icon-text-block__layout-shell {
             display: grid !important;
             grid-template-rows: subgrid !important;
-            grid-row: 1 / -1;
+            grid-row: 1 / span var(--bcew-cards-subgrid-content-rows, 6);
             row-gap: 0;
             column-gap: 1rem;
             min-width: 0;
@@ -142,7 +177,6 @@
        line up across cards via subgrid, and the spacer keeps the CTAs
        bottom-aligned. */
     .bcew-blocks-cards--type-media-text {
-        grid-template-rows: auto auto auto auto 1fr auto;
 
         .wp-block-bcew-blocks-media-text-layout,
         [data-type='bcew-blocks/media-text-layout'] {
@@ -155,7 +189,7 @@
             display: grid !important;
             flex-direction: unset !important;
             grid-template-rows: subgrid !important;
-            grid-row: 1 / -1;
+            grid-row: 1 / span var(--bcew-cards-subgrid-content-rows, 6);
             grid-template-columns: minmax(0, 1fr) !important;
             row-gap: 0;
             min-width: 0 !important;
