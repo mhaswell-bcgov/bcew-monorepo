@@ -49,15 +49,7 @@ $cards-slot-child: ':is(.bcew-blocks-card, .wp-block-bcew-blocks-card, .block-ed
         row-gap: 0;
         --bcew-cards-column-width: min(
             var(--bcew-cards-column-max),
-            calc(
-                (
-                        100% -
-                            (
-                                (var(--bcew-cards-columns) - 1) *
-                                    var(--bcew-cards-gap)
-                            )
-                    ) / var(--bcew-cards-columns)
-            )
+            calc((100% - ((var(--bcew-cards-columns) - 1) * var(--bcew-cards-gap))) / var(--bcew-cards-columns))
         );
         grid-template-columns: repeat(
             var(--bcew-cards-columns, 3),
