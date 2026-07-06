@@ -8,7 +8,7 @@ $cards-slot-child: ':is(.bcew-blocks-card, .wp-block-bcew-blocks-card, .block-ed
    for cross-card alignment (see cards-layout.scss). Below the breakpoint the
    cards stack in a single column and each block uses its standalone layout. */
 .bcew-blocks-cards {
-    --bcew-cards-column-width: 22rem;
+    --bcew-cards-column-max: 22rem;
     --bcew-cards-gap: 4.55rem;
     --bcew-cards-row-gap: 1.5rem;
     --bcew-cards-columns: 3;
@@ -44,11 +44,24 @@ $cards-slot-child: ':is(.bcew-blocks-card, .wp-block-bcew-blocks-card, .block-ed
 
 @media (min-width: 782px) {
 
+    /* Columns shrink with the container up to 22rem; gaps stay fixed. */
     .bcew-blocks-cards {
         row-gap: 0;
+        --bcew-cards-column-width: min(
+            var(--bcew-cards-column-max),
+            calc(
+                (
+                        100% -
+                            (
+                                (var(--bcew-cards-columns) - 1) *
+                                    var(--bcew-cards-gap)
+                            )
+                    ) / var(--bcew-cards-columns)
+            )
+        );
         grid-template-columns: repeat(
             var(--bcew-cards-columns, 3),
-            var(--bcew-cards-column-width, 22rem)
+            minmax(0, var(--bcew-cards-column-width))
         );
     }
 
