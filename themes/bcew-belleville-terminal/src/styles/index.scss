@@ -42,6 +42,12 @@
   max-width: none;
 }
 
+/* Header navigation spacing to keep the bar at 40px while using 168% line-height */
+.wp-block-design-system-wordpress-plugin-navigation {
+  max-height: 40px;
+  align-items: center;
+}
+
 @media (max-width: 1200px) {
 
   .bcgov-footer-container.footer-shell {
