@@ -68,16 +68,12 @@
     }
 }
 
-/* This avoids pixel-level conflicts with the image and border */
-.layout-shell::after {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    inset: 0;
-    border: 1px solid var(--dswp-surface-color-border-default);
-    box-shadow:
-        0 0.6px 1.8px 0 var(--dswp-surface-color-border-default),
-        0 3.2px 7.2px 0 var(--dswp-surface-color-border-default);
-    border-radius: inherit;
-    pointer-events: none;
+.wp-block-bcew-blocks-media-text-layout {
+    --bcew-media-text-shadow:
+        0 0.6px 1.8px 0 rgba(0, 0, 0, 0.1),
+        0 3.2px 7.2px 0 rgba(0, 0, 0, 0.13);
+
+    &.has-box-shadow .layout-shell {
+        box-shadow: var(--bcew-media-text-shadow);
+    }
 }

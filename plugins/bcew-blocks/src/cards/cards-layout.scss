@@ -91,13 +91,13 @@
             min-width: 0;
         }
 
-        /* Wrapped rows: margin below the first row (frontend card wrappers). */
+        /* Wrapped rows: margin-top on row 2+ cards matches vertical row-gap. */
         &.bcew-blocks-cards--count-4,
         &.bcew-blocks-cards--count-5,
         &.bcew-blocks-cards--count-6 {
 
-            > :is(.bcew-blocks-card, .wp-block-bcew-blocks-card):nth-child(-n + 3) {
-                margin-block-end: var(--bcew-cards-row-gap, 1.5rem);
+            > :is(.bcew-blocks-card, .wp-block-bcew-blocks-card):nth-child(n + 4) {
+                margin-block-start: var(--bcew-cards-row-gap, 1.5rem);
             }
         }
     }

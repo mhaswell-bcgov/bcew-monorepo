@@ -66,7 +66,6 @@ const Edit = ( { clientId, attributes, setAttributes } ) => {
     const normalizedType = CARD_CONTENT_TYPES[ contentType ]
         ? contentType
         : DEFAULT_CARD_CONTENT_TYPE;
-    const isIconText = 'icon-text' === normalizedType;
 
     const { replaceInnerBlocks, updateBlockAttributes } =
         useDispatch( blockEditorStore );
@@ -75,10 +74,9 @@ const Edit = ( { clientId, attributes, setAttributes } ) => {
         [ clientId ]
     );
 
-    // The shadow and content toggles are single, row-level settings: mirror
-    // them onto every content block in the row so they always match (including
-    // cards added after a toggle was set). The per-block toggles are hidden
-    // inside cards, so this stays the single source of truth.
+    // The content toggles are single, row-level settings: mirror them onto every
+    // content block in the row so they always match (including cards added after
+    // a toggle was set). Box shadow is controlled on this block only.
     useEffect( () => {
         cardBlocks.forEach( ( card ) => {
             card.innerBlocks?.forEach( ( inner ) => {
@@ -93,29 +91,18 @@ const Edit = ( { clientId, attributes, setAttributes } ) => {
                 if ( inner.attributes?.showList !== showList ) {
                     updates.showList = showList;
                 }
-                // Box shadow only applies to the icon-text block.
-                if (
-                    ICON_TEXT_BLOCK === inner.name &&
-                    inner.attributes?.boxShadow !== boxShadow
-                ) {
-                    updates.boxShadow = boxShadow;
-                }
 
                 if ( Object.keys( updates ).length > 0 ) {
                     updateBlockAttributes( inner.clientId, updates );
                 }
             } );
         } );
-    }, [
-        boxShadow,
-        showParagraph,
-        showList,
-        cardBlocks,
-        updateBlockAttributes,
-    ] );
+    }, [ showParagraph, showList, cardBlocks, updateBlockAttributes ] );
 
     const blockProps = useBlockProps( {
-        className: `bcew-blocks-cards bcew-blocks-cards--count-${ cardCount } bcew-blocks-cards--type-${ normalizedType }`,
+        className: `bcew-blocks-cards bcew-blocks-cards--count-${ cardCount } bcew-blocks-cards--type-${ normalizedType }${
+            boxShadow ? ' has-box-shadow' : ''
+        }`,
     } );
     const innerBlocksProps = useInnerBlocksProps( blockProps, {
         allowedBlocks: ALLOWED_BLOCKS,
@@ -188,10 +175,7 @@ const Edit = ( { clientId, attributes, setAttributes } ) => {
                         __nextHasNoMarginBottom
                     />
                 </PanelBody>
-                <PanelBody
-                    title={ __( 'Content', 'bcew-blocks' ) }
-                    initialOpen={ false }
-                >
+                <PanelBody title={ __( 'Content', 'bcew-blocks' ) } initialOpen>
                     <ToggleControl
                         __nextHasNoMarginBottom
                         label={ __( 'Show paragraph', 'bcew-blocks' ) }
@@ -217,25 +201,20 @@ const Edit = ( { clientId, attributes, setAttributes } ) => {
                         }
                     />
                 </PanelBody>
-                { isIconText && (
-                    <PanelBody
-                        title={ __( 'Style', 'bcew-blocks' ) }
-                        initialOpen={ false }
-                    >
-                        <ToggleControl
-                            __nextHasNoMarginBottom
-                            label={ __( 'Box shadow', 'bcew-blocks' ) }
-                            help={ __(
-                                'Adds a drop shadow to every card in this row.',
-                                'bcew-blocks'
-                            ) }
-                            checked={ !! boxShadow }
-                            onChange={ ( value ) =>
-                                setAttributes( { boxShadow: value } )
-                            }
-                        />
-                    </PanelBody>
-                ) }
+                <PanelBody title={ __( 'Style', 'bcew-blocks' ) } initialOpen>
+                    <ToggleControl
+                        __nextHasNoMarginBottom
+                        label={ __( 'Box shadow', 'bcew-blocks' ) }
+                        help={ __(
+                            'Adds a drop shadow to every card in this row.',
+                            'bcew-blocks'
+                        ) }
+                        checked={ !! boxShadow }
+                        onChange={ ( value ) =>
+                            setAttributes( { boxShadow: value } )
+                        }
+                    />
+                </PanelBody>
             </InspectorControls>
             <div { ...innerBlocksProps } />
         </>

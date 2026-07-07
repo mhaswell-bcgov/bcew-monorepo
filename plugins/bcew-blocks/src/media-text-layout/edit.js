@@ -64,6 +64,7 @@ const Edit = ( { attributes, setAttributes, clientId } ) => {
         characterLimit,
         showParagraph,
         showList,
+        boxShadow,
     } = attributes;
     const media = useSelect(
         ( select ) => {
@@ -76,9 +77,8 @@ const Edit = ( { attributes, setAttributes, clientId } ) => {
         [ imageId ]
     );
 
-    // Inside a Cards block the content toggles are controlled once at the row
-    // level, so the per-block toggles are hidden to keep a single source of
-    // truth.
+    // Inside a Cards block the content and shadow toggles are controlled once at
+    // the row level, so the per-block toggles are hidden.
     const isInsideCards = useSelect(
         ( select ) =>
             select( blockEditorStore ).getBlockParentsByBlockName(
@@ -130,8 +130,9 @@ const Edit = ( { attributes, setAttributes, clientId } ) => {
         '--ratio-content': `${ layoutRatio.content }%`,
     };
     const blockProps = useBlockProps( {
-        className:
-            'right' === imagePosition ? 'is-image-right' : 'is-image-left',
+        className: `${
+            'right' === imagePosition ? 'is-image-right' : 'is-image-left'
+        }${ ! isInsideCards && boxShadow ? ' has-box-shadow' : '' }`,
         style: styles,
     } );
 
@@ -183,6 +184,25 @@ const Edit = ( { attributes, setAttributes, clientId } ) => {
                         <div>{ characterLimit }</div>
                     </BaseControl>
                 </PanelBody>
+                { ! isInsideCards && (
+                    <PanelBody
+                        title={ __( 'Style', 'bcew-blocks' ) }
+                        initialOpen={ false }
+                    >
+                        <ToggleControl
+                            __nextHasNoMarginBottom
+                            label={ __( 'Box shadow', 'bcew-blocks' ) }
+                            help={ __(
+                                'Add a drop shadow around the block.',
+                                'bcew-blocks'
+                            ) }
+                            checked={ !! boxShadow }
+                            onChange={ ( value ) =>
+                                setAttributes( { boxShadow: value } )
+                            }
+                        />
+                    </PanelBody>
+                ) }
                 { ! isInsideCards && (
                     <PanelBody
                         title={ __( 'Content', 'bcew-blocks' ) }

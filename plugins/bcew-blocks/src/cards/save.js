@@ -9,9 +9,11 @@ import { useBlockProps, InnerBlocks } from '@wordpress/block-editor';
  * @return {import('react').ReactElement} Element to render.
  */
 const save = ( { attributes } ) => {
-    const { cardCount, contentType } = attributes;
+    const { cardCount, contentType, boxShadow } = attributes;
     const blockProps = useBlockProps.save( {
-        className: `bcew-blocks-cards bcew-blocks-cards--count-${ cardCount } bcew-blocks-cards--type-${ contentType }`,
+        className: `bcew-blocks-cards bcew-blocks-cards--count-${ cardCount } bcew-blocks-cards--type-${ contentType }${
+            boxShadow ? ' has-box-shadow' : ''
+        }`,
     } );
 
     return (

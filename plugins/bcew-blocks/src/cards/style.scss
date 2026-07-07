@@ -14,6 +14,9 @@ $cards-slot-child: ':is(.bcew-blocks-card, .wp-block-bcew-blocks-card, .block-ed
     --bcew-cards-columns: 3;
     --bcew-cards-subgrid-content-rows: 6;
     --bcew-cards-subgrid-row-span: 6;
+    --bcew-cards-shadow:
+        0 0.6px 1.8px 0 rgba(0, 0, 0, 0.1),
+        0 3.2px 7.2px 0 rgba(0, 0, 0, 0.13);
 
     display: grid !important;
     grid-template-columns: minmax(0, 1fr);
@@ -21,6 +24,39 @@ $cards-slot-child: ':is(.bcew-blocks-card, .wp-block-bcew-blocks-card, .block-ed
     row-gap: var(--bcew-cards-row-gap);
     width: 100%;
     align-items: stretch;
+}
+
+/* Space between stacked Cards blocks matches in-row vertical gap. */
+.wp-block-bcew-blocks-cards + .wp-block-bcew-blocks-cards {
+    margin-block-start: var(--bcew-cards-row-gap, 1.5rem);
+}
+
+/* Row-level shadow: applied from the Cards block toggle only. */
+.bcew-blocks-cards.has-box-shadow {
+
+    .bcew-blocks-card__content
+        > .wp-block-bcew-blocks-icon-text-block.bcgov-wp-blocks-icon-text-block {
+        box-shadow: var(--bcew-cards-shadow);
+    }
+
+    .bcew-blocks-card__content
+        > .wp-block-bcew-blocks-media-text-layout
+        .layout-shell {
+        box-shadow: var(--bcew-cards-shadow);
+    }
+}
+
+/* Per-block shadow toggles are standalone-only; suppress inside Cards unless the
+   row-level Cards shadow is enabled. */
+.bcew-blocks-cards:not(.has-box-shadow) .bcew-blocks-card__content
+    > .wp-block-bcew-blocks-icon-text-block.bcgov-wp-blocks-icon-text-block.has-box-shadow {
+    box-shadow: none;
+}
+
+.bcew-blocks-cards:not(.has-box-shadow) .bcew-blocks-card__content
+    > .wp-block-bcew-blocks-media-text-layout.has-box-shadow
+    .layout-shell {
+    box-shadow: none;
 }
 
 .bcew-blocks-cards.is-layout-flow,
