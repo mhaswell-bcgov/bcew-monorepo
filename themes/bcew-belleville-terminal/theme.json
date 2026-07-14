@@ -31,7 +31,7 @@
     },
 
     "styles": {
-        "css": ".belleville-search-page .wp-block-post-excerpt__excerpt{margin-top:0!important;}.belleville-search-page .wp-block-post-title{margin-top:0!important;}.belleville-search-page .wp-block-separator{padding-top:0!important;padding-bottom:0!important;}",
+        "css": "body.search.search-results :is(.wp-block-post-excerpt__excerpt,.wp-block-post-title){margin-top:0!important;}",
         "elements": {
             "h1": {
                 "typography": {
