@@ -4,9 +4,10 @@ set -euo pipefail
 PROJECT_PATH="${1:?project path required}"
 PROJECT_NAME="${2:?project name required}"
 VERSION="${3:-}"
+ASSET_NAME="${ASSET_NAME:?ASSET_NAME required}"
 
 REPO_ROOT="$(git rev-parse --show-toplevel)"
-OUTPUT_ZIP="${REPO_ROOT}/${PROJECT_PATH}/dist.zip"
+OUTPUT_ZIP="${REPO_ROOT}/${PROJECT_PATH}/${ASSET_NAME}"
 
 cd "${REPO_ROOT}"
 

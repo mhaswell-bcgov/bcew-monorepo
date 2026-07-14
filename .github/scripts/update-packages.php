@@ -9,6 +9,7 @@ $tag_name           = getenv( 'TAG' ); // e.g., "bcew-blocks/v1.2.0".
 $version            = getenv( 'VERSION' ); // e.g., "v1.2.0".
 $normalized_version = ltrim( $version, 'v' ); // e.g., "1.2.0".
 $project_path       = getenv( 'PROJECT_PATH' ); // e.g., 'themes/theme-a' or 'plugins/plugin-b'.
+$asset_name         = getenv( 'ASSET_NAME' ); // e.g., "bcew-blocks-1.2.0.zip".
 
 // Load the local composer.json for this subproject to get 'require', 'autoload', etc.
 // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
@@ -20,7 +21,7 @@ $new_entry = array_merge(
     [
 		'version' => $normalized_version,
 		'dist'    => [
-			'url'       => "https://github.com/$repository/releases/download/$tag_name/dist.zip",
+			'url'       => "https://github.com/$repository/releases/download/$tag_name/$asset_name",
 			'type'      => 'zip',
 			'reference' => $tag_name,
 		],
