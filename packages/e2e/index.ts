@@ -249,17 +249,14 @@ export const renderStylebook = async ( admin: any ) => {
             continue;
         }
 
-        const preview = block.locator( STYLEBOOK_PREVIEW_SELECTOR );
-        await expect( preview ).toBeVisible();
-        await expect( preview ).toHaveScreenshot(
-            `style-book-${ formattedName }.png`,
-            {
-                animations: 'disabled',
-                caret: 'hide',
-                scale: 'css',
-                maxDiffPixelRatio: 0.1,
-            }
-        );
+        await expect(
+            block.locator( STYLEBOOK_PREVIEW_SELECTOR )
+        ).toHaveScreenshot( `style-book-${ formattedName }.png`, {
+            animations: 'disabled',
+            caret: 'hide',
+            scale: 'css',
+            maxDiffPixelRatio: 0.02,
+        } );
     }
 };
 
