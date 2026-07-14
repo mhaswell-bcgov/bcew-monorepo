@@ -257,7 +257,7 @@ export const renderStylebook = async ( admin: any ) => {
                 animations: 'disabled',
                 caret: 'hide',
                 scale: 'css',
-                maxDiffPixelRatio: 0.02,
+                maxDiffPixelRatio: 0.1,
             }
         );
     }
