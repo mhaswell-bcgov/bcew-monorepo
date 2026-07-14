@@ -31,6 +31,7 @@
     },
 
     "styles": {
+        "css": "body.search.search-results :is(.wp-block-post-excerpt__excerpt,.wp-block-post-title){margin-top:0!important;}",
         "elements": {
             "h1": {
                 "typography": {
