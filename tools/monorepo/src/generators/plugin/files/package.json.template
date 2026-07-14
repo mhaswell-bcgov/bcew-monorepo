@@ -12,13 +12,14 @@
         "Gutenberg",
         "plugin"
     ],
-    "homepage": "https://github.com/bcgov/bcew-monorepo",
+    "homepage": "https://github.com/bcgov/bcew-monorepo/plugins/<%= slug %>",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/bcgov/<%= slug %>.git"
+        "url": "https://github.com/bcgov/bcew-monorepo.git",
+        "directory": "plugins/<%= slug %>"
     },
     "bugs": {
-        "url": "https://github.com/bcgov/<%= slug %>#readme",
+        "url": "https://github.com/bcgov/bcew-monorepo/issues",
         "email": "govwordpress@gov.bc.ca"
     },
     "dependencies": {

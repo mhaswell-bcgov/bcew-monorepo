@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       BCEW Blocks
- * Plugin URI:        https://github.com/bcgov/bcew-blocks
+ * Plugin URI:        https://github.com/bcgov/bcew-monorepo/plugins/bcew-blocks
  * Description:       Plugin containing blocks intended to be used with the Design System WordPress Theme suite of products.
  * Version:           1.0.0
  * Requires at least: 6.7
