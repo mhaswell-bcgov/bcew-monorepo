@@ -11,13 +11,14 @@
         "DesignSystem",
         "Gutenberg"
     ],
-    "homepage": "https://github.com/bcgov/bcew-monorepo",
+    "homepage": "https://github.com/bcgov/bcew-monorepo/themes/bcew-belleville-terminal",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/bcgov/bcew-monorepo.git"
+        "url": "https://github.com/bcgov/bcew-monorepo.git",
+        "directory": "themes/bcew-belleville-terminal"
     },
     "bugs": {
-        "url": "https://github.com/bcgov/bcew-monorepo#readme",
+        "url": "https://github.com/bcgov/bcew-monorepo/issues",
         "email": "govwordpress@gov.bc.ca"
     },
     "main": "index.ts",
