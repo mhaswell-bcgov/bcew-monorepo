@@ -20,6 +20,11 @@
                     "slug": "belleville-tertiary",
                     "color": "#6BCCE3",
                     "name": "Belleville Tertiary"
+                },
+                {
+                    "slug": "accent-primary",
+                    "color": "#00BBDA",
+                    "name": "Accent Primary"
                 }
             ]
         }
