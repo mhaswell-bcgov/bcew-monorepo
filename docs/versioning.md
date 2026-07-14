@@ -39,10 +39,10 @@ When **`tag.yml`** runs for a tag like `bcew-theme-2/v1.4.0`:
 
 1. The workflow parses the tag into project name (`bcew-theme-2`) and version (`1.4.0`).
 2. Source files in the repository are **not** modified.
-3. **Only if the version is `X.Y.Z`** (three numbers, e.g. `1.2.3`), the release **`dist.zip`** gets the version field updated:
+3. **Only if the version is `X.Y.Z`** (three numbers, e.g. `1.2.3`), the release zip (`<project>-<version>.zip`) gets the version field updated:
    - **Theme** — `Version:` line in `style.css`
    - **Plugin** — `* Version:` line in `<nx-project-name>.php`
-4. That updated file exists only inside **`dist.zip`** attached to the GitHub Release.
+4. That updated file exists only inside the release zip attached to the GitHub Release.
 
 Tags with other version shapes (for example `1.2.3-beta.1` or `0.0.1-test`) still release, but skip the version update step.
 
