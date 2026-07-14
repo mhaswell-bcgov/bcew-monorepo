@@ -11,13 +11,14 @@
         "DesignSystem",
         "Gutenberg"
     ],
-    "homepage": "https://github.com/bcgov/design-system-wordpress-child-theme-ticorp",
+    "homepage": "https://github.com/bcgov/bcew-monorepo/themes/design-system-wordpress-child-theme-ticorp",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/bcgov/design-system-wordpress-child-theme-ticorp.git"
+        "url": "https://github.com/bcgov/bcew-monorepo.git",
+        "directory": "themes/design-system-wordpress-child-theme-ticorp"
     },
     "bugs": {
-        "url": "https://github.com/bcgov/design-system-wordpress-child-theme-ticorp#readme",
+        "url": "https://github.com/bcgov/bcew-monorepo/issues",
         "email": "govwordpress@gov.bc.ca"
     },
     "main": "index.js",
