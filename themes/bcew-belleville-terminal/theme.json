@@ -76,13 +76,6 @@
         },
 
         "blocks": {
-            "core/heading": {
-                "variations": {
-                    "heading-callout": {
-                        "css": "&::before { background-color: var(--wp--preset--color--belleville-secondary); }"
-                    }
-                }
-            },
             "core/list": {
                 "typography": {
                     "fontSize": "1rem",
