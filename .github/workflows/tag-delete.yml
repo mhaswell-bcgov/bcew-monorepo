@@ -1,68 +1,4 @@
- >....
-          }
-
-          foreach ($data["packages"] as $packageName => &$releases) {
-              if (!is_array($releases)) {
-                  continue;
-              }
-
-              foreach ($releases as $releaseVersion => $release) {
-                  if (!is_array($release)) {
-                      continue;
-                  }
-
-                  $distRef = $release["dist"]["reference"] ?? null;
-                  $sourceRef = $release["source"]["reference"] ?? null;
-
-                  if (
-                      $distRef === $tag ||
-                      $sourceRef === $tag ||
-                      (($distRef === null && $sourceRef === null) && $releaseVersion === $version)
-                  ) {
-                      unset($releases[$releaseVersion]);
-                  }
-              }
-
-              if (empty($releases)) {
-                  unset($data["packages"][$packageName]);
-              }
-          }
-          unset($releases);
-
-          file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
-          '
-
-      - name: Prepare Pages content
-        if: ${{ steps.vars.outputs.supported == 'true' }}
-        run: |
-          mkdir -p public
-          cp packages.json public/packages.json
-
-      - name: Deploy to GH Pages
-        if: ${{ steps.vars.outputs.supported == 'true' }}
-        uses: peaceiris/actions-gh-pages@v4.1.0
-        with:
-          github_token: ${{ steps.app-token.outputs.token }}
-          publish_dir: ./public
-          keep_files: true
-
-zsh: command not found: name:
-zsh: command not found: on:
-zsh: command not found: delete:
-zsh: command not found: concurrency:
-zsh: command not found: group:
-zsh: command not found: cancel-in-progress:
-zsh: command not found: jobs:
-zsh: command not found: cleanup-release:
-zsh: command not found: name:
-zsh: bad substitution
-╭─robrien@J7PR944Q1Y ~/Development/bcew-monorepo-mhaswell  ‹test-tag-delete-workflow›
-╰─➤  ls                                                                                                                                127 ↵
-composer.json       docs                packages            pnpm-lock.yaml      stylelint.config.js tsconfig.base.json
-composer.lock       nx.json             phpcs.xml           pnpm-workspace.yaml themes              tsconfig.json
-docker-compose.yml  package.json        plugins             README.md           tools
-╭─robrien@J7PR944Q1Y ~/Development/bcew-monorepo-mhaswell  ‹test-tag-delete-workflow›
-╰─➤  name: Remove release metadata on tag delete
+name: Remove release metadata on tag delete
 
 on:
   delete:
@@ -77,8 +13,6 @@ jobs:
     if: ${{ github.event.ref_type == 'tag' }}
     permissions:
       contents: write
-      pages: write
-      id-token: write
     runs-on: ubuntu-latest
 
     steps:
@@ -109,4 +43,97 @@ jobs:
           VERSION="${BASH_REMATCH[2]}"
 
           echo "supported=true" >> "$GITHUB_OUTPUT"
-          echo "tag=$TAG" >> "$GITHUB_OU
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Download existing packages.json
+        if: ${{ steps.vars.outputs.supported == 'true' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          url="https://${{ github.repository_owner }}.github.io/bcew-monorepo/packages.json"
+
+          http_code=$(curl -sSL -w "%{http_code}" -o packages.json "$url") || {
+            curl_exit=$?
+            echo "Failed to download packages.json (curl exit $curl_exit)" >&2
+            exit "$curl_exit"
+          }
+
+          if [ "$http_code" = "404" ]; then
+            echo '{"packages":{}}' > packages.json
+          elif [ "$http_code" != "200" ]; then
+            echo "Failed to download packages.json (HTTP $http_code)" >&2
+            exit 1
+          fi
+      - name: Remove deleted tag from packages.json
+        if: ${{ steps.vars.outputs.supported == 'true' }}
+        env:
+          TAG: ${{ steps.vars.outputs.tag }}
+          VERSION: ${{ steps.vars.outputs.version }}
+        run: |
+          php -r '
+          $path = "packages.json";
+          $tag = getenv("TAG");
+          $version = getenv("VERSION");
+
+          if (!file_exists($path)) {
+              file_put_contents($path, json_encode(["packages" => new stdClass()], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+              exit(0);
+          }
+
+          $json = file_get_contents($path);
+          $data = json_decode($json, true);
+
+          if (!is_array($data)) {
+              fwrite(STDERR, "Invalid packages.json\n");
+              exit(1);
+          }
+
+          if (!isset($data["packages"]) || !is_array($data["packages"])) {
+              $data["packages"] = [];
+          }
+
+          foreach ($data["packages"] as $packageName => &$releases) {
+              if (!is_array($releases)) {
+                  continue;
+              }
+
+              foreach ($releases as $releaseVersion => $release) {
+                  if (!is_array($release)) {
+                      continue;
+                  }
+
+                  $distRef = $release["dist"]["reference"] ?? null;
+                  $sourceRef = $release["source"]["reference"] ?? null;
+
+                  if (
+                      $distRef === $tag ||
+                      $sourceRef === $tag
+                  ) {
+                      unset($releases[$releaseVersion]);
+                  }
+              }
+
+              if (empty($releases)) {
+                  unset($data["packages"][$packageName]);
+              }
+          }
+          unset($releases);
+
+          file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+          '
+
+      - name: Prepare Pages content
+        if: ${{ steps.vars.outputs.supported == 'true' }}
+        run: |
+          mkdir -p public
+          cp packages.json public/packages.json
+
+      - name: Deploy to GH Pages
+        if: ${{ steps.vars.outputs.supported == 'true' }}
+        uses: peaceiris/actions-gh-pages@v4.1.0
+        with:
+          github_token: ${{ steps.app-token.outputs.token }}
+          publish_dir: ./public
+          keep_files: true
