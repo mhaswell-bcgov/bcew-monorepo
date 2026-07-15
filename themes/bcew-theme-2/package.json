@@ -11,13 +11,14 @@
         "DesignSystem",
         "Gutenberg"
     ],
-    "homepage": "https://github.com/bcgov/bcew-theme-2",
+    "homepage": "https://github.com/bcgov/bcew-monorepo/themes/bcew-theme-2",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/bcgov/bcew-theme-2.git"
+        "url": "https://github.com/bcgov/bcew-monorepo.git",
+        "directory": "themes/bcew-theme-2"
     },
     "bugs": {
-        "url": "https://github.com/bcgov/bcew-theme-2#readme",
+        "url": "https://github.com/bcgov/bcew-monorepo/issues",
         "email": "govwordpress@gov.bc.ca"
     },
     "main": "index.js",

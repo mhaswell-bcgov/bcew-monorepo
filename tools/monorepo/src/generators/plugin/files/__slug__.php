@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:       <%= name %>
- * Plugin URI:        https://github.com/bcgov/<%= slug %>
+ * Plugin URI:        https://github.com/bcgov/bcew-monorepo/plugins/<%= slug %>
  * Description:       <%= description %>
  * Version:           0.0.1
  * Requires at least: 6.7
