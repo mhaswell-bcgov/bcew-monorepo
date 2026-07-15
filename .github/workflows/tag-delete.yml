@@ -54,7 +54,7 @@ jobs:
           set -euo pipefail
           url="https://${{ github.repository_owner }}.github.io/bcew-monorepo/packages.json"
 
-          http_code=$(curl -sSL -w "%{http_code}" -o packages.json "$url") || {
+          http_code=$(curl -sSL --retry 5 --retry-all-errors --connect-timeout 10 --max-time 60 -w "%{http_code}" -o packages.json "$url") || {
             curl_exit=$?
             echo "Failed to download packages.json (curl exit $curl_exit)" >&2
             exit "$curl_exit"
