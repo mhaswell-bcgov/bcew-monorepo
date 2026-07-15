@@ -39,13 +39,8 @@ jobs:
             exit 0
           fi
 
-          NAME="${BASH_REMATCH[1]}"
-          VERSION="${BASH_REMATCH[2]}"
-
           echo "supported=true" >> "$GITHUB_OUTPUT"
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
-          echo "name=$NAME" >> "$GITHUB_OUTPUT"
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Download existing packages.json
         if: ${{ steps.vars.outputs.supported == 'true' }}
