@@ -1,0 +1,112 @@
+ >....
+          }
+
+          foreach ($data["packages"] as $packageName => &$releases) {
+              if (!is_array($releases)) {
+                  continue;
+              }
+
+              foreach ($releases as $releaseVersion => $release) {
+                  if (!is_array($release)) {
+                      continue;
+                  }
+
+                  $distRef = $release["dist"]["reference"] ?? null;
+                  $sourceRef = $release["source"]["reference"] ?? null;
+
+                  if (
+                      $distRef === $tag ||
+                      $sourceRef === $tag ||
+                      (($distRef === null && $sourceRef === null) && $releaseVersion === $version)
+                  ) {
+                      unset($releases[$releaseVersion]);
+                  }
+              }
+
+              if (empty($releases)) {
+                  unset($data["packages"][$packageName]);
+              }
+          }
+          unset($releases);
+
+          file_put_contents($path, json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
+          '
+
+      - name: Prepare Pages content
+        if: ${{ steps.vars.outputs.supported == 'true' }}
+        run: |
+          mkdir -p public
+          cp packages.json public/packages.json
+
+      - name: Deploy to GH Pages
+        if: ${{ steps.vars.outputs.supported == 'true' }}
+        uses: peaceiris/actions-gh-pages@v4.1.0
+        with:
+          github_token: ${{ steps.app-token.outputs.token }}
+          publish_dir: ./public
+          keep_files: true
+
+zsh: command not found: name:
+zsh: command not found: on:
+zsh: command not found: delete:
+zsh: command not found: concurrency:
+zsh: command not found: group:
+zsh: command not found: cancel-in-progress:
+zsh: command not found: jobs:
+zsh: command not found: cleanup-release:
+zsh: command not found: name:
+zsh: bad substitution
+╭─robrien@J7PR944Q1Y ~/Development/bcew-monorepo-mhaswell  ‹test-tag-delete-workflow›
+╰─➤  ls                                                                                                                                127 ↵
+composer.json       docs                packages            pnpm-lock.yaml      stylelint.config.js tsconfig.base.json
+composer.lock       nx.json             phpcs.xml           pnpm-workspace.yaml themes              tsconfig.json
+docker-compose.yml  package.json        plugins             README.md           tools
+╭─robrien@J7PR944Q1Y ~/Development/bcew-monorepo-mhaswell  ‹test-tag-delete-workflow›
+╰─➤  name: Remove release metadata on tag delete
+
+on:
+  delete:
+
+concurrency:
+  group: composer-repo-update
+  cancel-in-progress: false
+
+jobs:
+  cleanup-release:
+    name: Remove deleted tag from packages.json
+    if: ${{ github.event.ref_type == 'tag' }}
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Generate GitHub App Token
+        id: app-token
+        uses: actions/create-github-app-token@v3.2.0
+        with:
+          client-id: ${{ vars.GH_APP_CLIENT_ID }}
+          private-key: ${{ secrets.GH_APP_PRIVATE_KEY }}
+
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Parse deleted tag
+        id: vars
+        shell: bash
+        run: |
+          TAG="${{ github.event.ref }}"
+          echo "supported=false" >> "$GITHUB_OUTPUT"
+
+          # Expected format: <project>/v<semver>
+          if [[ ! "$TAG" =~ ^([^/]+)/v([0-9]+\.[0-9]+\.[0-9]+([.-][0-9A-Za-z.-]+)?)$ ]]; then
+            echo "Unsupported tag format (skipping): $TAG"
+            exit 0
+          fi
+
+          NAME="${BASH_REMATCH[1]}"
+          VERSION="${BASH_REMATCH[2]}"
+
+          echo "supported=true" >> "$GITHUB_OUTPUT"
+          echo "tag=$TAG" >> "$GITHUB_OU
