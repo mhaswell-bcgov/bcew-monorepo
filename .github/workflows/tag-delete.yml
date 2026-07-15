@@ -55,9 +55,7 @@ jobs:
             exit "$curl_exit"
           }
 
-          if [ "$http_code" = "404" ]; then
-            echo '{"packages":{}}' > packages.json
-          elif [ "$http_code" != "200" ]; then
+          if [ "$http_code" != "200" ]; then
             echo "Failed to download packages.json (HTTP $http_code)" >&2
             exit 1
           fi
