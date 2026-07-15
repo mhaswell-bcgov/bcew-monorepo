@@ -73,7 +73,6 @@ jobs:
           php -r '
           $path = "packages.json";
           $tag = getenv("TAG");
-          $version = getenv("VERSION");
 
           if (!file_exists($path)) {
               file_put_contents($path, json_encode(["packages" => new stdClass()], JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES) . "\n");
