@@ -70,6 +70,7 @@ jobs:
         if: ${{ steps.vars.outputs.supported == 'true' }}
         env:
           TAG: ${{ steps.vars.outputs.tag }}
+        run: |
           php -r '
           $path = "packages.json";
           $tag = getenv("TAG");
