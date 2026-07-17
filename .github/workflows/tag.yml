@@ -42,6 +42,12 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Inspect installation
+        env:
+            GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+            gh api /installation
+
       - name: Install pnpm
         uses: pnpm/action-setup@v6.0.9
         with:
