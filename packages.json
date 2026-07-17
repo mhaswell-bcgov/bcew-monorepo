@@ -83,7 +83,7 @@
                 },
                 "version": "1.0.0-alpha.4",
                 "dist": {
-                    "url": "https://github.com/mhaswell-bcgov/bcew-monorepo/releases/download/bcew-blocks/v1.0.0-alpha.4/dist.zip",
+                    "url": "https://github.com/mhaswell-bcgov/bcew-monorepo/releases/download/bcew-blocks/v1.0.0-alpha.4/bcew-blocks-1.0.0-alpha.4.zip",
                     "type": "zip",
                     "reference": "bcew-blocks/v1.0.0-alpha.4"
                 },
