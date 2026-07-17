@@ -84,25 +84,19 @@ jobs:
               "${{ steps.vars.outputs.name }}" \
               "${{ steps.vars.outputs.version_normalized }}"
 
-      - name: Show installation details
-        env:
-            GH_TOKEN: ${{ steps.app-token.outputs.token }}
-        run: |
-            gh api /installation
-
       - name: Create tag
         env:
-          GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
           TAG: ${{ steps.vars.outputs.tag }}
         run: |
           if git rev-parse "$TAG" >/dev/null 2>&1; then
             echo "Tag $TAG already exists"
             exit 1
           else
+            git remote set-url origin \
+            https://x-access-token:${{ steps.app-token.outputs.token }}@github.com/${{ github.repository }}.git
+
             git tag "$TAG"
-            git push \
-            https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }}.git \
-            "$TAG"
+            git push origin "$TAG"
           fi
 
       - name: Generate changelog
