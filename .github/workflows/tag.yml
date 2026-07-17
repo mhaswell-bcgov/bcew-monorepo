@@ -84,15 +84,11 @@ jobs:
               "${{ steps.vars.outputs.name }}" \
               "${{ steps.vars.outputs.version_normalized }}"
 
-
-      - name: Show token identity
+      - name: Show installation details
         env:
             GH_TOKEN: ${{ steps.app-token.outputs.token }}
         run: |
-            curl -s \
-            -H "Authorization: Bearer $GH_TOKEN" \
-            https://api.github.com/user
-
+            gh api /installation
 
       - name: Create tag
         env:
