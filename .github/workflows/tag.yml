@@ -84,6 +84,13 @@ jobs:
               "${{ steps.vars.outputs.name }}" \
               "${{ steps.vars.outputs.version_normalized }}"
 
+      - name: Verify token identity
+        env:
+            GH_TOKEN: ${{ steps.app-token.outputs.token }}
+        run: |
+            gh api /user
+            gh api /repos/${{ github.repository }}
+
       - name: Create tag
         env:
           GITHUB_TOKEN: ${{ steps.app-token.outputs.token }}
@@ -91,6 +98,7 @@ jobs:
         run: |
           if git rev-parse "$TAG" >/dev/null 2>&1; then
             echo "Tag $TAG already exists"
+            exit 1
           else
             git tag "$TAG"
             git push \
