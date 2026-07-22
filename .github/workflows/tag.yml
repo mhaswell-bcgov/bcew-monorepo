@@ -68,6 +68,7 @@ jobs:
           echo "is_prerelease=${{ inputs.is_prerelease }}" >> $GITHUB_OUTPUT
           echo "tag=${{ inputs.name }}/v${{ inputs.version }}" >> $GITHUB_OUTPUT
           echo "asset_name=${{ inputs.name }}-${{ inputs.version }}.zip" >> $GITHUB_OUTPUT
+          echo "first_commit_sha=$(git rev-list --max-parents=0 main | head -n 1)" >> $GITHUB_OUTPUT
 
       - name: Install Composer dependencies
         run: npx nx run ${{ steps.vars.outputs.name }}:composer-install
@@ -109,6 +110,7 @@ jobs:
             includeOnlyPaths: ${{ steps.vars.outputs.project_path }}
             ignorePreReleases: "false"
             mode: "COMMIT"
+            fromTag: ${{ steps.vars.outputs.first_commit_sha }}
             toTag: ${{ steps.vars.outputs.tag }}
 
       - name: Create GitHub Release
