@@ -104,7 +104,6 @@ jobs:
 
       - name: Generate changelog
         id: build_changelog
-        if: ${{ inputs.tag_name != '' }}
         uses: mikepenz/release-changelog-builder-action@v6.2.2
         with:
             includeOnlyPaths: ${{ steps.vars.outputs.project_path }}
